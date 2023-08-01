@@ -7,10 +7,6 @@
     "build": "webpack",
     "start": "webpack serve"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ifloky/eCommerce-Application.git"
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
