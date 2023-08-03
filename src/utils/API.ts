@@ -1,12 +1,13 @@
 abstract class API {
   private static baseUrl = 'https://api.us-central1.gcp.commercetools.com/bestshop-rs';
+  private static bearerToken = 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ';
 
   static async get<T>(path: string): Promise<T> {
     const response = await fetch(`${API.baseUrl}${path}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ'
+        'Authorization': API.bearerToken
       },
     });
     if (!response.ok) {
@@ -20,7 +21,7 @@ abstract class API {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ'
+        'Authorization': API.bearerToken
       },
       body: JSON.stringify(data),
     });
