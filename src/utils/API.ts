@@ -1,8 +1,14 @@
 abstract class API {
-  private static baseUrl = 'http://localhost:3010/';
+  private static baseUrl = 'https://api.us-central1.gcp.commercetools.com/bestshop-rs';
 
   static async get<T>(path: string): Promise<T> {
-    const response = await fetch(`${API.baseUrl}${path}`);
+    const response = await fetch(`${API.baseUrl}${path}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ'
+      },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -14,6 +20,7 @@ abstract class API {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ'
       },
       body: JSON.stringify(data),
     });
