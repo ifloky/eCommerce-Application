@@ -3,3 +3,4 @@
    ![]()
 3. Done __.08.2023 / deadline __.08.2023
 4. What did you implement
+5. Link to an issue in Jira
