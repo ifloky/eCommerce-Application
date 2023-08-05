@@ -19,6 +19,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/i,
+        use: 'html-loader'
+      },
+      {
         test: /\.ts$/i,
         use: 'ts-loader'
       },
@@ -50,10 +54,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'eCommerce project',
-      favicon: './assets/image/icons/favicon.svg'
-    }),
+    new HtmlWebpackPlugin({template: '../index.html'}),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
     new EslintWebpackPlugin({ extensions: 'ts' })
