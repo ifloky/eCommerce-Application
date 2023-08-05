@@ -1,13 +1,14 @@
+
 abstract class API {
-  private static baseUrl = 'https://api.us-central1.gcp.commercetools.com/bestshop-rs';
-  private static bearerToken = 'Bearer QZodKZBwQA4mxGKHCDG3bDtNlqUqOkAQ';
+  private static BASE_URL = 'https://api.us-central1.gcp.commercetools.com/bestshop-rs'
+  private static BEARER_TOKEN = 'Bearer gMC3Vp4wto76rjP7Ltr8WIJB2UwyBE6A'
 
   static async get<T>(path: string): Promise<T> {
-    const response = await fetch(`${API.baseUrl}${path}`, {
+    const response = await fetch(`${API.BASE_URL}${path}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': API.bearerToken
+        'Authorization': API.BEARER_TOKEN
       },
     });
     if (!response.ok) {
@@ -17,11 +18,11 @@ abstract class API {
   }
 
   static async post<T>(path: string, data: any): Promise<T> {
-    const response = await fetch(`${API.baseUrl}${path}`, {
+    const response = await fetch(`${API.BASE_URL}${path}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': API.bearerToken
+        'Authorization': API.BEARER_TOKEN
       },
       body: JSON.stringify(data),
     });
