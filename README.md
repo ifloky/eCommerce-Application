@@ -2,12 +2,14 @@
 
 ## Description scripts
 
-start = run devServer, open new browser tab, watch mode
+npm start = run devServer, open new browser tab, watch mode
 
-dev = build app on development mode
+npm run dev = build app on development mode
 
-prod = build app on production mode
+npm run prod = build app on production mode
 
-lint = run eslint in src folder
+npm run lint = run eslint in src folder
 
-prettier = run prettier faormat in src folder
+npm run prettier = run prettier format in src folder
+
+npm run test = run jest tests  
