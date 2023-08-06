@@ -4,21 +4,22 @@ This repository contains a SPA web application for an online store selling pets.
 
 The store contains pages:
   - registration;
-  - entrance;
+  - login;
   - home;
   - product page in the catalog;
   - detailed product page;
   - user profile;
-  - basket;
-  - "About Us";
+  - shopping cart;
+  - about us;
 
 ## Technology stack used:
+
 - TS
 - SCSS
 - ESlint
 - Prettier
--Jest
-- webpack
+- Jest
+- Webpack
 - Husky
 
 ## To run locally on your computer:
