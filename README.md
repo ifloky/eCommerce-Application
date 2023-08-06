@@ -13,7 +13,7 @@ The store contains pages:
   - "About Us";
 
 ## Technology stack used:
--TS
+- TS
 - SCSS
 - ESlint
 - Prettier
