@@ -1,39 +1,39 @@
 # eCommerce-Application
 
-Данный репозиторий содержит SPA веб-приложение интернет магазина по продаже домашних питомцев.
+This repository contains a SPA web application for an online store selling pets.
 
-Магазин содержит страницы:
- - регистрация;
- - вход;
- - главная;
- - страница товара в каталоге;
- - подробная страница продукта;
- - профиль пользователя;
- - корзина;
- - «О нас»;
+The store contains pages:
+  - registration;
+  - entrance;
+  - home;
+  - product page in the catalog;
+  - detailed product page;
+  - user profile;
+  - basket;
+  - "About Us";
 
-## Использованный стек технологий: 
-- TS 
+## Technology stack used:
+-TS
 - SCSS
 - ESlint
 - Prettier
-- Jest
-- Webpack
+-Jest
+- webpack
 - Husky
 
-## Для локального запуска на своем компьютере:
- 
-  - сделайте fork репозитория
-  - клонируйте репозиторий (git clone) 
-  - установите зависимотсти (npm install)
-  - добавьте файл окружения .env с переменными BASE_URL и BEARER_TOKEN (необходимо получить из вашей API)
-  - запустите проект (npm run start)    
+## To run locally on your computer:
+
+   - fork the repository
+   - clone the repository (git clone)
+   - install dependencies (npm install)
+   - add an .env environment file with BASE_URL and BEARER_TOKEN variables (must be obtained from your API)
+   - run the project (npm run start)
 
 ## Description scripts
 
- - npm start = run devServer, open new browser tab, watch mode
- - npm run dev = build app on development mode
- - npm run prod = build app on production mode
- - npm run lint = run eslint in src folder
- - npm run prettier = run prettier format in src folder
- - npm run test = run jest tests  
+  - npm start = run devServer, open new browser tab, watch mode
+  - npm run dev = build app on development mode
+  - npm run prod = build app on production mode
+  - npm run lint = run eslint in src folder
+  - npm run prettier = run prettier format in src folder
+  - npm run test = run jest tests
