@@ -1,6 +1,6 @@
-import { mainView } from '../views/mainView';
-import { MainData } from '../models/Main';
-import API from '../../shared/API';
+import { mainView } from './mainView';
+import { MainData } from './Main';
+import {get, post} from '../../shared/API';
 
 interface CustomerData {
   results: { email: string }[];
@@ -15,7 +15,7 @@ export async function MainController() {
     if (button) {
       document.addEventListener('click', async () => {
         try {
-          const response = await API.get<CustomerData>('/customers');
+          const response = await get<CustomerData>('/customers');
           const email = response.results[0].email;
           console.log('First email:', email);
         } catch (error) {

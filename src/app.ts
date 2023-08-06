@@ -1,8 +1,8 @@
-import API from './shared/API';
+import {get, post} from './shared/API';
 
 export async function initializeApp() {
   try {
-    const customers = await API.get('/customers');
+    const customers = await get('/customers');
     console.log(customers);
   } catch (error) {
     console.error('Error fetching customers:', error);
