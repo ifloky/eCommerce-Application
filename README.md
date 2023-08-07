@@ -1,16 +1,16 @@
-# eCommerce-Application
-
+# eCommerce-Application sprint#1
+ 
 This repository contains a SPA web application for an online store selling pets.
 
-The store contains pages:
-  - registration;
-  - login;
-  - home;
-  - product page in the catalog;
-  - detailed product page;
-  - user profile;
-  - shopping cart;
-  - about us;
+Our team completed the following tasks in Sprint #1:
+1. Repository Setup (ifloky)
+2. Task Board Setup (Jira) (viktarbrutsis)
+3. CommerceTools Project and API Client Setup (ifloky)
+4. Development Environment Configuration (panakir)
+5. Development Scripts (panakir)
+6. Comprehensive README (ifloky)
+
+
 
 ## Technology stack used:
 
@@ -22,13 +22,6 @@ The store contains pages:
 - Webpack
 - Husky
 
-## To run locally on your computer:
-
-   - fork the repository
-   - clone the repository (git clone)
-   - install dependencies (npm install)
-   - add an .env environment file with BASE_URL and BEARER_TOKEN variables (must be obtained from your API)
-   - run the project (npm run start)
 
 ## Description scripts
 
