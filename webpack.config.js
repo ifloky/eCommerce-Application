@@ -3,9 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const EslintWebpackPlugin = require('eslint-webpack-plugin')
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: './index',
   output: {
@@ -14,7 +15,28 @@ module.exports = {
     assetModuleFilename: 'assets/[name][hash][ext]'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.js', '.ts'],
+    fallback: {
+      path: require.resolve('path-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer/'),
+    },
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      path: path.resolve(__dirname, 'index.html')
+      // favicon: './src/assets/fav.ico',
+    }),
+    new CleanWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new Dotenv(),
+    new MiniCssExtractPlugin(),
+    new EslintWebpackPlugin({ extensions: 'ts' })
+  ],
+  stats: {
+    children: true,
   },
   module: {
     rules: [
@@ -53,15 +75,10 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({template: '../index.html'}),
-    new MiniCssExtractPlugin(),
-    new CleanWebpackPlugin(),
-    new EslintWebpackPlugin({ extensions: 'ts' })
-  ],
   devServer: {
     hot: true,
     compress: true,
-    port: 2023
+    port: 2023,
+    historyApiFallback: true
   }
 }
