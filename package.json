@@ -1,5 +1,5 @@
 {
-  "name": "webpack",
+  "name": "commerce",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -12,7 +12,7 @@
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "Kiryl Panamarou",
+  "author": "Kiryl Panamarou, Petrenko Maksim, Viktar Brutsis",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.3",
