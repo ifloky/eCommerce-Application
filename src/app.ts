@@ -1,6 +1,6 @@
 import { get } from './shared/API';
 import { startRouting } from './shared/router';
-
+import { final } from './pages/registrationPage/registrationView';
 export async function initializeApp(): Promise<void> {
   try {
     const customers = await get('/customers');
@@ -10,4 +10,6 @@ export async function initializeApp(): Promise<void> {
     // console.error('Error fetching customers:', error);
   }
 }
+final.render();
+
 
