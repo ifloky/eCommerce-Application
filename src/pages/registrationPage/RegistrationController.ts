@@ -1,0 +1,1 @@
+import { registrationView } from "./registrationView";
