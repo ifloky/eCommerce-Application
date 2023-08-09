@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { MainPageController } from "../pages/mainPage/MainPageController";
+import { headerController } from "../widgets/header/headerController";
 
 type ControllerFunction = () => void;
 
@@ -7,31 +8,35 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
+const appWrapper = document.body
+
 function homeController(): void {
-  MainPageController()
+  appWrapper.innerHTML = headerController()
+  appWrapper.innerHTML += MainPageController()
+  startRouting()
 }
 
-function logInController(): void {
-  const appDiv = document.body
-  appDiv.innerHTML = '<h1>Login Page</h1><a href="/"> home </a>';
+function logInController(): void { 
+  appWrapper.innerHTML = headerController()
+  appWrapper.innerHTML += '<div class="main-container"><h1>Login Page</h1></div>';
   startRouting()
 }
 
 function registerController(): void {
-  const appDiv = document.body
-  appDiv.innerHTML = '<h1>Register Page</h1><a href="/"> home </a>';
+  appWrapper.innerHTML = headerController()
+  appWrapper.innerHTML += '<div class="main-container"><h1>Register Page</h1></div>';
   startRouting()
 }
 
 function aboutController(): void {
-  const appDiv = document.body;
-  appDiv.innerHTML = '<h1>About Page</h1><a href="/"> home </a>';
+  appWrapper.innerHTML = headerController()
+  appWrapper.innerHTML += '<div class="main-container"><h1>About Page</h1></div>';
   startRouting()
 }
 
 function notFoundController(): void {
-  const appDiv = document.body
-  appDiv.innerHTML = '<h1>404 - Page Not Found</h1><a href="/"> home </a>';
+  appWrapper.innerHTML = headerController()
+  appWrapper.innerHTML += '<div class="main-container"><h1>404 - Page Not Found</h1></div>';
   startRouting()
 }
 
@@ -44,9 +49,10 @@ const routes: { [path: string]: ControllerFunction } = {
 
 function handleRoute(): void {
   const currentPath = window.location.pathname;
-  const controller = routes[currentPath] || notFoundController; 
+  const controller = routes[currentPath] || notFoundController;
   controller();
 }
+
 
 export function startRouting(): void {
   function changeRoute(path: string): void {
@@ -54,13 +60,12 @@ export function startRouting(): void {
     handleRoute();
   }
 
-  let links = document.querySelectorAll('a'); 
-  
+  const links = document.querySelectorAll('a');
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
       const href = link.getAttribute('href');
-      if (href && href.startsWith('/')) {
+      if (href) {
         changeRoute(href);
       }
     });
@@ -69,9 +74,4 @@ export function startRouting(): void {
   window.addEventListener('popstate', () => {
     handleRoute();
   });
-
-  window.addEventListener('hashchange', () => {
-    links = document.querySelectorAll('a');
-  });
 }
-
