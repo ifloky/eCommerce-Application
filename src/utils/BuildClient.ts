@@ -7,26 +7,34 @@ import {
   type HttpMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/sdk-client-v2';
 
-const projectKey = '{projectKey}';
-const scopes = ['{scope}'];
+import 'dotenv/config'
+
+export const projectKey = process.env.PROJECT_KEY || '';
+const scopes = ['process.env.SCopes'];
+const clientId = process.env.CLIENT_ID || '';
+const clientSecret = process.env.CLIENT_SECRET || '';
+export const authHost = process.env.AUTH_URL || '';
+const httpHost = process.env.API_URL || ''
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: 'https://auth.{region}.commercetools.com',
+  host: authHost,
   projectKey: projectKey,
   credentials: {
-    clientId: '{clientID}',
-    clientSecret: '{clientSecret}',
+    clientId: clientId,
+    clientSecret: clientSecret,
   },
   scopes,
   fetch,
 };
 
+
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: 'https://api.{region}.commercetools.com',
+  host: httpHost,
   fetch,
 };
+
 
 // Export the ClientBuilder
 export const ctpClient = new ClientBuilder()
@@ -35,3 +43,5 @@ export const ctpClient = new ClientBuilder()
   .withHttpMiddleware(httpMiddlewareOptions)
   .withLoggerMiddleware() // Include middleware for logging
   .build();
+
+  console.log(ctpClient);

@@ -1,48 +1,33 @@
-//  const {
-//   createClient,
-//   createHttpClient,
-//   createAuthForClientCredentialsFlow,
-//   createAuthForPasswordFlow
-// } = require ('@commercetools/sdk-client-v2')
-// const { createApiBuilderFromCtpClient } = require('@commercetools/platform-sdk')
+import { ctpClient, projectKey, authHost } from './BuildClient';
+import {
+  ApiRoot,
+  Project,
+  ClientResponse,
+  createApiBuilderFromCtpClient,
+} from '@commercetools/platform-sdk';
 
-// import { createApiBuilderFromCtpClient as createApiBuilderFromCtpClientOnlyForImports } from "@commercetools/importapi-sdk";
-// import 'dotenv.config';
+console.log(ApiRoot);
 
-// const fetch = require("node-fetch");
+// Create apiRoot from the imported ClientBuilder and include your Project key
+export const apiRoot = createApiBuilderFromCtpClient(ctpClient, authHost)
+  .withProjectKey({ projectKey: projectKey });
 
-// const projectKey = process.env.CTP_PROJECT_KEY,
-//      authHost = process.env.CTP_AUTH_URL;
 
-// //use .env for credentials process.env.adminClientId
+// Example call to return Project information
+// This code has the same effect as sending a GET request to the commercetools Composable Commerce API without any endpoints.
+export const getProject = async (): Promise<ClientResponse<Project>> => {
+    const api = await apiRoot.get().execute();
+    return api;
+  };
 
-// const getClient = () => {
-//   const authMiddleware = createAuthForClientCredentialsFlow({
-//      host: authHost,
-//   })
-// };
+  console.log(apiRoot.categories());
 
-// const getImportClient = () => {
+console.log(apiRoot.products());
 
-// };
+console.log(apiRoot.customers().get());
 
-// const getStoreClient = () => {
 
-// };
-
-// const getMLClient = () => {};
-
-// const getMyAPIClient = () => {
-
-// };
-
-// module.exports.apiRoot = createApiBuilderFromCtpClient(getClient());
-
-// // module.exports.importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
-// //   getImportClient()
-// // );
-
-// // module.exports.storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
-
-// // module.exports.myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
-// module.exports.projectKey = projectKey;
+  // Retrieve Project information and output the result to the log
+//   getProject()
+//     .then(console.log)
+//     .catch(console.error);

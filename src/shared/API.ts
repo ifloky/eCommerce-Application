@@ -1,4 +1,4 @@
-import 'dotenv.config';
+import 'dotenv/config';
 
 interface FetchResponse<T> {
   ok: boolean;
@@ -7,8 +7,8 @@ interface FetchResponse<T> {
 }
 
 
-const BASE_URL = `${process.env.BASE_URL}`;
-const BEARER_TOKEN = `${process.env.BEARER_TOKEN}`;
+const BASE_URL = process.env.BASE_URL || '';
+const BEARER_TOKEN = process.env.BEARER_TOKEN || '';
 
 type HttpMethod = 'GET' | 'POST';
 
