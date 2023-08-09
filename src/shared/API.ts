@@ -1,4 +1,4 @@
-import'dotenv/config';
+import 'dotenv.config';
 
 interface FetchResponse<T> {
   ok: boolean;

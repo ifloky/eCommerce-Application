@@ -48,9 +48,13 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@commercetools/importapi-sdk": "^4.6.2",
+    "@commercetools/platform-sdk": "^4.11.0",
+    "@commercetools/sdk-client-v2": "^2.2.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0"
