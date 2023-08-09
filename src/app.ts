@@ -8,7 +8,7 @@ export async function initializeApp(): Promise<void> {
     document.body.innerHTML += MainPageController()
     startRouting() 
   } catch (error) {
-    // 'Error fetching customers:', error
+    console.error(error)
   }
 }
 

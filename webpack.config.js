@@ -28,7 +28,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       path: path.resolve(__dirname, 'index.html'),
       title: 'eCommerce',
-      // favicon: './src/assets/fav.ico',
+      favicon: './src/assets/image/icons/favicon.ico',
     }),
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),

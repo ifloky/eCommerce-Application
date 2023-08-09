@@ -1,6 +1,4 @@
-interface Links {
-  [key: string]: string;
-}
+import { Links } from "../../types/interfaces/Main";
 
 export function headerView(navElements: string[], links: Links): string {
   const navElementsHTML = navElements.join('');

@@ -70,7 +70,7 @@ export function startRouting(): void {
       }
     });
   });
-
+  window.removeEventListener('popstate', () => {});
   window.addEventListener('popstate', () => {
     handleRoute();
   });
