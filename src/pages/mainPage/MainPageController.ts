@@ -1,5 +1,6 @@
 import { mainPageView } from './mainPageView';
 import { get } from '../../shared/API';
+import { startRouting } from '../../shared/router';
 
 interface CustomerData {
   results: { email: string }[];
@@ -9,6 +10,7 @@ export async function MainPageController(): Promise<void> {
   try {
     document.body.innerHTML = ''
     mainPageView();
+    startRouting() 
     const errorDisplay = document.querySelector('#error');
     const emailDisplay = document.querySelector('#email');
     try {

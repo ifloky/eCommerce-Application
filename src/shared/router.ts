@@ -1,4 +1,4 @@
-import { LoginPageController } from "../pages/loginPage/loginPageController";
+/* eslint-disable no-use-before-define */
 import { MainPageController } from "../pages/mainPage/MainPageController";
 
 type ControllerFunction = () => void;
@@ -12,23 +12,27 @@ function homeController(): void {
 }
 
 function logInController(): void {
-  LoginPageController()
+  const appDiv = document.body
+  appDiv.innerHTML = '<h1>Login Page</h1><a href="/"> home </a>';
+  startRouting()
 }
 
 function registerController(): void {
   const appDiv = document.body
   appDiv.innerHTML = '<h1>Register Page</h1><a href="/"> home </a>';
+  startRouting()
 }
 
 function aboutController(): void {
   const appDiv = document.body;
   appDiv.innerHTML = '<h1>About Page</h1><a href="/"> home </a>';
+  startRouting()
 }
 
 function notFoundController(): void {
   const appDiv = document.body
   appDiv.innerHTML = '<h1>404 - Page Not Found</h1><a href="/"> home </a>';
-
+  startRouting()
 }
 
 const routes: { [path: string]: ControllerFunction } = {
@@ -51,8 +55,6 @@ export function startRouting(): void {
   }
 
   let links = document.querySelectorAll('a'); 
-
-  console.log(links);
   
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
