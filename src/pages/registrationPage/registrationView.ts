@@ -43,7 +43,7 @@ const registrationUser = document.createElement('div');
       registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form">
       ${registrationFieldForm}
-      <button class="button registration" type="submit">Register</button>
+      <button class="btn registration" type="submit">Register</button>
       </form>
       `;
 

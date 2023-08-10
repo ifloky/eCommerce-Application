@@ -44,4 +44,4 @@ export const ctpClient = new ClientBuilder()
   .withLoggerMiddleware() // Include middleware for logging
   .build();
 
-  console.log(ctpClient);
+  //  console.log(ctpClient);

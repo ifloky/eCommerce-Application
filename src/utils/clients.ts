@@ -1,12 +1,11 @@
 import { ctpClient, projectKey, authHost } from './BuildClient';
 import {
-  ApiRoot,
   Project,
   ClientResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
 
-console.log(ApiRoot);
+// console.log(ApiRoot);
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 export const apiRoot = createApiBuilderFromCtpClient(ctpClient, authHost)
@@ -20,11 +19,11 @@ export const getProject = async (): Promise<ClientResponse<Project>> => {
     return api;
   };
 
-  console.log(apiRoot.categories());
+// console.log(apiRoot.categories());
 
-console.log(apiRoot.products());
+// console.log(apiRoot.products());
 
-console.log(apiRoot.customers().get());
+// console.log(apiRoot.customers().get());
 
 
   // Retrieve Project information and output the result to the log
