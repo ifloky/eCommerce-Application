@@ -11,9 +11,7 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
 const appWrapper = document.body
 
 function homeController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += MainPageController()
-  startRouting()
+  MainPageController()
 }
 
 function logInController(): void { 
