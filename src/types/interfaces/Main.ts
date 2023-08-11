@@ -4,6 +4,3 @@ export interface MainData {
   description: string;
 }
 
-export interface Links {
-  [key: string]: string;
-}

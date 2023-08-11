@@ -1,6 +1,5 @@
 /* eslint-disable no-use-before-define */
 import { MainPageController } from "../pages/mainPage/MainPageController";
-import { headerController } from "../widgets/header/headerController";
 
 type ControllerFunction = () => void;
 
@@ -8,41 +7,41 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-const appWrapper = document.body
+let popstateHandler = (): void => { };
+
+  const appContainer = document.getElementById('app');
 
 function homeController(): void {
-  MainPageController()
+  if (appContainer) {
+    appContainer.innerHTML += MainPageController();
+  }
 }
 
-function logInController(): void { 
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>Login Page</h1></div>';
-  startRouting()
+function logInController(): void {
+  if (appContainer) {
+    appContainer.innerHTML += '<div class="main-container"><h1>Login Page</h1></div>';
+    startRouting();
+  }
 }
 
 function registerController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>Register Page</h1></div>';
-  startRouting()
-}
-
-function aboutController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>About Page</h1></div>';
-  startRouting()
+  if (appContainer) {
+    appContainer.innerHTML += '<div class="main-container"><h1>Register Page</h1></div>';
+    startRouting();
+  }
 }
 
 function notFoundController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>404 - Page Not Found</h1></div>';
-  startRouting()
+  if (appContainer) {
+    appContainer.innerHTML = '<div class="main-container"><h1>404 - Page Not Found</h1></div>';
+    startRouting();
+  }
 }
 
 const routes: { [path: string]: ControllerFunction } = {
   '/': createControllerFunction(homeController),
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
-  '/about': createControllerFunction(aboutController)
 };
 
 function handleRoute(): void {
@@ -50,7 +49,6 @@ function handleRoute(): void {
   const controller = routes[currentPath] || notFoundController;
   controller();
 }
-
 
 export function startRouting(): void {
   function changeRoute(path: string): void {
@@ -68,8 +66,12 @@ export function startRouting(): void {
       }
     });
   });
-  window.removeEventListener('popstate', () => {});
-  window.addEventListener('popstate', () => {
+
+  window.removeEventListener('popstate', popstateHandler);
+  popstateHandler = (): void => {
     handleRoute();
-  });
+  };
+  window.addEventListener('popstate', popstateHandler);
 }
+
+startRouting();
