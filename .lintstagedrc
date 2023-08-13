@@ -1,4 +1,4 @@
 {
   "*.ts": "npm run lint",
-  "*": "npm run prettier"
+  "['*.ts', '*.scss', '*.html', '*.css']": "npm run prettier"
 }
