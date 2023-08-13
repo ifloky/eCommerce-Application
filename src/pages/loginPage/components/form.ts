@@ -26,13 +26,13 @@ const generateButtonsBlock = (): HTMLDivElement => {
 
 const generateShowPasswordChecbox = (): HTMLDivElement => {
   const wrapper = createWrapper();
+  wrapper.classList.add('form__wrapper_toggle');
   const label = createLabelElement();
   label.setAttribute('for', 'toggle');
   const input = createInputElement();
-  input.setAttribute('id', 'toggle');
+  input.setAttribute('id', 'toggle-password');
   input.type = 'checkbox';
   wrapper.append(label, input);
-  wrapper.hidden = true;
   return wrapper;
 };
 

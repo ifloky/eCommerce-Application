@@ -18,7 +18,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 60px;
   border: 1px solid #7eb53e;
   border-radius: 10px;
 }
@@ -28,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 40px 0;
 }
 
 .login-page__logo {
@@ -45,6 +45,12 @@
 
 .form {
   width: 80%;
+
+  &__wrapper {
+    &_password {
+      position: relative;
+    }
+  }
 
   &__label {
     display: block;
@@ -69,6 +75,7 @@
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
+    margin: 40px 0;
   }
 
   &__button {
@@ -104,5 +111,44 @@
       background-color: #7eb53e;
       color: white;
     }
+  }
+}
+
+.form__wrapper_toggle {
+  position: absolute;
+  top: calc(50% - 20px);
+  right: 15px;
+
+  .form__label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: url('../image/icons/ligin-page/close-eye.svg') center / contain no-repeat;
+      border-radius: 5px;
+    }
+
+    &_show-pass {
+      &::before {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: url('../image/icons/ligin-page/open-eye.svg') center / contain no-repeat;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  #toggle-password {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: -9999px;
   }
 }

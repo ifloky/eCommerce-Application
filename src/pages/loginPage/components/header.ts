@@ -6,7 +6,7 @@ const createLogoBlock = (): HTMLDivElement => createElement('div', ['login-page_
 
 const createHeadingLoginPage = (): HTMLHeadingElement => {
   const heading = createElement('h2', ['login-page__title']);
-  heading.textContent = 'welcome, friend! sign in';
+  heading.textContent = 'welcome, friend! please, sign in';
   return heading;
 };
 
