@@ -1,3 +1,5 @@
+import '../../../css/main.min.css'
+
 interface FieldsInfo {
   for: string,
   text: string,
@@ -5,6 +7,10 @@ interface FieldsInfo {
   id: string,
   class: string
 }
+
+//  RegistrationForm {
+
+//  }
 
 let registrationFieldForm: string = '';
 
@@ -14,8 +20,8 @@ function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {
     registrationFieldForm += `
   <div class="login-form__input">
-  <label for="${array[i].for}" class="label">${array[i].text}</label>
-  <input type="${array[i].type}" id="${array[i].id}" class="input-${array[i].class}" required>
+  <label for="${array[i].for}" class="form-label">${array[i].text}</label>
+  <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
 </div>`;
   }
 return registrationFieldForm;
@@ -41,9 +47,9 @@ createRegistrationFields(registrationFeildsInfo);
 
 const registrationUser = document.createElement('div');
       registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
-      <form class="registration-form">
+      <form class="registration-form" action=''>
       ${registrationFieldForm}
-      <button class="btn registration" type="submit">Register</button>
+      <button class="btn btn-registration" type="submit">Register</button>
       </form>
       `;
 

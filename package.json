@@ -50,6 +50,7 @@
   "dependencies": {
     "@commercetools/importapi-sdk": "^4.6.2",
     "@commercetools/platform-sdk": "^4.11.0",
+    "@commercetools/sdk-auth": "^4.0.1",
     "@commercetools/sdk-client-v2": "^2.2.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
