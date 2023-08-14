@@ -9,13 +9,10 @@ const headerLinks = {
 }
 
 function createHeader(): void {
-  const headerWrapper = document.createElement("div");
-  headerWrapper.className = 'header__wrapper';
-  headerWrapper.innerHTML = headerView(headerLinks);
-
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.appendChild(headerWrapper);
+  const [headerContainer] = document.getElementsByClassName('header__wrapper');
+  if (headerContainer) {
+    
+    headerContainer.innerHTML = headerView(headerLinks);
   }
 }
 

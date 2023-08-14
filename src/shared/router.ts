@@ -7,35 +7,36 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-let popstateHandler = (): void => { };
+function popstateHandler(): void {
+  handleRoute();
+}
 
+window.addEventListener('popstate', popstateHandler);
+
+function updateContainer(content: string): void {
   const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = content;
+  }
+}
 
 function homeController(): void {
+  const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML += MainPageController();
+    appContainer.innerHTML = MainPageController();
   }
 }
 
 function logInController(): void {
-  if (appContainer) {
-    appContainer.innerHTML += '<div class="main-container"><h1>Login Page</h1></div>';
-    startRouting();
-  }
+  updateContainer('<div class="main-container"><h1>Login Page</h1></div>');
 }
 
 function registerController(): void {
-  if (appContainer) {
-    appContainer.innerHTML += '<div class="main-container"><h1>Register Page</h1></div>';
-    startRouting();
-  }
+  updateContainer('<div class="main-container"><h1>Register Page</h1></div>');
 }
 
 function notFoundController(): void {
-  if (appContainer) {
-    appContainer.innerHTML = '<div class="main-container"><h1>404 - Page Not Found</h1></div>';
-    startRouting();
-  }
+  updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
 }
 
 const routes: { [path: string]: ControllerFunction } = {
@@ -68,9 +69,6 @@ export function startRouting(): void {
   });
 
   window.removeEventListener('popstate', popstateHandler);
-  popstateHandler = (): void => {
-    handleRoute();
-  };
   window.addEventListener('popstate', popstateHandler);
 }
 
