@@ -4,9 +4,9 @@ import Navigation from "../Navigation/navigationController";
 export function headerView(links: Links): string {
   return `
   <div class="header">
-    <a href="/" class="header__logo">
-      <img src=${links.logoImage} alt="" class="header__logo-img">
-    </a>
+    <div class="header__logo">
+      <a href="/" class="header__logo"> </a>
+    </div>
     <div class="navigation__wrapper">
       ${Navigation.render()}
     </div>

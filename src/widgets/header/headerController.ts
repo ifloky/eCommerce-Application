@@ -1,4 +1,4 @@
-import './header.scss';
+import '../../assets/styles/header.scss';
 import { headerView } from './headerView';
 
 const headerLinks = {
