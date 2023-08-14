@@ -28,7 +28,6 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   fetch,
 };
 
-
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: httpHost,
@@ -45,3 +44,4 @@ export const ctpClient = new ClientBuilder()
   .build();
 
   //  console.log(ctpClient);
+
