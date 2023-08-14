@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { MainPageController } from "../pages/mainPage/MainPageController";
 
 type ControllerFunction = () => void;
@@ -6,12 +5,6 @@ type ControllerFunction = () => void;
 function createControllerFunction(renderFunction: ControllerFunction): ControllerFunction {
   return renderFunction;
 }
-
-function popstateHandler(): void {
-  handleRoute();
-}
-
-window.addEventListener('popstate', popstateHandler);
 
 function updateContainer(content: string): void {
   const appContainer = document.getElementById('app');
@@ -50,6 +43,12 @@ function handleRoute(): void {
   const controller = routes[currentPath] || notFoundController;
   controller();
 }
+
+function popstateHandler(): void {
+  handleRoute();
+}
+
+window.addEventListener('popstate', popstateHandler);
 
 export function startRouting(): void {
   function changeRoute(path: string): void {
