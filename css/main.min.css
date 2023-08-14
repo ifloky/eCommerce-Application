@@ -45,7 +45,12 @@
   display: block;
   margin: 0 auto;
   margin-top: 10px;
+  margin-bottom: 25px;
   width: 30%;
+}
+
+#terms {
+  margin: 25px 10px 15px 0;
 }
 
 :root {

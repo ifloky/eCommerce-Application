@@ -49,7 +49,10 @@ const registrationUser = document.createElement('div');
       registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
       ${registrationFieldForm}
+      <input type="checkbox" id="terms" name="terms" value="terms">
+      <label for="terms">You need to agree to <a href=''>Terms and conditions</a></label><br>
       <button class="btn btn-registration" type="submit">Register</button>
+      <p>Already have an account? <a href=''>Sign in</a></p>
       </form>
       `;
 
