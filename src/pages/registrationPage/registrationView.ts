@@ -50,4 +50,3 @@ const registrationUser = document.createElement('div');
 export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
-
