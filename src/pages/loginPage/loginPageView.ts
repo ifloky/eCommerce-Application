@@ -1,13 +1,15 @@
 import { createElement } from '../../utils/abstract';
 import { generateForm } from './components/form';
 import { generateHeaderBlock } from './components/header';
-import { isShowed } from './loginPageController';
+import { isShowed, isValid } from './loginPageController';
 
 const createLoginPage = (): HTMLElement => createElement('section', ['login-page']);
 
 const bindEvents = (elements: HTMLElement[]): void => {
   const [form] = elements
   form.addEventListener('click', isShowed)
+  form.addEventListener('input', isValid)
+
 }
 
 const createLoginPageWrapper = (): HTMLDivElement => createElement('div', ['login-page__wrapper']);

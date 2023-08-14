@@ -69,6 +69,13 @@
     font-size: 16px;
   }
 
+  #email {
+
+    &:invalid {
+      border-color: red;
+    }
+  }
+
   &__buttons {
     display: flex;
     width: 100%;
@@ -129,7 +136,7 @@
       display: block;
       width: 20px;
       height: 20px;
-      background: url('../image/icons/ligin-page/close-eye.svg') center / contain no-repeat;
+      background: url('../image/icons/login-page/close-eye.svg') center / contain no-repeat;
       border-radius: 5px;
     }
 
@@ -139,7 +146,7 @@
         display: block;
         width: 20px;
         height: 20px;
-        background: url('../image/icons/ligin-page/open-eye.svg') center / contain no-repeat;
+        background: url('../image/icons/login-page/open-eye.svg') center / contain no-repeat;
         border-radius: 5px;
       }
     }

@@ -44,7 +44,6 @@ const generteEmailField = (): HTMLDivElement => {
   const input = createInputElement();
   input.setAttribute('id', 'email');
   input.classList.add('input', 'input_email');
-  input.required = true;
   input.type = 'email';
   wrapper.append(label, input);
   return wrapper;
