@@ -1,11 +1,13 @@
+import 'dotenv/config'
+
 interface FetchResponse<T> {
   ok: boolean;
   status: number;
   json(): Promise<T>;
 }
 
-const BASE_URL = 'https://api.us-central1.gcp.commercetools.com/bestshop-rs';
-const BEARER_TOKEN = 'Bearer zIakNzlaXZxHtEkqKOdJzDgkG5o5d4Lf';
+const BASE_URL = process.env.BASE_URL || '';
+const BEARER_TOKEN = process.env.BEARER_TOKEN || '';
 
 type HttpMethod = 'GET' | 'POST';
 
