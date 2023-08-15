@@ -1,3 +1,4 @@
+import { RegistrationPageView } from "./registrationView";
 export function showHidePassword(): void {
    const passEye = document.querySelector('.password-control');
    const input = document.querySelector('.input-password');
@@ -17,18 +18,18 @@ export function showHidePassword(): void {
 
  }
 
-// interface CustomerRegistrationInfo {
-//   email: string;
-//   password: string;
-//   firstname: string;
-//   lastname: string;
-//   dateOfBirth: string;
-//   street: string;
-//   city: string;
-//   postcode: string;
-//   country: string;
+interface CustomerRegistrationInfo {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  dateOfBirth: string;
+  street: string;
+  city: string;
+  postcode: string;
+  country: string;
 
-// }
+}
 
 // const registrationInfo: CustomerRegistrationInfo = {
 //   email: '',
@@ -41,28 +42,38 @@ export function showHidePassword(): void {
 //   postcode: '',
 //   country: '',
 // }
+const registrationInfo: CustomerRegistrationInfo = {
+  email: '',
+  password: '',
+  firstname: '',
+  lastname: '',
+  dateOfBirth: '',
+  street: '',
+  city: '',
+  postcode: '',
+  country: '',
+};
 
-// export function ReceiveInfoAfterSubmit(): void {
-//   // const submitButton = document.querySelector('.btn-registration') as HTMLButtonElement;
-//   const form = document.querySelector('.registration-form');
-//   const filledForm = document.querySelectorAll('.form-input') as NodeList;
-//   // submitButton.addEventListener('submit', () => {
-//   //   // eslint-disable-next-line no-console
-//   //   console.log(filledForm);
-//   // })
-//   form?.addEventListener('submit', (event: Event) => {
-//      event.preventDefault();
-//      Array.from(filledForm).forEach((elem) => {
-//         registrationInfo.email: Element.value;
-//      });
-//   })
+export function receiveInfoAfterSubmit(): void {
+  const submitButton = document.querySelector('.btn-registration') as HTMLButtonElement;
+  //  const form = document.querySelector('.registration-form');
 
-// }
+  submitButton.addEventListener('click', (event: Event) => {
+    // eslint-disable-next-line no-console
+    //  console.log(submitButton);
+    event.preventDefault();
+    const filledForm = document.querySelectorAll('.form-input') as NodeList;
+    filledForm.forEach((inputField) => {
+      const input = inputField as HTMLInputElement;
+      Object.defineProperty(registrationInfo, input.id, { value: input.value });
+      // eslint-disable-next-line no-console
+      console.log(input.value);
+    })
+    // eslint-disable-next-line no-console
+    console.log(registrationInfo);
+  })
+}
 
-// ReceiveInfoAfterSubmit();
+RegistrationPageView();
 
-
-
-
-
-
+receiveInfoAfterSubmit();
