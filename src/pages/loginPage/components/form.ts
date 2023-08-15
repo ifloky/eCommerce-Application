@@ -45,6 +45,7 @@ const generteEmailField = (): HTMLDivElement => {
   input.setAttribute('id', 'email');
   input.classList.add('input', 'input_email');
   input.type = 'email';
+  input.required = true
   wrapper.append(label, input);
   return wrapper;
 };
@@ -60,6 +61,7 @@ const genertePasswordField = (): HTMLDivElement => {
   input.setAttribute('id', 'password');
   input.required = true;
   input.type = 'password';
+  input.minLength = 8
   const showPassword = generateShowPasswordChecbox();
   wrapper.append(label, input, showPassword);
   return wrapper;
