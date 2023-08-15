@@ -8,26 +8,24 @@ interface FieldsInfo {
   class: string
 }
 
-
-
 let registrationFieldForm: string = '';
 
-const registrationFeildsInfo: FieldsInfo[] = [{for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' }, {for: 'password', text: 'Password', type: 'password', id: 'password', class: 'password' }, {for: 'firstname', text: 'First name', type: 'text', id: 'firstname', class: 'firstname' }, {for: 'lastname', text: 'Last name', type: 'text', id: 'lastname', class: 'lastname' }, {for: 'date', text: 'Date of Birth', type: 'date', id: 'date', class: 'date' }, {for: 'street', text: 'Street', type: 'text', id: 'street', class: 'street' }, {for: 'city', text: 'City', type: 'text', id: 'city', class: 'city' }, {for: 'post', text: 'Postal code', type: 'text', id: 'post', class: 'post' }, {for: 'country', text: 'Country', type: 'text', id: 'country', class: 'country' }]; 
+export const registrationFeildsInfo: FieldsInfo[] = [{for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' }, {for: 'password', text: 'Password', type: 'password', id: 'password', class: 'password' }, {for: 'firstname', text: 'First name', type: 'text', id: 'firstname', class: 'firstname' }, {for: 'lastname', text: 'Last name', type: 'text', id: 'lastname', class: 'lastname' }, {for: 'date', text: 'Date of Birth', type: 'date', id: 'date', class: 'date' }, {for: 'street', text: 'Street', type: 'text', id: 'street', class: 'street' }, {for: 'city', text: 'City', type: 'text', id: 'city', class: 'city' }, {for: 'post', text: 'Postal code', type: 'text', id: 'post', class: 'post' }, {for: 'country', text: 'Country', type: 'text', id: 'country', class: 'country' }]; 
 
-function createRegistrationFields(array: FieldsInfo[]): string {
+export function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {
     if (array[i].for === 'password') {
       registrationFieldForm += `
         <div class="login-form__input-password">
         <label for="${array[i].for}" class="form-label">${array[i].text}</label>
-        <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
-        <div class="password-control"></div>
+        <input type="${array[i].type}" name="${array[i].id}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
+        <a href='' class="password-control"></a>
       </div>`;
     } else {
       registrationFieldForm += `
       <div class="login-form__input">
       <label for="${array[i].for}" class="form-label">${array[i].text}</label>
-      <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
+      <input type="${array[i].type}" name="${array[i].id}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
     </div>`;
     }
   }
@@ -50,18 +48,4 @@ const registrationUser = document.createElement('div');
 export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
-
-export function showHidePassword(): void {
-  const passEye = document.querySelector('password-control');
-  // eslint-disable-next-line no-console
-  console.log(passEye);
-  const input = document.querySelector('input-password');
-
-  if (input?.getAttribute('type') === 'password') {
-    passEye?.classList.add('no-view');
-    input.setAttribute('type', 'text');
-   } else {
-    passEye?.classList.remove('no-view');
-    input?.setAttribute('type', 'password');
-   }
-}
+RegistrationPageView();
