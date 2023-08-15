@@ -36,24 +36,6 @@ return registrationFieldForm;
 
 createRegistrationFields(registrationFeildsInfo);
 
-const passEye = document.querySelector('password-control');
-// eslint-disable-next-line no-console
-console.log(passEye);
-const input = document.querySelector('#password');
-
-function showHidePassword(): void {
-
-  if (input?.getAttribute('type') === 'password') {
-    passEye?.classList.remove('password-control')
-    passEye?.classList.add('password-control-no-view');
-    input.setAttribute('type', 'text');
-   } else {
-    passEye?.classList.add('password-control')
-    passEye?.classList.remove('password-control-no-view');
-    input?.setAttribute('type', 'password');
-   }
-}
-
 const registrationUser = document.createElement('div');
       registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
@@ -69,4 +51,17 @@ export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
 
-showHidePassword();
+export function showHidePassword(): void {
+  const passEye = document.querySelector('password-control');
+  // eslint-disable-next-line no-console
+  console.log(passEye);
+  const input = document.querySelector('input-password');
+
+  if (input?.getAttribute('type') === 'password') {
+    passEye?.classList.add('no-view');
+    input.setAttribute('type', 'text');
+   } else {
+    passEye?.classList.remove('no-view');
+    input?.setAttribute('type', 'password');
+   }
+}
