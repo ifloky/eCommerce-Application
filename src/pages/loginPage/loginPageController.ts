@@ -12,16 +12,26 @@ export const isShowed = (event: Event): void => {
   }
 }
 
-export const isValid = (event: Event): boolean => {
+export const isValid = (event: Event): void => {
   const { target } = event
   if (target instanceof HTMLInputElement) {
     if (target.getAttribute('id') === 'email') {
-      const pattern = /^\w+([.-]?\w+)*@\w+.\w{2,4}$/
-      const { value } = target
-      if (!pattern.test(value)) {
-        target.setCustomValidity('Please, check you email. It should look like user@example.com')
+      const pattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})$/
+      if (!target.value.match(pattern)) {
+        target.setCustomValidity('')
+        if (target.value.indexOf(' ') !== -1) {
+          target.setCustomValidity('')
+          target.setCustomValidity('Please, check your email. It must not contain whitespace.')
+          if (target.value === '') {
+            target.setCustomValidity('')
+          } else {
+            target.setCustomValidity('')
+            target.setCustomValidity('Please, check your email. It must be properly formatted (e.g., user@example.com).')
+          }
+        }
+      } else {
+        target.setCustomValidity('')
       }
     }
   }
-  return true
 }
