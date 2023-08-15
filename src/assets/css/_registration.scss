@@ -29,7 +29,10 @@
       border-radius: 5px;
    }
 }
-.login-form__input {
+.login-form__input-password {
+   position: relative;
+}
+.login-form__input, .login-form__input-password {
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -46,4 +49,22 @@
 }
 #terms {
    margin: 25px 10px 15px 0;
+}
+.password-control {
+	position: absolute;
+	top: 4px;
+	right: 6px;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+}
+.password-control-no-view {
+   position: absolute;
+	top: 4px;
+	right: 6px;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
 }

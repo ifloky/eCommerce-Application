@@ -8,9 +8,7 @@ interface FieldsInfo {
   class: string
 }
 
-//  RegistrationForm {
 
-//  }
 
 let registrationFieldForm: string = '';
 
@@ -18,32 +16,43 @@ const registrationFeildsInfo: FieldsInfo[] = [{for: 'email', text: 'E-mail', typ
 
 function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {
-    registrationFieldForm += `
-  <div class="login-form__input">
-  <label for="${array[i].for}" class="form-label">${array[i].text}</label>
-  <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
-</div>`;
+    if (array[i].for === 'password') {
+      registrationFieldForm += `
+        <div class="login-form__input-password">
+        <label for="${array[i].for}" class="form-label">${array[i].text}</label>
+        <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
+        <div class="password-control"></div>
+      </div>`;
+    } else {
+      registrationFieldForm += `
+      <div class="login-form__input">
+      <label for="${array[i].for}" class="form-label">${array[i].text}</label>
+      <input type="${array[i].type}" id="${array[i].id}" class="form-input input-${array[i].class}" required>
+    </div>`;
+    }
   }
 return registrationFieldForm;
 }
 
 createRegistrationFields(registrationFeildsInfo);
 
-// const finalFieldForm = `<div><h2 class="registration-title">Registration</h2>
-// <form class="registration-form">
-// ${registrationFieldForm}
-// <button class="button registration" type="submit">Register</button>
-// </form>
-// </div>`;
+const passEye = document.querySelector('password-control');
+// eslint-disable-next-line no-console
+console.log(passEye);
+const input = document.querySelector('#password');
 
-//  export function final(): void {
-//  return `<div><h2 class="registration-title">Registration</h2>
-//  <form class="registration-form">
-//  ${registrationFieldForm}
-//  <button class="button registration" type="submit">Register</button>
-//  </form>
-//  </div>`;
-//  }
+function showHidePassword(): void {
+
+  if (input?.getAttribute('type') === 'password') {
+    passEye?.classList.remove('password-control')
+    passEye?.classList.add('password-control-no-view');
+    input.setAttribute('type', 'text');
+   } else {
+    passEye?.classList.add('password-control')
+    passEye?.classList.remove('password-control-no-view');
+    input?.setAttribute('type', 'password');
+   }
+}
 
 const registrationUser = document.createElement('div');
       registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
@@ -59,3 +68,5 @@ const registrationUser = document.createElement('div');
 export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
+
+showHidePassword();
