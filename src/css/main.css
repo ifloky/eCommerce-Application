@@ -21,6 +21,7 @@
   height: 30px;
 }
 .form-input {
+  padding: 1px 10px;
   display: block;
   width: 46%;
   height: 30px;
@@ -45,6 +46,12 @@
   margin-top: 10px;
 }
 
+.form-input.input-password {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 .btn-registration {
   display: block;
   margin: 0 auto;
@@ -58,10 +65,11 @@
 }
 
 .password-control {
+  display: block;
   position: absolute;
+  cursor: pointer;
   top: 4px;
   right: 6px;
-  display: inline-block;
   width: 25px;
   height: 25px;
   background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;

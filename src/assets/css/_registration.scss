@@ -39,6 +39,9 @@
    align-items: center;
    margin-top: 10px;
 }
+.form-input.input-password {
+   appearance: none;
+}
 .btn {
    &-registration {
       display: block;
