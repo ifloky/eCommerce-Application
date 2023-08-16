@@ -1,13 +1,18 @@
-import { get } from './shared/API';
+// import { get } from './shared/API';
+import { showHidePassword, receiveInfoAfterSubmit} from './pages/registrationPage/RegistrationController';
+import { RegistrationPageView} from './pages/registrationPage/registrationView';
 import { startRouting } from './shared/router';
 
 export async function initializeApp(): Promise<void> {
   try {
-    const customers = await get('/customers');
-    document.body.innerText += customers
+    RegistrationPageView()
+    showHidePassword()
+    receiveInfoAfterSubmit()
     startRouting()
   } catch (error) {
     // console.error('Error fetching customers:', error);
   }
 }
+
+
 
