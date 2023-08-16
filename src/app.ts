@@ -1,18 +1,16 @@
-import { MainPageController } from "./pages/mainPage/MainPageController"
-import { startRouting } from "./shared/router";
-import Header from "./widgets/Header/headerController";
-
+// import { get } from './shared/API';
+import { showHidePassword, receiveInfoAfterSubmit} from './pages/registrationPage/RegistrationController';
+import { RegistrationPageView} from './pages/registrationPage/registrationView';
+import { startRouting } from './shared/router';
 
 export async function initializeApp(): Promise<void> {
   try {
-    const appContainer = document.createElement('div');
-    appContainer.id = "app";
-    document.body.append(appContainer);
-    Header.render();    
-    appContainer.innerHTML += MainPageController();
+    RegistrationPageView()
+    showHidePassword()
+    receiveInfoAfterSubmit()
     startRouting()
   } catch (error) {
-    throw new Error();
+    // console.error('Error fetching customers:', error);
   }
 }
 

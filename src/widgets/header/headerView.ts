@@ -1,15 +1,17 @@
-import { Links } from "../../types/interfaces/Header";
-import Navigation from "../Navigation/navigationController";
+import { Links } from "../../types/interfaces/Main";
 
-export function headerView(links: Links): string {
+export function headerView(navElements: string[], links: Links): string {
+  const navElementsHTML = navElements.join('');
   return `
   <div class="header">
     <a href="/" class="header__logo">
       <img src=${links.logoImage} alt="" class="header__logo-img">
     </a>
-    <div class="navigation__wrapper">
-      ${Navigation.render()}
-    </div>
+    <nav class="navigation">
+      <ul class="header__nav-ul">
+        ${navElementsHTML}
+      </ul>
+    </nav>
     <div class="cart">
       <a href=${links.cart} class="header__card-btn btn-light">Cart</a>
     </div>
