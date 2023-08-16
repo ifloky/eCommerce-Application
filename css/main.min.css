@@ -46,6 +46,12 @@
   margin-top: 10px;
 }
 
+.form-input.input-password {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 .btn-registration {
   display: block;
   margin: 0 auto;
