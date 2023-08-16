@@ -8,8 +8,6 @@ const createInputElement = (): HTMLInputElement => createElement('input', ['form
 
 const createLabelElement = (): HTMLLabelElement => createElement('label', ['form__label']);
 
-const createAnchorElement = (): HTMLAnchorElement => createElement('a', ['form__link-button', 'button']);
-
 const createButtonElement = (): HTMLButtonElement => createElement('button', ['form__button', 'button']);
 
 const generateButtonsBlock = (): HTMLDivElement => {
@@ -17,8 +15,9 @@ const generateButtonsBlock = (): HTMLDivElement => {
   buttonsBlock.textContent = 'or';
   const submitBtn = createButtonElement();
   submitBtn.textContent = 'sign in';
-  const redirectBtn = createAnchorElement();
+  const redirectBtn = createButtonElement();
   redirectBtn.textContent = 'sign up';
+  redirectBtn.type = 'button'
   buttonsBlock.prepend(submitBtn);
   buttonsBlock.append(redirectBtn);
   return buttonsBlock;
