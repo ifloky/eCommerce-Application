@@ -1,14 +1,7 @@
 // import { apiRoot } from "../../utils/AdminClient";
 // import { RegistrationPageView } from "./registrationView";
 // import { ctpClient, projectKey } from "../../utils/BuildClient";
-
-export interface FieldsInfo {
-  for: string,
-  text: string,
-  type: string,
-  id: string,
-  class: string
-}
+import { FieldsInfo } from "./registrationView";
 
 export const registrationFeildsInfo: FieldsInfo[] = [
   {for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' },
@@ -85,6 +78,8 @@ export function showHidePassword(): void {
   })
   }
 
+  // receiveInfoAfterSubmit();
 
+  // RegistrationPageView();
   //  https://api.{region}.commercetools.com
   //  /{projectKey}/customers

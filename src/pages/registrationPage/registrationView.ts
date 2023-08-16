@@ -1,7 +1,16 @@
 import '../../../css/main.min.css'
-import { FieldsInfo, registrationFeildsInfo } from './RegistrationController';
+import { registrationFeildsInfo, receiveInfoAfterSubmit } from './RegistrationController';
 
 let registrationFieldForm: string = '';
+
+
+export interface FieldsInfo {
+  for: string,
+  text: string,
+  type: string,
+  id: string,
+  class: string
+}
 
 export function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {
@@ -40,3 +49,4 @@ export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
 RegistrationPageView();
+receiveInfoAfterSubmit();
