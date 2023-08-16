@@ -1,7 +1,7 @@
 .header {
   margin-bottom: 2vh;
   padding: 4vh 6vw;
-  border-bottom: 1px var(--sub-main-color) solid;
+  border-bottom: 1px $color-additional solid;
 
   display: flex;
   justify-content: space-between;
@@ -35,16 +35,15 @@
   padding: 10px 20px;
   text-decoration: none;
   text-transform: capitalize;
-  border: 1px transparent solid;
 }
 
 .header__nav-link:visited {
-  color: var(--dark);
+  color: $color-dark;
 }
 
 .header__nav-link:hover {
   border-radius: 5px;
-  border: 1px var(--sub-main-color) solid;
+  border: 1px $color-additional solid;
 }
 
 .header__nav-link-element {
@@ -52,7 +51,7 @@
 }
 
 .cart {
-margin-right: 4vw;
+  margin-right: 4vw;
 }
 
 .header__user-wrapper {
@@ -60,10 +59,8 @@ margin-right: 4vw;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-
 }
 
 .header__btn {
   margin-left: 10px;
 }
-
