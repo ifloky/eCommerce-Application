@@ -1,10 +1,11 @@
-import 'dotenv/config'
+import 'dotenv/config';
 
 interface FetchResponse<T> {
   ok: boolean;
   status: number;
   json(): Promise<T>;
 }
+
 
 const BASE_URL = process.env.BASE_URL || '';
 const BEARER_TOKEN = process.env.BEARER_TOKEN || '';

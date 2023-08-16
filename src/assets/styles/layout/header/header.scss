@@ -13,7 +13,7 @@
   height: 50px; 
   width: 50px;
   background-size: contain;
-  background-image: url(../image/logo.png);
+  background-image: url(../../../image/logo.png);
 }
 
 .navigation {
@@ -48,19 +48,11 @@
   list-style: none;
 }
 
-.cart {
-  margin-right: 4vw;
-}
-
 .header__user-wrapper {
   gap: 10px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-}
-
-.header__btn {
-  margin-left: 10px;
 }
 
 @media screen and (max-width: 968px) {
@@ -84,10 +76,12 @@
     padding: 4px 10px;
   }
 
-  .cart {
-    position: absolute;
+  .header__cart-btn {
+    position: fixed;
     bottom: 40px;
     right: 15px;
+    z-index: 3;
+    background-color: var(--light);
   }
   .header__btn {
     margin-left: 5px;

@@ -1,3 +1,5 @@
+import "../../assets/styles/pages/main/mainPage.scss"
+
 export function mainPageView(title: string, description: string): string {
   return `
     <div class="main-container">

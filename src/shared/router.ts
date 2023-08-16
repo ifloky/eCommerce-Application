@@ -1,4 +1,5 @@
 import { MainPageController } from "../pages/mainPage/MainPageController";
+import RegistrationPageView from "../pages/registrationPage/registrationView";
 
 type ControllerFunction = () => void;
 
@@ -25,7 +26,7 @@ function logInController(): void {
 }
 
 function registerController(): void {
-  updateContainer('<div class="main-container"><h1>Register Page</h1></div>');
+  RegistrationPageView()
 }
 
 function notFoundController(): void {

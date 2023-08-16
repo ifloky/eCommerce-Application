@@ -1,4 +1,3 @@
-import '../../assets/styles/header.scss';
 import { headerView } from './headerView';
 
 const headerLinks = {
@@ -11,7 +10,7 @@ const headerLinks = {
 function createHeader(): void {
   const [headerContainer] = document.getElementsByClassName('header__wrapper');
   if (headerContainer) {
-    
+
     headerContainer.innerHTML = headerView(headerLinks);
   }
 }
@@ -21,4 +20,3 @@ const Header = {
 };
 
 export default Header;
-
