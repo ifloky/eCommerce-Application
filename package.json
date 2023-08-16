@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack serve --open chrome",
+    "start": "webpack-dev-server --open 'google chrome'",
     "dev": "webpack",
     "prod": "webpack --mode=production",
     "lint": "eslint --ext .ts ./src --color",

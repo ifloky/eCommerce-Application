@@ -1,5 +1,5 @@
 import '../../../css/main.min.css'
-import { registrationFeildsInfo, receiveInfoAfterSubmit } from './RegistrationController';
+import { registrationFeildsInfo } from './RegistrationController';
 
 let registrationFieldForm: string = '';
 
@@ -19,7 +19,7 @@ export function createRegistrationFields(array: FieldsInfo[]): string {
         <div class="login-form__input-password">
         <label for="${array[i].for}" class="form-label">${array[i].text}</label>
         <input type="${array[i].type}" name="${array[i].id}" id="${array[i].id}" class="form-input input-${array[i].class}">
-        <a href='' class="password-control"></a>
+        <div href='' class="password-control"></div>
       </div>`;
     } else {
       registrationFieldForm += `
@@ -49,4 +49,4 @@ export function RegistrationPageView(): void {
   document.body.append(registrationUser);
 }
 RegistrationPageView();
-receiveInfoAfterSubmit();
+// receiveInfoAfterSubmit();
