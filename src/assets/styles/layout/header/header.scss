@@ -1,7 +1,7 @@
 .header {
   margin-bottom: 2vh;
   padding: 4vh 6vw;
-  border-bottom: 1px var(--sub-main-color) solid;
+  border-bottom: 1px var($sub-main-color) solid;
 
   display: flex;
   justify-content: space-between;
@@ -41,7 +41,7 @@
 
 .header__nav-link:hover {
   border-radius: 5px;
-  border: 1px var(--sub-main-color) solid;
+  border: 1px var($sub-main-color) solid;
 }
 
 .header__nav-link-element {
@@ -81,7 +81,7 @@
     bottom: 40px;
     right: 15px;
     z-index: 3;
-    background-color: var(--light);
+    background-color: var($light);
   }
   .header__btn {
     margin-left: 5px;
