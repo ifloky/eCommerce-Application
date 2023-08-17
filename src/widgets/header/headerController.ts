@@ -1,4 +1,4 @@
-import '../../assets/css/header/header.scss'
+import '../../assets/styles/header/header.scss'
 import { headerView } from './headerView';
 import { startRouting } from '../../shared/router';
 
