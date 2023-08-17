@@ -17,5 +17,4 @@ export function headerView(links: Links): string {
     </div>
   </div>
   `;
-
 }

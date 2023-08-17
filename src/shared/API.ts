@@ -1,19 +1,16 @@
 import 'dotenv/config';
 
-interface FetchResponse<T> {
-  ok: boolean;
-  status: number;
-  json(): Promise<T>;
-}
+const BASE_URL = process.env.BASE_URL || "";
+const BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 
-
-const BASE_URL = process.env.BASE_URL || '';
-const BEARER_TOKEN = process.env.BEARER_TOKEN || '';
 
 type HttpMethod = 'GET' | 'POST';
 
-const fetchWithAuthorization = async <T>(url: string, method: HttpMethod, data?: string): Promise<T> => {
-
+const fetchWithAuthorization = async <T>(
+  url: string,
+  method: HttpMethod,
+  data?: string
+): Promise<T> => {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'Authorization': BEARER_TOKEN,
@@ -28,8 +25,8 @@ const fetchWithAuthorization = async <T>(url: string, method: HttpMethod, data?:
     requestOptions.body = JSON.stringify(data);
   }
 
-  const response: FetchResponse<T> = await fetch(BASE_URL + url, requestOptions);
-
+  const response: Response = await fetch(BASE_URL + url, requestOptions);
+  
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

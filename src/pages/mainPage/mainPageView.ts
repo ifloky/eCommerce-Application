@@ -1,9 +1,16 @@
+export async function mainPageView(title: string, description: string, productListView: string): Promise<string> {
+  function escapeHtml(unsafe: string): string {
+    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
 
-export function mainPageView(title: string, description: string): string {
+  const escapedTitle = escapeHtml(title);
+  const escapedDescription = escapeHtml(description);
+
   return `
     <div class="main-container">
-      <h1>${title}</h1>
-      <p>${description}</p>
+      <h1>${escapedTitle}</h1>
+      <p>${escapedDescription}</p>
+      ${productListView} 
     </div>
   `;
 }

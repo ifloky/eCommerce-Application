@@ -14,10 +14,10 @@ function updateContainer(content: string): void {
   }
 }
 
-function homeController(): void {
+async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = MainPageController();
+    appContainer.innerHTML = await MainPageController();
   }
 }
 
@@ -51,12 +51,13 @@ function popstateHandler(): void {
 
 window.addEventListener('popstate', popstateHandler);
 
-export function startRouting(): void {
-  function changeRoute(path: string): void {
-    window.history.pushState({}, '', path);
-    handleRoute();
-  }
+function changeRoute(path: string): void {
+  const fullPath = `${window.location.origin}${path}`;
+  window.history.pushState({}, '', fullPath);
+  handleRoute();
+}
 
+export function startRouting(): void {
   const links = document.querySelectorAll('a');
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -68,8 +69,12 @@ export function startRouting(): void {
     });
   });
 
-  window.removeEventListener('popstate', popstateHandler);
-  window.addEventListener('popstate', popstateHandler);
+  handleRoute();
+
+  window.addEventListener('beforeunload', () => {
+    const currentState = {}; 
+    localStorage.setItem('appState', JSON.stringify(currentState));
+  });
 }
 
 startRouting();
