@@ -9,7 +9,6 @@ const bindEvents = (elements: HTMLElement[]): void => {
   const [form] = elements
   form.addEventListener('click', isShowed)
   form.addEventListener('input', isValid)
-
 }
 
 const createLoginPageWrapper = (): HTMLDivElement => createElement('div', ['login-page__wrapper']);

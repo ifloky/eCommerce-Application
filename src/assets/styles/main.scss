@@ -1,61 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-:root {
-  --dark: #090909;
-  --light: #FEFEFE;
-  --white-darkest: #F9F9FB;
-  --main-color: #9C96E2;
-  --sub-main-color: #C4C0F2;
-}
+// Abstract
+@import './abstracts/constants';
+@import './abstracts/placeholders';
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-  color: var(--dark);
-}
+// Base
+@import './base/base';
+@import './base/button';
 
-body {
-  overflow-x: hidden;
-  background-color: var(--white-darkest);
-}
+// Components
+@import './components/header';
 
-.btn {
-  background-color: var(--main-color);
-  color: var(--light);
-  border-radius: 5px;
-  text-decoration: none;
-  padding: 10px 20px;
-  white-space: nowrap;
-  border: 1px transparent solid;
-}
-
-.btn:hover {
-  background-color: transparent;
-  color: var(--main-color);
-  border: 1px var(--main-color) solid;
-  transition: all .3s ease-in-out;
-}
-
-.btn-light {
-  background-color: transparent;
-  color: var(--main-color);
-  border: 1px var(--main-color) solid;
-  border-radius: 5px;
-  text-decoration: none;
-  padding: 10px 20px;
-  white-space: nowrap;
-}
-
-.btn-light:hover {
-  background-color: var(--main-color);
-  color: var(--light);
-  border: 1px transparent solid;
-  transition: all .3s ease-in-out;
-}
+// Pages 
+@import './pages/loginPage';
+@import './pages/registrationPage';
 
 .main-container {
-  max-width: 1400px;
+  max-width: $content-width;
   margin: 0 auto;
   padding: 10px;
 }
