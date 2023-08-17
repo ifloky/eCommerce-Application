@@ -1,6 +1,6 @@
 .btn {
-  background-color: var($main-color);
-  color: var($light);
+  background-color: $main-color;
+  color: $light;
   border-radius: 5px;
   text-decoration: none;
   padding: 10px 20px;
@@ -10,15 +10,15 @@
 
 .btn:hover {
   background-color: transparent;
-  color: var(--main-color);
-  border: 1px var(--main-color) solid;
+  color: $main-color;
+  border: 1px $main-color solid;
   transition: all .3s ease-in-out;
 }
 
 .btn-light {
   background-color: transparent;
-  color: var($main-color);
-  border: 1px var($main-color) solid;
+  color: $main-color;
+  border: 1px $main-color solid;
   border-radius: 5px;
   text-decoration: none;
   padding: 10px 20px;
@@ -26,8 +26,8 @@
 }
 
 .btn-light:hover {
-  background-color: var($main-color);
-  color: var($light);
+  background-color: $main-color;
+  color: $light;
   border: 1px transparent solid;
   transition: all .3s ease-in-out;
 }

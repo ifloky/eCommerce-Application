@@ -1,7 +1,7 @@
-@import "./abstracts/variables.scss";
-@import "./base/typography";
-@import "./components/buttons.scss";
-@import "./base/reset.scss";
-@import "./layout/header/header.scss";
-@import "./registration/registration.scss";
-@import "./pages/main/mainPage.scss"
+@import "./abstracts/_variables.scss";
+@import "./base/_typography";
+@import "./components/_buttons.scss";
+@import "./base/_reset.scss";
+@import "./layout/header/_header.scss";
+@import "./pages/registration/_registration.scss";
+@import "./pages/main/_mainPage.scss"
