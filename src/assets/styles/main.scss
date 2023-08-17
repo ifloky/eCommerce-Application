@@ -1,6 +1,22 @@
- @import '../styles/registerPageStyles/registration';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
- * {
-  margin: 0;
-  padding: 0;
- }
+// Abstract
+@import './abstracts/constants';
+// @import './abstracts/placeholders';
+
+// Base
+// @import './base/base';
+// @import './base/button';
+
+// Components
+// @import './components/header';
+
+// Pages
+// @import './pages/loginPage';
+@import '../styles/registerPageStyles/registrationPage';
+
+.main-container {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 10px;
+}

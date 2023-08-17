@@ -1,4 +1,4 @@
 import { initializeApp } from './src/app';
-import './src/assets/styles/css/main.css';
+import './src/assets/styles/main.scss'
 
 initializeApp();
