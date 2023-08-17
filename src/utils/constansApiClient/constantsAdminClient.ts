@@ -1,4 +1,4 @@
-import'dotenv/config'
+import 'dotenv/config'
 
 export const BASE_URL = process.env.BASE_URL || '';
 export const BEARER_TOKEN = process.env.BEARER_TOKEN || '';

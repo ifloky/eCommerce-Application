@@ -1,5 +1,5 @@
 import './src/assets/styles/main.scss'
 import { initializeApp } from './src/app';
-import './src/assets/styles/main.scss'
+import './src/main.scss'
 
 initializeApp();

@@ -1,0 +1,131 @@
+.login-page {
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .login-page__wrapper {
+   width: 600px;
+   height: 600px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   border: 1px solid $color-primary;
+   border-radius: 10px;
+ }
+
+ .login-page__header {
+   width: 80%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 40px 0;
+ }
+
+ .login-page__logo {
+   width: 80px;
+   height: 80px;
+   background: url(../../image/logo.png) center / contain no-repeat;
+ }
+
+ .login-page__title {
+   font-size: 30px;
+   text-transform: uppercase;
+   max-width: 305px;
+   text-align: right;
+ }
+
+ .form {
+   width: 80%;
+
+   &__wrapper {
+     &_password {
+       position: relative;
+     }
+   }
+
+   &__label {
+     display: block;
+     margin-bottom: 5px;
+     font-size: 16px;
+   }
+
+   &__input {
+     width: 100%;
+     height: 50px;
+     padding: 10px 15px;
+     border-radius: 10px;
+     border: 1px solid $color-primary;
+     outline: none;
+     margin-bottom: 40px;
+     font-size: 16px;
+     box-sizing: border-box;
+
+     &:invalid {
+       border-color: $color-invalid;
+     }
+   }
+
+   &__buttons {
+     display: flex;
+     width: 100%;
+     justify-content: space-between;
+     align-items: center;
+     text-transform: uppercase;
+     margin: 40px 0;
+   }
+
+   &__button {
+     font-family: inherit;
+     width: 210px;
+     height: 50px;
+     outline: none;
+     border: 1px solid $color-primary;
+     border-radius: 10px;
+     font-size: 16px;
+     text-transform: uppercase;
+     cursor: pointer;
+   }
+ }
+
+ .form__wrapper_toggle {
+   position: absolute;
+   top: calc(50% - 20px);
+   right: 15px;
+
+   .form__label {
+     display: block;
+     position: relative;
+     cursor: pointer;
+
+     &::before {
+       content: '';
+       display: block;
+       width: 20px;
+       height: 20px;
+       background: url('../../image/icons/login-page/close-eye.svg') center / contain no-repeat;
+       border-radius: 5px;
+     }
+
+     &_show-pass {
+       &::before {
+         content: '';
+         display: block;
+         width: 20px;
+         height: 20px;
+         background: url('../../image/icons/login-page/open-eye.svg') center / contain no-repeat;
+         border-radius: 5px;
+       }
+     }
+   }
+
+   #toggle-password {
+     width: 15px;
+     height: 15px;
+     position: absolute;
+     left: -9999px;
+   }
+ }

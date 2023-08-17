@@ -1,16 +1,8 @@
 // import '../../../css/main.min.css'
 import { registrationFeildsInfo } from './RegistrationController';
+import { FieldsInfo } from '../../types/interfaces/interfaces';
 
 let registrationFieldForm: string = '';
-
-
-export interface FieldsInfo {
-  for: string,
-  text: string,
-  type: string,
-  id: string,
-  class: string
-}
 
 export function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {

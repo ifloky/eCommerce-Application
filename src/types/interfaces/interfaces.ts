@@ -4,3 +4,23 @@ export interface CustomerFields {
    lastName: string;
    password: string;
 }
+
+export interface FieldsInfo {
+   for: string,
+   text: string,
+   type: string,
+   id: string,
+   class: string
+ }
+
+ export interface CustomerRegistrationInfo {
+   email: string;
+   password: string;
+   firstname: string;
+   lastname: string;
+   dateOfBirth: string;
+   street: string;
+   city: string;
+   postcode: string;
+   country: string;
+   }

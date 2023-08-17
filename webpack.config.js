@@ -34,7 +34,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new Dotenv(),
     new MiniCssExtractPlugin(),
-    new EslintWebpackPlugin({ extensions: 'ts' })
+    new EslintWebpackPlugin({ extensions: 'ts' }),
   ],
   stats: {
     children: true,
