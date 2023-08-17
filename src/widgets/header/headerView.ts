@@ -1,4 +1,3 @@
-import '../../assets/styles/layout/header/header.scss';
 import { Links } from "../../types/interfaces/Header";
 import Navigation from "../Navigation/navigationController";
 

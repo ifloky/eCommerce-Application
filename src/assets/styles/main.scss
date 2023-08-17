@@ -2,9 +2,6 @@
 @import "./base/typography";
 @import "./components/buttons.scss";
 @import "./base/reset.scss";
-
-.main-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 10px;
-}
+@import "./layout/header/header.scss";
+@import "./registration/registration.scss";
+@import "./pages/main/mainPage.scss"

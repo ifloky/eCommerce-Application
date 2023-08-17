@@ -1,4 +1,3 @@
-import '../../assets/styles/registration/registration.scss'
 import { FieldsInfo } from '../../types/interfaces/registration'
 
 let registrationFieldForm: string = '';
