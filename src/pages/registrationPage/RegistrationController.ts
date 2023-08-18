@@ -60,7 +60,7 @@ export function showHidePassword(): void {
       const input = inputField as HTMLInputElement;
       Object.defineProperty(registrationInfo, input.id, { value: input.value });
       // eslint-disable-next-line no-console
-      console.log(input.value);
+      //  console.log(input.value);
     })
     // eslint-disable-next-line no-console
     console.log(registrationInfo);

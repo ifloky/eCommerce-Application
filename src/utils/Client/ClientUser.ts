@@ -19,7 +19,7 @@ import { projectKey } from './BuildClientAdmin';
 // Create apiRoot from the imported ClientBuilder and include your Project key
 export const apiRoot = createApiBuilderFromCtpClient(
   ctpClient,
-  'https://auth.us-central1.gcp.commercetools.com/'
+  'https://api.us-central1.gcp.commercetools.com/'
 ).withProjectKey({
   projectKey: projectKey,
 });
@@ -103,25 +103,6 @@ export async function getCategories(): Promise<
 export async function createCustomer(data: CustomerRegistrationInfo): Promise<ClientResponse<CustomerSignInResult>> {
   try {
     const customer = await apiRoot
-      .me()
-      .signup()
-      .post({
-        // body: createCustomerDraft(data),
-        body: data,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .execute();
-    return customer;
-  } catch {
-    throw new Error('cannot create a customer me');
-  }
-}
-
-export async function createCustomerTwo(data: CustomerRegistrationInfo): Promise<ClientResponse<CustomerSignInResult>> {
-  try {
-    const customer = await apiRoot
       .customers()
       .post({
         body: data,
@@ -132,6 +113,6 @@ export async function createCustomerTwo(data: CustomerRegistrationInfo): Promise
       .execute();
     return customer;
   } catch {
-    throw new Error('cannot create a customer');
+    throw new Error('cannot create a customer me');
   }
 }

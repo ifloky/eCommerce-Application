@@ -10,16 +10,16 @@ import {
 //  import SdkAuth from '@commercetools/sdk-auth'
 import 'dotenv/config'
 
-export const projectKey = process.env.PROJECT_KEY || '';
-const scopes = ['process.env.SCopes'];
-const clientId = process.env.CLIENT_ID || '';
-const clientSecret = process.env.CLIENT_SECRET || '';
-export const authHost = process.env.AUTH_URL || '';
-const httpHost = process.env.API_URL || ''
+// export const projectKey = process.env.PROJECT_KEY || '';
+// const scopes = ['process.env.SCopes'];
+// const clientId = process.env.CLIENT_ID || '';
+// const clientSecret = process.env.CLIENT_SECRET || '';
+// export const authHost = process.env.AUTH_URL || '';
+// const httpHost = process.env.API_URL || ''
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: authHost,
+  host: httpHost,
   projectKey: projectKey,
   credentials: {
     clientId: clientId,

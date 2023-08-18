@@ -6,6 +6,15 @@ const EslintWebpackPlugin = require('eslint-webpack-plugin')
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 module.exports = {
   mode: 'development',
   entry: './index',
@@ -35,6 +44,7 @@ module.exports = {
     new Dotenv(),
     new MiniCssExtractPlugin(),
     new EslintWebpackPlugin({ extensions: 'ts' }),
+    new webpack.DefinePlugin(envKeys),
   ],
   stats: {
     children: true,

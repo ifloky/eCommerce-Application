@@ -2,12 +2,12 @@
 import { ClientBuilder, type AuthMiddlewareOptions, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import fetch from 'node-fetch';
 // import SdkAuth from '@commercetools/sdk-auth';
-import { projectKey } from './BuildClientAdmin';
+import { BASE_PROJECT_KEY } from '../constansApi/constantsClients';
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: 'https://auth.us-central1.gcp.commercetools.com',
-  projectKey: projectKey,
+  host: 'https://api.us-central1.gcp.commercetools.com',
+  projectKey: BASE_PROJECT_KEY,
   credentials: {
     clientId: '-',
     clientSecret: '-',
@@ -52,7 +52,7 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
 
 // Export the ClientBuilder
 export const ctpClient = new ClientBuilder()
-  .withProjectKey(projectKey)
+  .withProjectKey(BASE_PROJECT_KEY)
   .withClientCredentialsFlow(authMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
   .withLoggerMiddleware()
