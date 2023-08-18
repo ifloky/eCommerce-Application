@@ -13,15 +13,15 @@ import {
 } from '@commercetools/platform-sdk';
 
 
-import { projectKey } from './BuildClientAdmin';
+import { BASE_PROJECT_KEY, BASE_URL } from '../constansApi/constantsClients';
 // import { setImage } from '@/store/counterSlice';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 export const apiRoot = createApiBuilderFromCtpClient(
   ctpClient,
-  'https://api.us-central1.gcp.commercetools.com/'
+  BASE_URL
 ).withProjectKey({
-  projectKey: projectKey,
+  projectKey: BASE_PROJECT_KEY,
 });
 
 // Example call to return Project information

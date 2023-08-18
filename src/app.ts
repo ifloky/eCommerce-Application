@@ -1,16 +1,23 @@
 // import { get } from './shared/API';
-import { showHidePassword, receiveInfoAfterSubmit, registrationFeildsInfo } from './pages/registrationPage/RegistrationController';
-import { RegistrationPageView, createRegistrationFields} from './pages/registrationPage/registrationView';
-import { startRouting } from './shared/router';
-// import { createCustomer} from './utils/Client/ClientUser';
+import { MainPageController } from "./pages/mainPage/MainPageController"
+import { startRouting } from "./shared/router";
+import Header from "./widgets/header/headerController";
 
 export async function initializeApp(): Promise<void> {
   try {
-    createRegistrationFields(registrationFeildsInfo);
-    RegistrationPageView()
-    showHidePassword()
-    receiveInfoAfterSubmit()
-    // createCustomer(registrationInfo)
+    const headerContainer = document.createElement('div');
+    headerContainer.className = "header__wrapper";
+    document.body.append(headerContainer);
+    Header.render();
+    const appContainer = document.createElement('div');
+    appContainer.id = "app";
+    document.body.append(appContainer);
+
+
+    const savedState = localStorage.getItem('appState');
+    if (!savedState) {
+      appContainer.innerHTML += MainPageController();
+    }
     startRouting()
   } catch (error) {
     // console.error('Error fetching customers:', error);

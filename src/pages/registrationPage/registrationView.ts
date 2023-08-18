@@ -1,5 +1,5 @@
 // import '../../../css/main.min.css'
-import { registrationFeildsInfo } from './RegistrationController';
+import { registrationfieldsInfo } from './RegistrationController';
 import { FieldsInfo } from '../../types/interfaces/interfaces';
 
 let registrationFieldForm: string = '';
@@ -21,13 +21,13 @@ export function createRegistrationFields(array: FieldsInfo[]): string {
     </div>`;
     }
   }
-return registrationFieldForm;
+  return registrationFieldForm;
 }
 
-createRegistrationFields(registrationFeildsInfo);
+createRegistrationFields(registrationfieldsInfo);
 
 const registrationUser = document.createElement('div');
-      registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
+registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
       ${registrationFieldForm}
       <input type="checkbox" id="terms" name="terms" value="terms">

@@ -1,0 +1,68 @@
+.btn {
+  background-color: $color-primary;
+  color: $color-light;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 20px;
+  white-space: nowrap;
+  border: 1px transparent solid;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: $color-primary;
+  border: 1px $color-primary solid;
+  @extend %transition;
+}
+
+.btn-light {
+  background-color: transparent;
+  color: $color-primary;
+  border: 1px $color-primary solid;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 20px;
+  white-space: nowrap;
+}
+
+.btn-light:hover {
+  background-color: $color-primary;
+  color: $color-light;
+  border: 1px transparent solid;
+  @extend %transition;
+}
+
+.button {
+  background-color: $color-primary;
+  color: $color-light;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 20px;
+  white-space: nowrap;
+  border: 1px transparent solid;
+  @extend %transition;
+
+  &:hover {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px $color-primary solid;
+    @extend %transition;
+  }
+
+  &_light {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px $color-primary solid;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 10px 20px;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-light;
+      border: 1px transparent solid;
+      @extend %transition;
+    }
+  }
+}

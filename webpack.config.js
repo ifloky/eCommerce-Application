@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const EslintWebpackPlugin = require('eslint-webpack-plugin')
-const Dotenv = require('dotenv-webpack');
+//  const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
 const dotenv = require('dotenv');
@@ -41,7 +41,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new Dotenv(),
+    //  new Dotenv(),
     new MiniCssExtractPlugin(),
     new EslintWebpackPlugin({ extensions: 'ts' }),
     new webpack.DefinePlugin(envKeys),

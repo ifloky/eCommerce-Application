@@ -1,22 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import "./abstracts/constants";
+@import "./abstracts/placeholders.scss";
+@import "./base/typography";
+@import "./components/buttons";
+@import "./base/base";
+@import "./layout/header/header.scss";
 
-// Abstract
-@import '../styles/abstracts/constants';
-@import '../styles/abstracts/placeholders';
-
-// Base
-@import '../styles/base/base';
-@import '../styles/base/button';
-
-// Components
-@import './components/header';
-
-// Pages
-@import '../styles/pages/loginPage';
-@import '../styles/pages/registrationPage';
-
-.main-container {
-  max-width: $content-width;
-  margin: 0 auto;
-  padding: 10px;
-}
+@import "./pages/loginPage";
+@import "./pages/registrationPage";
+@import "./pages/mainPage"
