@@ -16,8 +16,8 @@ export interface FieldsInfo {
  export interface CustomerRegistrationInfo {
    email: string;
    password: string;
-   firstname: string;
-   lastname: string;
+   firstName: string;
+   lastName: string;
    dateOfBirth: string;
    street: string;
    city: string;

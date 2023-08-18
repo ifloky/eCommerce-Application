@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { BASE_PROJECT_KEY, BASE_AUTH_URL } from '../constansApi/constantsClients';
+import { BASE_PROJECT_KEY, BASE_AUTH_URL } from '../constantsApi/constantsClients';
 import { ctpClient } from './BuildClientAdmin';
 import {
   ClientResponse,

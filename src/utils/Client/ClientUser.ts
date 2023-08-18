@@ -13,7 +13,7 @@ import {
 } from '@commercetools/platform-sdk';
 
 
-import { BASE_PROJECT_KEY, BASE_URL } from '../constansApi/constantsClients';
+import { BASE_PROJECT_KEY, BASE_URL } from '../constantsApi/constantsClients';
 // import { setImage } from '@/store/counterSlice';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
@@ -73,7 +73,7 @@ export async function getAllProducts(): Promise<ClientResponse<ProductPagedQuery
 //  };
 
 export async function getAllCustomers(): Promise<ClientResponse<CustomerPagedQueryResponse>> {
-try {
+  try {
     const customers = await apiRoot.customers().get().execute();
     console.log(customers);
     return customers;

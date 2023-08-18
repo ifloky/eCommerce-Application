@@ -2,7 +2,7 @@
 import { ClientBuilder, type AuthMiddlewareOptions, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import fetch from 'node-fetch';
 // import SdkAuth from '@commercetools/sdk-auth';
-import { BASE_URL, BASE_AUTH_URL, BASE_PROJECT_KEY, USER_ID, USER_SECRET } from '../constansApi/constantsClients';
+import { BASE_URL, BASE_AUTH_URL, BASE_PROJECT_KEY, USER_ID, USER_SECRET } from '../constantsApi/constantsClients';
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
