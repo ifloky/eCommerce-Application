@@ -37,8 +37,11 @@ registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       </form>
       `;
 
-export function RegistrationPageView(): void {
-  document.body.append(registrationUser);
+export default function RegistrationPageView(): void {
+  const appWrapper = document.getElementById('app');
+  if (appWrapper) {
+    appWrapper.innerHTML = '';
+    appWrapper.append(registrationUser);
+  }
 }
-RegistrationPageView();
-// receiveInfoAfterSubmit();
+

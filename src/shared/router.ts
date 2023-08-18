@@ -1,6 +1,6 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
-import { RegistrationPageView } from "../pages/registrationPage/registrationView";
+import RegistrationPageView from "../pages/registrationPage/registrationView";
 
 type ControllerFunction = () => void;
 

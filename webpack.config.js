@@ -37,7 +37,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       path: path.resolve(__dirname, 'index.html'),
       title: 'eCommerce',
-      favicon: './src/assets/image/icons/favicon.ico',
+      favicon: './src/assets/image/icons/favicon.png',
     }),
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -45,6 +45,9 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new EslintWebpackPlugin({ extensions: 'ts' }),
     new webpack.DefinePlugin(envKeys),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
   stats: {
     children: true,

@@ -38,22 +38,18 @@ export function showHidePassword(): void {
 export const registrationInfo: CustomerRegistrationInfo = {
   email: '',
   password: '',
-  firstname: '',
-  lastname: '',
+  firstName: '',
+  lastName: '',
   dateOfBirth: '',
   street: '',
   city: '',
   postcode: '',
   country: '',
-};
+}
 
 export function receiveInfoAfterSubmit(): void {
   const submitButton = document.querySelector('.btn-registration') as HTMLButtonElement;
-  //  const form = document.querySelector('.registration-form');
-
   submitButton.addEventListener('click', (event: Event) => {
-    // eslint-disable-next-line no-console
-    //  console.log(submitButton);
     event.preventDefault();
     const filledForm = document.querySelectorAll('.form-input') as NodeList;
     filledForm.forEach((inputField) => {

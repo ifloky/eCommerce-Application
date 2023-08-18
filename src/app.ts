@@ -1,7 +1,7 @@
-// import { get } from './shared/API';
 import { MainPageController } from "./pages/mainPage/MainPageController"
 import { startRouting } from "./shared/router";
 import Header from "./widgets/header/headerController";
+
 
 export async function initializeApp(): Promise<void> {
   try {
@@ -18,11 +18,9 @@ export async function initializeApp(): Promise<void> {
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
     }
-    startRouting()
+
+    startRouting();
   } catch (error) {
-    // console.error('Error fetching customers:', error);
+    throw new Error();
   }
 }
-
-
-

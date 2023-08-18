@@ -1,27 +1,10 @@
-@import "./abstracts/constants";
-@import "./abstracts/placeholders.scss";
+@import "./abstracts/variables";
+@import "./abstracts/placeholders";
 @import "./base/typography";
 @import "./components/buttons";
-@import "./base/base";
-@import "./layout/header/header.scss";
+@import "./base/_base.scss";
+@import "./layout/header/header";
 
-// Abstract
-@import './abstracts/constants';
-@import './abstracts/placeholders';
-
-// Base
-@import './base/base';
-@import './base/button';
-
-// Components
-@import './components/header';
-
-// Pages
-@import './pages/loginPage';
-@import './pages/registrationPage';
-
-.main-container {
-  max-width: $content-width;
-  margin: 0 auto;
-  padding: 10px;
-}
+@import "./pages/loginPage";
+@import "./pages/registrationPage";
+@import "./pages/mainPage"
