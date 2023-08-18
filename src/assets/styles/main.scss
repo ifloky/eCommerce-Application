@@ -5,6 +5,23 @@
 @import "./base/base";
 @import "./layout/header/header.scss";
 
-@import "./pages/loginPage";
-@import "./pages/registrationPage";
-@import "./pages/mainPage"
+// Abstract
+@import './abstracts/constants';
+@import './abstracts/placeholders';
+
+// Base
+@import './base/base';
+@import './base/button';
+
+// Components
+@import './components/header';
+
+// Pages
+@import './pages/loginPage';
+@import './pages/registrationPage';
+
+.main-container {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 10px;
+}
