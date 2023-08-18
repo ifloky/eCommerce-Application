@@ -1,4 +1,4 @@
-import { BASE_PROJECT_KEY, BASE_AUTH_URL } from './constansApiClient/constantsAdminClient';
+import { BASE_PROJECT_KEY, BASE_AUTH_URL } from './constantsApiClient/constantsAdminClient';
 import { ctpClient } from './BuildClient';
 import {
   ClientResponse,

@@ -36,8 +36,8 @@ export function showHidePassword(): void {
   interface CustomerRegistrationInfo {
   email: string;
   password: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   dateOfBirth: string;
   street: string;
   city: string;
@@ -49,8 +49,8 @@ export function showHidePassword(): void {
   const registrationInfo: CustomerRegistrationInfo = {
   email: '',
   password: '',
-  firstname: '',
-  lastname: '',
+  firstName: '',
+  lastName: '',
   dateOfBirth: '',
   street: '',
   city: '',
@@ -60,21 +60,14 @@ export function showHidePassword(): void {
 
   export function receiveInfoAfterSubmit(): void {
   const submitButton = document.querySelector('.btn-registration') as HTMLButtonElement;
-  //  const form = document.querySelector('.registration-form');
-
   submitButton.addEventListener('click', (event: Event) => {
-    // eslint-disable-next-line no-console
-    //  console.log(submitButton);
     event.preventDefault();
     const filledForm = document.querySelectorAll('.form-input') as NodeList;
     filledForm.forEach((inputField) => {
       const input = inputField as HTMLInputElement;
       Object.defineProperty(registrationInfo, input.id, { value: input.value });
-      // eslint-disable-next-line no-console
-      console.log(input.value);
     })
-    // eslint-disable-next-line no-console
-    console.log(registrationInfo);
+
   })
   }
 

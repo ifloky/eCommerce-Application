@@ -1,6 +1,6 @@
-/* eslint-disable no-use-before-define */
+import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
-import { headerController } from "../widgets/header/headerController";
+import RegistrationPageView from "../pages/registrationPage/registrationView";
 
 type ControllerFunction = () => void;
 
@@ -8,43 +8,41 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-const appWrapper = document.body
+function updateContainer(content: string): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = content;
+  }
+}
 
-function homeController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += MainPageController()
-  startRouting()
+async function homeController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = await MainPageController();
+  }
 }
 
 function logInController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>Login Page</h1></div>';
-  startRouting()
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(getLoginPageView);
+  }
+
 }
 
 function registerController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>Register Page</h1></div>';
-  startRouting()
-}
-
-function aboutController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>About Page</h1></div>';
-  startRouting()
+  RegistrationPageView()
 }
 
 function notFoundController(): void {
-  appWrapper.innerHTML = headerController()
-  appWrapper.innerHTML += '<div class="main-container"><h1>404 - Page Not Found</h1></div>';
-  startRouting()
+  updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
 }
 
 const routes: { [path: string]: ControllerFunction } = {
   '/': createControllerFunction(homeController),
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
-  '/about': createControllerFunction(aboutController)
 };
 
 function handleRoute(): void {
@@ -53,13 +51,19 @@ function handleRoute(): void {
   controller();
 }
 
+function popstateHandler(): void {
+  handleRoute();
+}
+
+window.addEventListener('popstate', popstateHandler);
+
+function changeRoute(path: string): void {
+  const fullPath = `${window.location.origin}${path}`;
+  window.history.pushState({}, '', fullPath);
+  handleRoute();
+}
 
 export function startRouting(): void {
-  function changeRoute(path: string): void {
-    window.history.pushState({}, '', path);
-    handleRoute();
-  }
-
   const links = document.querySelectorAll('a');
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -70,8 +74,13 @@ export function startRouting(): void {
       }
     });
   });
-  window.removeEventListener('popstate', () => {});
-  window.addEventListener('popstate', () => {
-    handleRoute();
+
+  handleRoute();
+
+  window.addEventListener('beforeunload', () => {
+    const currentState = {}; 
+    localStorage.setItem('appState', JSON.stringify(currentState));
   });
 }
+
+startRouting();

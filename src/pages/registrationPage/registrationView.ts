@@ -45,8 +45,11 @@ const registrationUser = document.createElement('div');
       </form>
       `;
 
-export function RegistrationPageView(): void {
-  document.body.append(registrationUser);
+export default function RegistrationPageView(): void {
+  const appWrapper = document.getElementById('app');
+  if (appWrapper) {
+    appWrapper.innerHTML = '';
+    appWrapper.append(registrationUser);
+  }
 }
-RegistrationPageView();
-// receiveInfoAfterSubmit();
+
