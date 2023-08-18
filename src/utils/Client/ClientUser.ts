@@ -13,13 +13,13 @@ import {
 } from '@commercetools/platform-sdk';
 
 
-import { BASE_PROJECT_KEY, BASE_URL } from '../constantsApi/constantsClients';
+import { BASE_PROJECT_KEY, BASE_AUTH_URL } from '../constantsApi/constantsClients';
 // import { setImage } from '@/store/counterSlice';
 
 // Create apiRoot from the imported ClientBuilder and include your Project key
 export const apiRoot = createApiBuilderFromCtpClient(
   ctpClient,
-  BASE_URL
+  BASE_AUTH_URL
 ).withProjectKey({
   projectKey: BASE_PROJECT_KEY,
 });
@@ -103,16 +103,18 @@ export async function getCategories(): Promise<
 export async function createCustomer(data: CustomerRegistrationInfo): Promise<ClientResponse<CustomerSignInResult>> {
   try {
     const customer = await apiRoot
-      .customers()
-      .post({
-        body: data,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .execute();
-    return customer;
-  } catch {
-    throw new Error('cannot create a customer me');
-  }
+    .me()
+    .signup()
+    .post({
+      // body: createCustomerDraft(data),
+      body: data,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .execute();
+  return customer;
+} catch {
+  throw new Error('cannot create a customer me');
+}
 }

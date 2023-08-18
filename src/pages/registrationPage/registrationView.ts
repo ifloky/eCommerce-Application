@@ -1,6 +1,7 @@
 // import '../../../css/main.min.css'
 import { registrationfieldsInfo } from './RegistrationController';
 import { FieldsInfo } from '../../types/interfaces/interfaces';
+import { receiveInfoAfterSubmit } from './RegistrationController';
 
 let registrationFieldForm: string = '';
 
@@ -42,6 +43,9 @@ export default function RegistrationPageView(): void {
   if (appWrapper) {
     appWrapper.innerHTML = '';
     appWrapper.append(registrationUser);
+    receiveInfoAfterSubmit();
   }
 }
+//  RegistrationPageView()
+
 

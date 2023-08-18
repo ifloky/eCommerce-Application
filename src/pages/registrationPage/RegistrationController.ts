@@ -1,9 +1,9 @@
 // import { apiRoot } from "../../utils/AdminClient";
-// import { RegistrationPageView } from "./registrationView";
+//  import RegistrationPageView from "./registrationView";
 // import { ctpClient, projectKey } from "../../utils/BuildClient";
 import { FieldsInfo } from "../../types/interfaces/interfaces";
 import { CustomerRegistrationInfo } from "../../types/interfaces/interfaces";
-//  import { createCustomer } from "../../utils/Client/ClientUser";
+import { createCustomer } from "../../utils/Client/ClientUser";
 
 export const registrationfieldsInfo: FieldsInfo[] = [
   { for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' },
@@ -60,12 +60,12 @@ export function receiveInfoAfterSubmit(): void {
     })
     // eslint-disable-next-line no-console
     console.log(registrationInfo);
-    //  createCustomer(registrationInfo);
+    createCustomer(registrationInfo);
   })
 }
 
   // receiveInfoAfterSubmit();
 
-  // RegistrationPageView();
+  //  RegistrationPageView();
   //  https://api.{region}.commercetools.com
   //  /{projectKey}/customers

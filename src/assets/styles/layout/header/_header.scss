@@ -1,7 +1,7 @@
 .header {
   margin-bottom: 2vh;
   padding: 4vh 6vw;
-  border-bottom: 1px $sub-main-color solid;
+  border-bottom: 1px $color-additional solid;
 
   display: flex;
   justify-content: space-between;
@@ -10,7 +10,7 @@
 
 .header__logo {
   display: block;
-  height: 50px; 
+  height: 50px;
   width: 50px;
   background-size: contain;
   background-image: url(../../../image/logo.png);
@@ -36,12 +36,12 @@
 }
 
 .header__nav-link:visited {
-  color: $dark;
+  color: $color-dark;
 }
 
 .header__nav-link:hover {
   border-radius: 5px;
-  border: 1px $sub-main-color solid;
+  border: 1px $color-additional solid;
 }
 
 .header__nav-link-element {
@@ -61,7 +61,7 @@
   }
 
   .header__logo {
-    height: 25px; 
+    height: 25px;
     width: 25px;
     background-size: cover;
   }
@@ -81,7 +81,7 @@
     bottom: 40px;
     right: 15px;
     z-index: 3;
-    background-color: $light;
+    background-color: $color-light;
   }
   .header__btn {
     margin-left: 5px;

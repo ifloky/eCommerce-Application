@@ -1,8 +1,8 @@
-@import "./abstracts/variables";
+@import './abstracts/constants';
 @import "./abstracts/placeholders";
 @import "./base/typography";
 @import "./components/buttons";
-@import "./base/_base.scss";
+@import "./base/base.scss";
 @import "./layout/header/header";
 
 @import "./pages/loginPage";
