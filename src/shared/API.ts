@@ -27,7 +27,7 @@ const fetchWithAuthorization = async <T>(
   }
 
   const response: Response = await fetch(BASE_URL + BASE_PROJECT_KEY + url, requestOptions);
-  
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

@@ -1,16 +1,9 @@
 // import '../../../css/main.min.css'
-import { registrationFeildsInfo } from './RegistrationController';
+import { registrationfieldsInfo } from './RegistrationController';
+import { FieldsInfo } from '../../types/interfaces/interfaces';
+import { receiveInfoAfterSubmit } from './RegistrationController';
 
 let registrationFieldForm: string = '';
-
-
-export interface FieldsInfo {
-  for: string,
-  text: string,
-  type: string,
-  id: string,
-  class: string
-}
 
 export function createRegistrationFields(array: FieldsInfo[]): string {
   for (let i = 0; i < array.length; i += 1) {
@@ -29,13 +22,13 @@ export function createRegistrationFields(array: FieldsInfo[]): string {
     </div>`;
     }
   }
-return registrationFieldForm;
+  return registrationFieldForm;
 }
 
-createRegistrationFields(registrationFeildsInfo);
+createRegistrationFields(registrationfieldsInfo);
 
 const registrationUser = document.createElement('div');
-      registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
+registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
       ${registrationFieldForm}
       <input type="checkbox" id="terms" name="terms" value="terms">
@@ -50,6 +43,9 @@ export default function RegistrationPageView(): void {
   if (appWrapper) {
     appWrapper.innerHTML = '';
     appWrapper.append(registrationUser);
+    receiveInfoAfterSubmit();
   }
 }
+//  RegistrationPageView()
+
 

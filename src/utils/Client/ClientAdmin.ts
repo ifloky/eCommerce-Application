@@ -1,5 +1,6 @@
-import { BASE_PROJECT_KEY, BASE_AUTH_URL } from './constantsApiClient/constantsAdminClient';
-import { ctpClient } from './BuildClient';
+/* eslint-disable no-console */
+import { BASE_PROJECT_KEY, BASE_AUTH_URL } from '../constantsApi/constantsClients';
+import { ctpClient } from './BuildClientAdmin';
 import {
   ClientResponse,
   ProductPagedQueryResponse,
@@ -32,3 +33,7 @@ export const getAllProducts = async (): Promise<ClientResponse<ProductPagedQuery
   // console.log(products);
   return products;
 };
+
+getProject()
+  .then(console.log)
+  .then(console.error);
