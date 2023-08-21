@@ -1,4 +1,5 @@
-// import { apiRoot } from "../../utils/AdminClient";
+/* eslint-disable no-console */
+import { apiRoot } from "../../utils/Client/ClientUser";
 //  import RegistrationPageView from "./registrationView";
 // import { ctpClient, projectKey } from "../../utils/BuildClient";
 import { FieldsInfo } from "../../types/interfaces/interfaces";
@@ -8,8 +9,8 @@ import { createCustomer } from "../../utils/Client/ClientUser";
 export const registrationfieldsInfo: FieldsInfo[] = [
   { for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' },
   { for: 'password', text: 'Password', type: 'password', id: 'password', class: 'password' },
-  { for: 'firstname', text: 'First name', type: 'text', id: 'firstname', class: 'firstname' },
-  { for: 'lastname', text: 'Last name', type: 'text', id: 'lastname', class: 'lastname' },
+  { for: 'firstName', text: 'First name', type: 'text', id: 'firstName', class: 'firstName' },
+  { for: 'lastName', text: 'Last name', type: 'text', id: 'lastName', class: 'lastName' },
   { for: 'date', text: 'Date of Birth', type: 'date', id: 'dateOfBirth', class: 'date' },
   { for: 'street', text: 'Street', type: 'text', id: 'street', class: 'street' },
   { for: 'city', text: 'City', type: 'text', id: 'city', class: 'city' },
@@ -58,6 +59,11 @@ export function receiveInfoAfterSubmit(): void {
       // eslint-disable-next-line no-console
       //  console.log(input.value);
     })
+    console.log(apiRoot.categories());
+
+    console.log(apiRoot.products());
+
+    console.log(apiRoot.customers().get());
     // eslint-disable-next-line no-console
     console.log(registrationInfo);
     createCustomer(registrationInfo);
