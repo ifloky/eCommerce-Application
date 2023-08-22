@@ -1,4 +1,4 @@
-import { receiveInfoAfterSubmit, registrationFieldsInfo } from './RegistrationController';
+import { bindEvents, receiveInfoAfterSubmit, registrationFieldsInfo, validationForm } from './RegistrationController';
 import { FieldsInfo } from '../../types/interfaces/interfaces';
 
 let registrationFieldForm: string = '';
@@ -50,7 +50,7 @@ const input = registrationUser.querySelector('.input-password');
 
 const submitButton = registrationUser.querySelector('.btn-registration') as HTMLButtonElement;
 
-
+validationForm(registrationUser)
 
 export default function RegistrationPageView(): HTMLElement {
   receiveInfoAfterSubmit(submitButton);
@@ -58,3 +58,7 @@ export default function RegistrationPageView(): HTMLElement {
 }
 
 
+const inputElement = registrationUser.querySelector('input');
+if (inputElement) {
+  bindEvents([inputElement]);
+}
