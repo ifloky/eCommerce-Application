@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { createElement } from '../utils/abstract';
 
 const BASE_URL = process.env.BASE_URL || "";
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || "";
@@ -52,10 +53,17 @@ const fetchWithAuthorization = async <T>(
   if (data) {
     requestOptions.body = JSON.stringify(data);
   }
+  
   const response: Response = await fetch(BASE_URL + '/' + BASE_PROJECT_KEY + url, requestOptions);
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+  if (!response.ok) {    
+    const errorMessage = createElement('div', ['error'])
+    errorMessage.innerHTML = 'hey dude, check your input';
+    document.body.appendChild(errorMessage)
+
+    setTimeout(() => {
+      document.body.removeChild(errorMessage)
+    }, 3000);
   }
 
   return response.json();
@@ -86,7 +94,6 @@ export const get = async <T>(url: string): Promise<T> => {
   await fetchAndSetBearerToken();
   return fetchWithAuthorization<T>(url, 'GET');
 };
-
 
 export const post = async <T>(url: string, data: object): Promise<T> => {
   await fetchAndSetBearerToken();

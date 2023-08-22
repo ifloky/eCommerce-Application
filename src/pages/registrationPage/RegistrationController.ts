@@ -12,8 +12,11 @@ export const registrationInfo: CustomerRegistrationInfo = {
   city: '',
   postcode: '',
   country: '',
+  version: '1',
+  addresses: [],
+  authenticationMode: "Password",
+  isEmailVerified: false
 }
-
 
 export const registrationFieldsInfo: FieldsInfo[] = [
   { for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' },
@@ -50,15 +53,8 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
       const input = inputField as HTMLInputElement;
       registrationInfo[input.id] = input.value;
     });
-
-
-
-    try {
-      const response = await post('/customers', registrationInfo);
-      return response;
-    } catch (error) {
-      throw new Error('' + error);
-    }
+    const response = await post('/customers', registrationInfo);
+    return response;
   });
 }
 

@@ -14,14 +14,5 @@ export interface FieldsInfo {
 }
 
 export interface CustomerRegistrationInfo {
-  [key: string]: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  street: string;
-  city: string;
-  postcode: string;
-  country: string;
+  [key: string]: string | string[] | boolean;
 }
