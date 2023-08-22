@@ -2,6 +2,7 @@
 import { registrationfieldsInfo } from './RegistrationController';
 import { FieldsInfo } from '../../types/interfaces/interfaces';
 import { receiveInfoAfterSubmit } from './RegistrationController';
+//  import { tokenAdmin } from '../../utils/Client/BuildClientAdmin';
 
 let registrationFieldForm: string = '';
 
@@ -44,6 +45,8 @@ export default function RegistrationPageView(): void {
     appWrapper.innerHTML = '';
     appWrapper.append(registrationUser);
     receiveInfoAfterSubmit();
+    // eslint-disable-next-line no-console
+    //  console.log(tokenAdmin);
   }
 }
 //  RegistrationPageView()

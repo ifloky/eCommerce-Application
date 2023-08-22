@@ -103,10 +103,8 @@ export async function getCategories(): Promise<
 export async function createCustomer(data: CustomerRegistrationInfo): Promise<ClientResponse<CustomerSignInResult>> {
   try {
     const customer = await apiRoot
-    .me()
-    .signup()
+    .customers()
     .post({
-      // body: createCustomerDraft(data),
       body: data,
       headers: {
         'Content-Type': 'application/json',

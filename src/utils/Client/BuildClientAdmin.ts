@@ -8,7 +8,7 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { BASE_AUTH_URL, BASE_PROJECT_KEY, DEVELOP_ID, DEVELOP_SECRET, BASE_URL } from '../constantsApi/constantsClients';
 
-//  import SdkAuth from '@commercetools/sdk-auth'
+import SdkAuth from '@commercetools/sdk-auth'
 import 'dotenv/config'
 
 // Configure authMiddlewareOptions
@@ -23,23 +23,22 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   fetch,
 };
 
-//  const authClient = new SdkAuth({
-//  host: 'https://auth.us-central1.gcp.commercetools.com/',
-//  projectKey: projectKey,
-//  disableRefreshToken: false,
-//  credentials: {
-//    clientId: 'MnD3lYwVYb80uoQvugZvkLFY',
-//    clientSecret: 'WM64L_47FMiVY1Yc-nW3aqUrIJfvmJYJ',
-//  },
-//  scopes: [
-//    'manage_customers:tycteam manage_my_quotes:tycteam manage_product_selections:tycteam view_categories:tycteam manage_my_business_units:tycteam manage_my_profile:tycteam manage_customer_groups:tycteam manage_my_payments:tycteam manage_my_quote_requests:tycteam create_anonymous_token:tycteam manage_products:tycteam view_published_products:tycteam manage_my_shopping_lists:tycteam manage_my_orders:tycteam',
-//  ],
+  const authClient = new SdkAuth({
+  host: 'https://auth.us-central1.gcp.commercetools.com/',
+  projectKey: BASE_PROJECT_KEY,
+  disableRefreshToken: false,
+  credentials: {
+    clientId: DEVELOP_ID,
+    clientSecret: DEVELOP_SECRET,
+  },
+  scopes: ['manage_project:bestshop-rs', 'manage_api_clients:bestshop-rs'],
 
-//  fetch,
-//  });
+  fetch,
+  });
 
-//  export const tokenAdmin = async(): Promise<TokenInfo> => authClient.clientCredentialsFlow();
-//  console.log(tokenAdmin);
+  export const tokenAdmin = authClient.clientCredentialsFlow();
+  // eslint-disable-next-line no-console
+  console.log(tokenAdmin);
 
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
