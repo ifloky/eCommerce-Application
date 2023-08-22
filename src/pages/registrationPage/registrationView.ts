@@ -1,7 +1,5 @@
-// import '../../../css/main.min.css'
-import { registrationfieldsInfo } from './RegistrationController';
+import { receiveInfoAfterSubmit, registrationFieldsInfo } from './RegistrationController';
 import { FieldsInfo } from '../../types/interfaces/interfaces';
-import { receiveInfoAfterSubmit } from './RegistrationController';
 
 let registrationFieldForm: string = '';
 
@@ -25,12 +23,11 @@ export function createRegistrationFields(array: FieldsInfo[]): string {
   return registrationFieldForm;
 }
 
-createRegistrationFields(registrationfieldsInfo);
-
 const registrationUser = document.createElement('div');
+registrationUser.className = 'registration'
 registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
-      ${registrationFieldForm}
+      ${createRegistrationFields(registrationFieldsInfo)}
       <input type="checkbox" id="terms" name="terms" value="terms">
       <label for="terms">You need to agree to <a href=''>Terms and conditions</a></label><br>
       <button class="btn btn-registration" type="submit">Register</button>
@@ -38,14 +35,26 @@ registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       </form>
       `;
 
-export default function RegistrationPageView(): void {
-  const appWrapper = document.getElementById('app');
-  if (appWrapper) {
-    appWrapper.innerHTML = '';
-    appWrapper.append(registrationUser);
-    receiveInfoAfterSubmit();
-  }
+
+const passEye = registrationUser.querySelector('.password-control');
+const input = registrationUser.querySelector('.input-password');
+  passEye?.addEventListener('click', () => {
+    if (input?.getAttribute('type') === 'password') {
+      passEye?.classList.add('no-view');
+      input.setAttribute('type', 'text');
+    } else {
+      passEye?.classList.remove('no-view');
+      input?.setAttribute('type', 'password');
+    }
+  })
+
+const submitButton = registrationUser.querySelector('.btn-registration') as HTMLButtonElement;
+
+
+
+export default function RegistrationPageView(): HTMLElement {
+  receiveInfoAfterSubmit(submitButton);
+  return registrationUser;
 }
-//  RegistrationPageView()
 
 

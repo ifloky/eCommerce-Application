@@ -18,7 +18,6 @@ export async function initializeApp(): Promise<void> {
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
     }
-
     startRouting();
   } catch (error) {
     throw new Error();
