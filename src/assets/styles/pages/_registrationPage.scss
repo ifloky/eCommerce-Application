@@ -1,4 +1,6 @@
 .registration {
+  display: flex;
+  flex-direction: column;
   border-radius: 7px;
   border: 1px solid $color-primary;
   max-width: 600px;
@@ -20,16 +22,18 @@
 
 .form {
   &-label {
-    display: block;
-    width: 46%;
-    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 20px;
+    margin-top: 10px;
   }
   &-input {
     padding: 1px 10px;
     display: block;
-    width: 60%;
+    width: 90%;
     height: 30px;
-    border: 1px solid $color-primary;
+    border: 1px solid #9C96E2;
     border-radius: 5px;
   }
 }
@@ -69,12 +73,16 @@
   margin: 25px 10px 15px 0;
 }
 
+.registration-form__input-password{
+  position: relative;
+}
+
 .password-control {
   display: block;
   position: absolute;
   cursor: pointer;
-  top: 8px;
-  right: 20%;
+  top: 28px;
+  right: 7%;
   width: 20px;
   height: 20px;
   background: url('../../image/icons/login-page/close-eye.svg') center / contain no-repeat;
@@ -82,4 +90,33 @@
 
 .no-view {
   background: url('../../image/icons/login-page/open-eye.svg') center / contain no-repeat;
+}
+
+.registration-form__address-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  & input {
+    width: 80%;
+  }
+}
+
+.input-country {
+  height: 35px;
+  width: 92%;
+}
+.registration-form__shipping-address {
+  margin-left: 0px;
+}
+
+.registration-form-default {
+  display: flex;
+  margin-top: 10px;
+  
+  & input {
+    width: auto;
+  }
 }

@@ -24,10 +24,6 @@ export const registrationFieldsInfo: FieldsInfo[] = [
   { for: 'firstName', text: 'First name', type: 'text', id: 'firstName', class: 'firstName' },
   { for: 'lastName', text: 'Last name', type: 'text', id: 'lastName', class: 'lastName' },
   { for: 'date', text: 'Date of Birth', type: 'date', id: 'dateOfBirth', class: 'date' },
-  { for: 'street', text: 'Street', type: 'text', id: 'street', class: 'street' },
-  { for: 'city', text: 'City', type: 'text', id: 'city', class: 'city' },
-  { for: 'post', text: 'Postal code', type: 'text', id: 'postcode', class: 'post' },
-  { for: 'country', text: 'Country', type: 'text', id: 'country', class: 'country' }
 ];
 
 
@@ -74,67 +70,5 @@ export function validationForm(registrationUser: HTMLElement):void {
       event.preventDefault();
     }
   });
-}
-
-
-
-const validationEmail = (target: HTMLInputElement): void => {
-  const emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})$/
-  if (!target.value.match(emailPattern)) {
-    target.setCustomValidity('')
-    if (target.value.indexOf(' ') !== -1) {
-      target.setCustomValidity('')
-      target.setCustomValidity('Please, check your email. It must not contain whitespace.')
-      if (target.value === '') {
-        target.setCustomValidity('')
-      } else {
-        target.setCustomValidity('')
-        target.setCustomValidity('Please, check your email. It must be properly formatted (e.g., user@example.com).')
-      }
-    }
-  } else {
-    target.setCustomValidity('')
-  }
-}
-
-const validationPassword = (target: HTMLInputElement): void => {
-  const { value } = target
-  if (!/(?=.[a-z])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one lowercase letter (a-z).')
-  } else if (!/(?=.[A-Z])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one uppercase letter (A-Z).')
-  } else if (!/(?=.[0-9])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one digit (0-9).')
-  } else if (!/(?=.[!@#$%^&*])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one special character (e.g., !@#$%^&*).')
-  } else if (value.includes(' ')) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must not contain whitespace.')
-  }
-  else {
-    target.setCustomValidity('')
-  }
-}
-
-export const isValid = (event: Event): void => {
-  const { target } = event
-  if (target instanceof HTMLInputElement) {
-    if (target.id === 'email') {
-      validationEmail(target)
-    }
-    if (target.id === 'password') {
-      validationPassword(target)
-    }
-  }
-}
-
-
-export const bindEvents = (elements: HTMLElement[]): void => {
-  const [form] = elements;  
-  form.addEventListener('input', isValid)
 }
 

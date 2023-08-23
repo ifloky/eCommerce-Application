@@ -8,3 +8,8 @@
   padding: 5px 10px;
   background-color: #d43e6667;
 }
+
+.invalid-input {
+  outline: none;
+  border: 1px $color-invalid solid !important; 
+}
