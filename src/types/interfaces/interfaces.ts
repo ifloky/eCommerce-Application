@@ -13,6 +13,40 @@ export interface FieldsInfo {
   class: string
 }
 
-export interface CustomerRegistrationInfo {
-  [key: string]: string | string[] | boolean;
+export interface Address {
+  addressId: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+export interface RegistrationInfo {
+  id: string,
+  version: number,
+  versionModifiedAt: Date,
+  lastMessageSequenceNumber: number,
+  lastModifiedBy: {
+    clientId: "",
+    isPlatformClient: boolean,
+  },
+  createdBy: {
+    clientId: "",
+    isPlatformClient: boolean,
+  },
+  createdAt: Date,
+  lastModifiedAt: Date,
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: Address[];
+  defaultShippingAddressId: string;
+  defaultBillingAddressId: string;
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+  isEmailVerified: boolean;
+  stores: string[];
+  authenticationMode: string;
 }

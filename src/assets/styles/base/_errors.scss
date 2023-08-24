@@ -6,10 +6,17 @@
   border:1px solid $color-invalid;
   border-radius: 5px;
   padding: 5px 10px;
-  background-color: #d43e6667;
+  background-color: $color-invalid;
+  color: $color-light;
 }
 
 .invalid-input {
   outline: none;
   border: 1px $color-invalid solid !important; 
+}
+
+.error-message {
+  color: $color-invalid;
+  font-size: 10px;
+  text-align: left;
 }

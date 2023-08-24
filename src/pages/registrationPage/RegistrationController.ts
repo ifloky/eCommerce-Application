@@ -1,21 +1,35 @@
 import { post } from "../../shared/API";
 import { FieldsInfo } from "../../types/interfaces/interfaces";
-import { CustomerRegistrationInfo } from "../../types/interfaces/interfaces";
+import { RegistrationInfo, Address } from "../../types/interfaces/interfaces";
 
-export const registrationInfo: CustomerRegistrationInfo = {
+export const registrationInfo: RegistrationInfo = {
+  id: '',
+  version: 1,
+  versionModifiedAt: new Date(),
+  lastMessageSequenceNumber: 1,
+  createdAt: new Date(),
+  lastModifiedAt: new Date(),
+  lastModifiedBy: {
+    "clientId": "",
+    "isPlatformClient": false
+  },
+  createdBy: {
+    clientId: "",
+    isPlatformClient: false
+  },
   email: '',
   password: '',
   firstName: '',
   lastName: '',
   dateOfBirth: '',
-  street: '',
-  city: '',
-  postcode: '',
-  country: '',
-  version: '1',
   addresses: [],
+  defaultShippingAddressId: '',
+  defaultBillingAddressId: '',
+  shippingAddressIds: [],
+  billingAddressIds: [],
+  isEmailVerified: false,
+  stores: [],
   authenticationMode: "Password",
-  isEmailVerified: false
 }
 
 export const registrationFieldsInfo: FieldsInfo[] = [
@@ -41,14 +55,66 @@ export function showHidePassword(): void {
   })
 }
 
+export function getBillingAddresses(): Address[] {
+  const billingStreetInput: HTMLInputElement | null = document.querySelector('input[name="billing-street"]');
+  const billingCityInput: HTMLInputElement | null = document.querySelector('input[name="billing-city"]');
+  const billingPostalCodeInput: HTMLInputElement | null = document.querySelector('input[name="billing-postal-code"]');
+  const billingCountryInput: HTMLInputElement | null = document.querySelector('select[name="billing-country"]');
+  const defaultBillingCheckbox = document.getElementById('defaultBilling') as HTMLInputElement;
+  const billingAddresses: Address[] = [];
+
+  if (defaultBillingCheckbox.checked) {
+    billingAddresses.push({
+      addressId: "BA",
+      street: billingStreetInput?.value || '',
+      city: billingCityInput?.value || '',
+      postalCode: billingPostalCodeInput?.value || '',
+      country: billingCountryInput?.value || '',
+    });
+  }
+
+  return billingAddresses;
+}
+
+export function getShippingAddresses(): Address[] {
+  const shippingStreetInput: HTMLInputElement | null = document.querySelector('input[name="shipping-street"]');
+  const shippingCityInput: HTMLInputElement | null = document.querySelector('input[name="shipping-city"]');
+  const shippingPostalCodeInput: HTMLInputElement | null = document.querySelector('input[name="shipping-postal-code"]');
+  const shippingCountryInput: HTMLInputElement | null = document.querySelector('select[name="shipping-country"]');
+  const defaultShippingCheckbox = document.getElementById('defaultShipping') as HTMLInputElement;
+  const shippingAddresses: Address[] = [];
+
+  if (defaultShippingCheckbox.checked) {
+    shippingAddresses.push({
+      addressId: "SA",
+      street: shippingStreetInput?.value || '',
+      city: shippingCityInput?.value || '',
+      postalCode: shippingPostalCodeInput?.value || '',
+      country: shippingCountryInput?.value || '',
+    });
+  }
+
+  return shippingAddresses;
+}
+
 export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
   submitButton.addEventListener('click', async (event: Event) => {
     event.preventDefault();
     const filledForm = document.querySelectorAll('.form-input') as NodeList;
+
     filledForm.forEach((inputField) => {
       const input = inputField as HTMLInputElement;
-      registrationInfo[input.id] = input.value;
+      if (input.id === 'email' || input.id === 'password' || input.id === 'firstName' || input.id === 'lastName' || input.id === 'dateOfBirth') {
+        registrationInfo[input.id] = input.value;
+      }
     });
+
+    const billingAddresses = getBillingAddresses();
+    const shippingAddresses = getShippingAddresses();
+
+    registrationInfo.addresses = [...billingAddresses, ...shippingAddresses];
+    registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0].addressId;
+    registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1].addressId
     const response = await post('/customers', registrationInfo);
     return response;
   });
