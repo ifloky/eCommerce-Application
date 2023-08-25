@@ -137,4 +137,3 @@ export function validationForm(registrationUser: HTMLElement):void {
     }
   });
 }
-
