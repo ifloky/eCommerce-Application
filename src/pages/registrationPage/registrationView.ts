@@ -201,7 +201,6 @@ function validationDate(): void {
   });
 }
 
-
 function validationBillingStreet(): void {
   const billingStreetInput = form.querySelector('input[name="billing-street"]') as HTMLInputElement;
   const errorElement = document.createElement('div');

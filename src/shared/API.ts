@@ -70,12 +70,12 @@ const fetchWithAuthorization = async <T>(
 };
 
 
-function setCookie(name: string, value: string, expiresInHours: number): void {
+export function setCookie(name: string, value: string, expiresInHours: number): void {
   const expires = new Date(Date.now() + expiresInHours * 3600000).toUTCString();
   document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/; secure; sameSite=strict`;
 }
 
-function deleteCookie(name: string): void {
+export function deleteCookie(name: string): void {
   document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
