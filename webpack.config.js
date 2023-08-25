@@ -6,6 +6,15 @@ const EslintWebpackPlugin = require('eslint-webpack-plugin')
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 module.exports = {
   mode: 'development',
   entry: './index',
@@ -26,14 +35,19 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      path: path.resolve(__dirname, 'index.html')
-      // favicon: './src/assets/fav.ico',
+      path: path.resolve(__dirname, 'index.html'),
+      title: 'eCommerce',
+      favicon: './src/assets/image/icons/favicon.png',
     }),
     new CleanWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new Dotenv(),
     new MiniCssExtractPlugin(),
-    new EslintWebpackPlugin({ extensions: 'ts' })
+    new EslintWebpackPlugin({ extensions: 'ts' }),
+    new webpack.DefinePlugin(envKeys),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
   stats: {
     children: true,

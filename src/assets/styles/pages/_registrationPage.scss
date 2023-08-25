@@ -1,0 +1,122 @@
+.registration {
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  border: 1px solid $color-primary;
+  max-width: 600px;
+  margin: 0 auto;
+
+  &-form {
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+    padding: 10px;
+  }
+  &-title {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    margin: 15px 0;
+  }
+}
+
+.form {
+  &-label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 20px;
+    margin-top: 10px;
+  }
+  &-input {
+    padding: 1px 10px;
+    display: block;
+    width: 90%;
+    height: 30px;
+    border: 1px solid #9C96E2;
+    border-radius: 5px;
+  }
+}
+
+.login-form__input, .login-form__input-password {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin-top: 25px;
+  position: relative;
+
+  & .form-label {
+    position: absolute;
+    top: -20px;
+    left: 20%;
+    text-align: start;
+  }
+}
+
+.form-input.input-password {
+  appearance: none;
+}
+
+.btn {
+  &-registration {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    width: 30%;
+    cursor: pointer;
+  }
+}
+
+#terms {
+  margin: 25px 10px 15px 0;
+}
+
+.registration-form__input-password{
+  position: relative;
+}
+
+.password-control {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  top: 28px;
+  right: 7%;
+  width: 20px;
+  height: 20px;
+  background: url('../../image/icons/login-page/close-eye.svg') center / contain no-repeat;
+}
+
+.no-view {
+  background: url('../../image/icons/login-page/open-eye.svg') center / contain no-repeat;
+}
+
+.registration-form__address-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  & input {
+    width: 80%;
+  }
+}
+
+.input-country {
+  height: 35px;
+  width: 92%;
+}
+.registration-form__shipping-address {
+  margin-left: 0px;
+}
+
+.registration-form-default {
+  display: flex;
+  margin-top: 10px;
+  
+  & input {
+    width: auto;
+  }
+}

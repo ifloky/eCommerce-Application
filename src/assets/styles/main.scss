@@ -1,0 +1,11 @@
+@import './abstracts/constants';
+@import "./abstracts/placeholders";
+@import "./base/typography";
+@import "./base/base.scss";
+@import "./components/buttons";
+@import "./base/errors";
+@import "./layout/header/header";
+
+@import "./pages/loginPage";
+@import "./pages/registrationPage";
+@import "./pages/mainPage"
