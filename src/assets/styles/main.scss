@@ -1,8 +1,9 @@
 @import './abstracts/constants';
 @import "./abstracts/placeholders";
 @import "./base/typography";
-@import "./components/buttons";
 @import "./base/base.scss";
+@import "./components/buttons";
+@import "./base/errors";
 @import "./layout/header/header";
 
 @import "./pages/loginPage";

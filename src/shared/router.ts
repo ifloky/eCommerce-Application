@@ -1,8 +1,6 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
-import { showHidePassword } from "../pages/registrationPage/RegistrationController";
-//  import { receiveInfoAfterSubmit } from "../pages/registrationPage/RegistrationController";
 
 type ControllerFunction = () => void;
 
@@ -30,13 +28,14 @@ function logInController(): void {
     appContainer.innerHTML = ''
     appContainer.append(getLoginPageView);
   }
-
 }
 
 function registerController(): void {
-  RegistrationPageView()
-  //  receiveInfoAfterSubmit()
-  showHidePassword()
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(RegistrationPageView())
+  }
 }
 
 function notFoundController(): void {

@@ -1,9 +1,9 @@
 
 export interface MainData {
-   title: string;
-   description: string;
- }
+  title: string;
+  description: string;
+}
 
- export interface Links {
-   [key: string]: string;
- }
+export interface Links {
+  [key: string]: string;
+}
