@@ -3,6 +3,7 @@ import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { showHidePassword } from "../pages/registrationPage/RegistrationController";
 //  import { receiveInfoAfterSubmit } from "../pages/registrationPage/RegistrationController";
+import { category, createСategory } from "../utils/Client/ClientAdmin";
 
 type ControllerFunction = () => void;
 
@@ -37,6 +38,7 @@ function registerController(): void {
   RegistrationPageView()
   //  receiveInfoAfterSubmit()
   showHidePassword()
+  createСategory(category);
 }
 
 function notFoundController(): void {
