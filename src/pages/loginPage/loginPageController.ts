@@ -1,6 +1,11 @@
+import { homeController, registerController } from "../../shared/router"
+import {
+  checkUser,
+  getAllTokens,
+} from "./loginPageModel"
+
 export const isShowed = (event: Event): void => {
   const { target } = event
-
   const passwordFeild = document.getElementById('password') as HTMLInputElement
   if (target instanceof HTMLLabelElement && target.classList.contains('form__label')) {
     target.classList.toggle('form__label_show-pass')
@@ -62,6 +67,34 @@ export const isValid = (event: Event): void => {
     }
     if (target.id === 'password') {
       validationPassword(target)
+    }
+  }
+}
+
+export const redirectToRegistrationPage = (event: Event): void => {
+  const { target } = event
+  if (target instanceof HTMLButtonElement && target.type === 'button') {
+    registerController()
+  }
+}
+
+export const loginUser = async (event: Event): Promise<void> => {
+  const { target } = event
+  if (target instanceof HTMLButtonElement && target.type === 'submit') {
+    const emailField = document.getElementById('email')
+    const passwordField = document.getElementById('password')
+    let email = ''
+    let password = ''
+    if (emailField instanceof HTMLInputElement && passwordField instanceof HTMLInputElement) {
+      email = emailField.value
+      password = passwordField.value
+    }
+    event.preventDefault()
+    getAllTokens(email, password)
+    const isCorrectUserData = await checkUser(email, password)
+    if (isCorrectUserData.ok) {
+      localStorage.setItem('login', 'true')
+      homeController()
     }
   }
 }

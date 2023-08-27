@@ -15,7 +15,7 @@ function updateContainer(content: string): void {
   }
 }
 
-async function homeController(): Promise<void> {
+export async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = await MainPageController();
@@ -31,7 +31,7 @@ function logInController(): void {
 
 }
 
-function registerController(): void {
+export function registerController(): void {
   RegistrationPageView()
 }
 
@@ -78,7 +78,7 @@ export function startRouting(): void {
   handleRoute();
 
   window.addEventListener('beforeunload', () => {
-    const currentState = {}; 
+    const currentState = {};
     localStorage.setItem('appState', JSON.stringify(currentState));
   });
 }
