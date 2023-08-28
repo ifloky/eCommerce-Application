@@ -1,6 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
+import { catalogRender } from "../pages/catalogPage/catalogPageView";
 
 type ControllerFunction = () => void;
 
@@ -38,6 +39,14 @@ function registerController(): void {
   }
 }
 
+function catalogController(): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(catalogRender());
+  }
+}
+
 function notFoundController(): void {
   updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
 }
@@ -46,6 +55,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/': createControllerFunction(homeController),
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
+  '/catalog': createControllerFunction(catalogController)
 };
 
 function handleRoute(): void {
