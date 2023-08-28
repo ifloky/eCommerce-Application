@@ -28,11 +28,15 @@ function logInController(): void {
     appContainer.innerHTML = ''
     appContainer.append(getLoginPageView);
   }
-
 }
 
+
 export function registerController(): void {
-  RegistrationPageView()
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(RegistrationPageView())
+  }
 }
 
 function notFoundController(): void {

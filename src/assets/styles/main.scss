@@ -1,10 +1,11 @@
-@import "./abstracts/_variables.scss";
-@import "./abstracts/placeholders.scss";
-@import "./base/_typography";
+@import './abstracts/constants';
+@import "./abstracts/placeholders";
+@import "./base/typography";
+@import "./base/base.scss";
 @import "./components/buttons";
-@import "./base/_base.scss";
-@import "./layout/header/_header.scss";
+@import "./base/errors";
+@import "./layout/header/header";
 
 @import "./pages/loginPage";
-@import "./pages/_registrationPage.scss";
-@import "./pages/_mainPage.scss"
+@import "./pages/registrationPage";
+@import "./pages/mainPage"
