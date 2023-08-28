@@ -1,5 +1,4 @@
 import { createElement } from '../../../utils/abstract';
-import { loginUser } from '../loginPageController';
 
 const createFormElement = (): HTMLFormElement => createElement('form', ['login-page__form', 'form']);
 
@@ -16,8 +15,6 @@ const generateButtonsBlock = (): HTMLDivElement => {
   buttonsBlock.textContent = 'or';
   const submitBtn = createButtonElement();
   submitBtn.textContent = 'sign in';
-  submitBtn.type = 'button'
-  submitBtn.addEventListener('click', () => loginUser() )
   const redirectBtn = createButtonElement();
   redirectBtn.textContent = 'sign up';
   redirectBtn.type = 'button'

@@ -15,7 +15,7 @@ function updateContainer(content: string): void {
   }
 }
 
-async function homeController(): Promise<void> {
+export async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = await MainPageController();
@@ -30,7 +30,8 @@ function logInController(): void {
   }
 }
 
-function registerController(): void {
+
+export function registerController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
