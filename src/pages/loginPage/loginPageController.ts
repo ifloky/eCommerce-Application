@@ -1,8 +1,11 @@
-import { setCookie } from "../../shared/API"
+import { homeController, registerController } from "../../shared/router"
+import {
+  checkUser,
+  getAllTokens,
+} from "./loginPageModel"
 
 export const isShowed = (event: Event): void => {
   const { target } = event
-
   const passwordFeild = document.getElementById('password') as HTMLInputElement
   if (target instanceof HTMLLabelElement && target.classList.contains('form__label')) {
     target.classList.toggle('form__label_show-pass')
@@ -68,47 +71,30 @@ export const isValid = (event: Event): void => {
   }
 }
 
-const USER_SECRET = process.env.USER_SECRET || "";
-const USER_ID = process.env.USER_ID || "";
-const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || "";
-
-export async function loginUser(): Promise<void> {
-  const emailInput = document.querySelector('.input_email') as HTMLInputElement;
-  const passwordInput = document.querySelector('.input_pass') as HTMLInputElement;
-  const email = emailInput.value || "";
-  const password = passwordInput.value || "";
-  const clientId = USER_ID;
-  const clientSecret = USER_SECRET;
-  const authHost = "auth.us-central1.gcp.commercetools.com";
-  const projectKey = BASE_PROJECT_KEY;
-  const storeKey = "bestshop-rs";
-  const scope = `view_published_products:${projectKey} manage_my_orders:${projectKey} manage_my_profile:${projectKey}`;
-  const tokenEndpoint = storeKey
-    ? `https://${authHost}/oauth/${projectKey}/in-store/key=${storeKey}/customers/token`
-    : `https://${authHost}/oauth/${projectKey}/customers/token`;
-  const authHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
-  const requestBody = `grant_type=password&username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&scope=${encodeURIComponent(scope)}`;
-  try {
-    const response = await fetch(tokenEndpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: requestBody,
-    });
-    if (!response.ok) {
-      throw new Error('Failed to obtain access token');
-    }
-    const tokenResponse: {
-      access_token: string,
-      refresh_token: string,
-      expires_in: number
-    } = await response.json();
-    setCookie("access_token", tokenResponse.access_token, tokenResponse.expires_in);
-    setCookie("refresh_token", tokenResponse.refresh_token, 500);
-  } catch (error) {
-    throw new Error('' + error);
+export const redirectToRegistrationPage = (event: Event): void => {
+  const { target } = event
+  if (target instanceof HTMLButtonElement && target.type === 'button') {
+    registerController()
   }
 }
 
+export const loginUser = async (event: Event): Promise<void> => {
+  const { target } = event
+  if (target instanceof HTMLButtonElement && target.type === 'submit') {
+    const emailField = document.getElementById('email')
+    const passwordField = document.getElementById('password')
+    let email = ''
+    let password = ''
+    if (emailField instanceof HTMLInputElement && passwordField instanceof HTMLInputElement) {
+      email = emailField.value
+      password = passwordField.value
+    }
+    event.preventDefault()
+    getAllTokens(email, password)
+    const isCorrectUserData = await checkUser(email, password)
+    if (isCorrectUserData.ok) {
+      localStorage.setItem('login', 'true')
+      homeController()
+    }
+  }
+}
