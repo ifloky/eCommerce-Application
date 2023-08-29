@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-
 import { fetchBearerToken, DEVELOP_ID, DEVELOP_SECRET } from "../../shared/API";
-// import { createElement } from "../../utils/abstract";
+
 interface ImageDimensions {
    w: number,
    h: number,
@@ -10,10 +9,17 @@ interface Image {
    url: string,
    dimensions: ImageDimensions,
 }
+interface ThreeLanguages {
+   'en-US': string,
+   ru: string,
+   beBY: string,
+}
 
 interface Product {
+   masterData?: string;
    id: string,
-   description: string,
+   name: ThreeLanguages,
+   description: ThreeLanguages,
    images: Image[],
 }
 
@@ -53,20 +59,34 @@ export function catalogRender(): HTMLElement {
 
    return catalogWrapper;
 }
-// eslint-disable-next-line no-console
-const allProducts = getAllProductsInfo();
 
-console.log(typeof(allProducts));
+const productsResult: Product[] = [];
 
-const allId: string[] = [];
+async function processProducts(): Promise<void> {
+   const allProducts = await getAllProductsInfo();
+   allProducts.forEach(item => {
+      const oneProduct: Product = {
+         id: "",
+         name: {
+            'en-US': "",
+            ru: "",
+            beBY: ""
+         },
+         description: {
+            'en-US': "",
+            ru: "",
+            beBY: ""
+         },
+         images: []
+      };
+      oneProduct.id = item.id;
+      oneProduct.name = item.masterData.current.name;
+      oneProduct.description = item.masterData.current.description;
+      console.log(oneProduct);
+      productsResult.push(oneProduct);
+   });
+}
 
-Array(allProducts).forEach(item  => {
-   // eslint-disable-next-line no-restricted-syntax
-   for (const key of Object.keys(item)) {
-       if (key === 'id') {
-         allId.push(item.id);
-       }
-   }
-})
-// eslint-disable-next-line no-console
+processProducts();
+
 
