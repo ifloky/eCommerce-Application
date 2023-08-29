@@ -1,6 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
+import { categoryNavigationController } from "../widgets/categoryNavigation/categoryNavigationController";
 
 type ControllerFunction = () => void;
 
@@ -18,7 +19,9 @@ function updateContainer(content: string): void {
 async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = await MainPageController();
+    appContainer.innerHTML = ''
+    appContainer.append(await MainPageController());
+    appContainer.append(await categoryNavigationController())
   }
 }
 
