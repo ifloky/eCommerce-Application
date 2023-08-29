@@ -1,18 +1,20 @@
 import { createElement } from "../../utils/abstract";
 
-export interface LinkObject {
+export interface CategoryObject {
   id: string;
   name: Record<string, string>; 
   parent: string;
 }
 
-export async function categoryNavigationView(linkList: LinkObject[]): Promise<HTMLElement> {
-  const categoryNavigationWrapper = createElement('ul', ['category-navigation-wrapper']);
+export async function categoryNavigationView(categoryList: CategoryObject[]): Promise<HTMLElement> {
+  const categoryNavigationWrapper = createElement('ul', ['category-navigation__wrapper']);
   
-  categoryNavigationWrapper.innerHTML = linkList.map((el) => {
-    return !el.parent ? `<li class="category-navigation__item">
-      <a class="category-navigation__link" href="/${el.name['en-US']}">${el.name['en-US']}</a>
-    </li>` : '';
+  categoryNavigationWrapper.innerHTML = categoryList.map((categoryItem) => {
+    return !categoryItem.parent 
+    ? `<li class="category-navigation__item">
+        <a class="category-navigation__link" href="/${categoryItem.name['en-US']}">${categoryItem.name['en-US']}</a>
+      </li>` 
+    : '';
   }).join('');
 
   return categoryNavigationWrapper;

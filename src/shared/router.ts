@@ -1,6 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
+import { cardProductView } from "../widgets/cardProduct/cardProductView";
 import { categoryNavigationController } from "../widgets/categoryNavigation/categoryNavigationController";
 
 type ControllerFunction = () => void;
@@ -22,6 +23,8 @@ async function homeController(): Promise<void> {
     appContainer.innerHTML = ''
     appContainer.append(await MainPageController());
     appContainer.append(await categoryNavigationController())
+    appContainer.append(await cardProductView())
+    
   }
 }
 
