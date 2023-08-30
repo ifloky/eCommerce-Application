@@ -1,10 +1,7 @@
+import { CategoryObject } from "../../types/interfaces/widgets/CategoryNavigation";
 import { createElement } from "../../utils/abstract";
 
-export interface CategoryObject {
-  id: string;
-  name: Record<string, string>; 
-  parent: string;
-}
+
 
 export async function categoryNavigationView(categoryList: CategoryObject[]): Promise<HTMLElement> {
   const categoryNavigationWrapper = createElement('ul', ['category-navigation__wrapper']);

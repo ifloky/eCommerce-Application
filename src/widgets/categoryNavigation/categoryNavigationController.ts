@@ -1,13 +1,8 @@
 import { get } from "../../shared/API";
-import { CategoryObject, categoryNavigationView } from "./categoryNavigationView";
+import { CategoryApiResponse, CategoryObject } from "../../types/interfaces/widgets/CategoryNavigation";
+import { categoryNavigationView } from "./categoryNavigationView";
 
-interface CategoryApiResponse {
-  limit: number;
-  offset: number;
-  count: number;
-  total: number;
-  results: CategoryObject[];
-}
+
 
 export async function categoryNavigationController(): Promise<HTMLElement> {
   try {
