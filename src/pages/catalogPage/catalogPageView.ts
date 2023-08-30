@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { fetchBearerToken, DEVELOP_ID, DEVELOP_SECRET } from "../../shared/API";
 
-import { MasterVariant, Product, ThreeLanguages, TypeIdAndId } from "../../types/interfaces/Product";
+import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices } from "../../types/interfaces/Product";
 
 const getAllProductsInfo = async(): Promise<Product[]> => {
    const response = await fetch('https://api.us-central1.gcp.commercetools.com/bestshop-rs/products?limit=25', {
@@ -39,7 +40,7 @@ export function catalogRender(): HTMLElement {
 
 const productsResult: Product[] = [];
 
-function receiveName(item: Product): ThreeLanguages {
+async function receiveName(item: Product): Promise<ThreeLanguages>{
    const name: ThreeLanguages = {
          'en-US': `${item.masterData.current.name['en-US']}`,
          ru: `${item.masterData.current.name.ru}`,
@@ -48,7 +49,7 @@ function receiveName(item: Product): ThreeLanguages {
    return name;;
 }
 
-function receiveDescription(item: Product): ThreeLanguages {
+async function receiveDescription(item: Product): Promise<ThreeLanguages> {
    const description: ThreeLanguages = {
       'en-US': `${item.masterData.current.description['en-US']}`,
       ru: `${item.masterData.current.description.ru}`,
@@ -57,7 +58,7 @@ function receiveDescription(item: Product): ThreeLanguages {
    return description;
 }
 
-function receiveCategories(item: Product): TypeIdAndId[] {
+async function receiveCategories(item: Product): Promise<TypeIdAndId[]> {
    const categories: TypeIdAndId[] = [
       {
          typeId: `${item.masterData.current.categories[0].typeId}`,
@@ -67,7 +68,7 @@ function receiveCategories(item: Product): TypeIdAndId[] {
    return categories;
 }
 
-function receiveSlug(item: Product): ThreeLanguages {
+async function receiveSlug(item: Product): Promise<ThreeLanguages> {
    const slug: ThreeLanguages = {
       'en-US': `${item.masterData.current.slug['en-US']}`,
       ru: `${item.masterData.current.slug.ru}`,
@@ -76,7 +77,7 @@ function receiveSlug(item: Product): ThreeLanguages {
    return slug;
 }
 
-function receiveMetaTitle(item: Product): ThreeLanguages {
+async function receiveMetaTitle(item: Product): Promise<ThreeLanguages> {
    const metaTitle: ThreeLanguages = {
       'en-US': `${item.masterData.current.metaTitle['en-US']}`,
       ru: `${item.masterData.current.metaTitle.ru}`,
@@ -85,7 +86,7 @@ function receiveMetaTitle(item: Product): ThreeLanguages {
    return metaTitle;
 }
 
-function receiveMetaDescription(item: Product): ThreeLanguages {
+async function receiveMetaDescription(item: Product): Promise<ThreeLanguages> {
    const metaDescription: ThreeLanguages = {
       'en-US': `${item.masterData.current.metaDescription['en-US']}`,
       ru: `${item.masterData.current.metaDescription.ru}`,
@@ -94,12 +95,40 @@ function receiveMetaDescription(item: Product): ThreeLanguages {
    return metaDescription;
 }
 
-function receiveMasterVariant(item: Product): MasterVariant {
+async function receiveValueDiscounted(item: Product): Promise<ValuePrices> {
+   const value: ValuePrices = {
+      type: `${item.masterData.current.masterVariant.prices[0].discounted.value.type}`,
+      currencyCode: `${item.masterData.current.masterVariant.prices[0].discounted.value.currencyCode}`,
+      centAmount: item.masterData.current.masterVariant.prices[0].discounted.value.centAmount,
+      fractionDigits: item.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits,
+   }
+   return value;
+}
+
+async function receivePrices(item: Product): Promise<Prices[]> {
+   const prices: Prices[] = [
+      {
+         value: {
+            type: `${item.masterData.current.masterVariant.prices[0].value.type}`,
+            currencyCode: `${item.masterData.current.masterVariant.prices[0].value.currencyCode}`,
+            centAmount: item.masterData.current.masterVariant.prices[0].value.centAmount,
+            fractionDigits: item.masterData.current.masterVariant.prices[0].value.fractionDigits,
+        },
+        key: `${item.masterData.current.masterVariant.prices[0].key}`,
+        discounted: {
+            value: await receiveValueDiscounted(item),
+        },
+      }
+   ]
+   return prices;
+}
+
+async function receiveMasterVariant(item: Product): Promise<MasterVariant> {
    const masterVariant: MasterVariant = {
       id: item.masterData.current.masterVariant.id,
       sku: `${item.masterData.current.masterVariant.sku}`,
       key: `${item.masterData.current.masterVariant.key}`,
-      prices: item.masterData.current.masterVariant.prices,
+      prices: await receivePrices(item),
       images: [
          {
             url: `${item.masterData.current.masterVariant.images[0].url}`,
@@ -120,24 +149,25 @@ function receiveMasterVariant(item: Product): MasterVariant {
 
 async function processProducts(): Promise<void> {
    const allProducts = await getAllProductsInfo();
-   allProducts.forEach(item => {
+   allProducts.forEach(async item => {
       const oneProduct: Product = {
          id: item.id,
          masterData: {
             current: {
-               name: receiveName(item),
-               description: receiveDescription(item),
-               categories: receiveCategories(item),
-               slug: receiveSlug(item),
-               metaTitle: receiveMetaTitle(item),
-               metaDescription: receiveMetaDescription(item),
-               masterVariant: receiveMasterVariant(item),
+               name: await receiveName(item),
+               description: await receiveDescription(item),
+               categories: await receiveCategories(item),
+               slug: await receiveSlug(item),
+               metaTitle: await receiveMetaTitle(item),
+               metaDescription: await receiveMetaDescription(item),
+               masterVariant: await receiveMasterVariant(item),
             },
          }
       };
       // console.log(oneProduct);
       productsResult.push(oneProduct);
    });
+   console.log(productsResult);
   }
 
 processProducts();

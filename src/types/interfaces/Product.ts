@@ -1,3 +1,19 @@
+export interface ValuePrices {
+   type: string,
+   currencyCode: string,
+   centAmount: number,
+   fractionDigits: number,
+}
+interface ValueForDiscounted {
+   value: ValuePrices,
+}
+
+export interface Prices {
+   value: ValuePrices,
+   key: string,
+   discounted?: ValueForDiscounted,
+}
+
 export interface TypeIdAndId {
    typeId: string,
    id: string,
@@ -19,7 +35,7 @@ export interface MasterVariant {
    id: number,
    sku: string,
    key: string,
-   prices: [],
+   prices: Prices[],
    images: Image[],
 }
 interface Current {
