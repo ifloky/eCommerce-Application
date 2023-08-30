@@ -1,10 +1,8 @@
 .catalog-wrapper {
-    margin-top: 15px;
-    width: 70vw;
-    margin: 0 auto;
-    margin-top: 40px;
     border-radius: 7px;
     border: 1px solid #9C96E2;
+    margin: 0 30px;
+    margin-top: 40px;
     &-title {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -15,17 +13,23 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        &-item {
-            border-radius: 7px;
-            border: 1px solid #9C96E2;
-            width: 300px;
-            height: 240px;
-            text-align: center;
-            padding: 0 30px
-        }
+        padding-bottom: 30px;
     }
 }
 .catalog-item-title {
     display: block;
-    margin-top: 37%;
+    width: 250px;
+    text-align: center;
+    padding: 60px 30px;
+    text-decoration: none;
+    border-radius: 7px;
+    border: 1px solid #9C96E2;
+    background-size: cover;
+    background-repeat: no-repeat;
+    &-tomato {
+        background-image: url(../../image/catalogMainPageImages/tomato.jpeg);
+    }
+    &-pumpkin {
+        background-image: url(../../image/catalogMainPageImages/pumpkin.jpg);
+    }
 }
