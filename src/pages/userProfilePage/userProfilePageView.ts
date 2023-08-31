@@ -9,14 +9,14 @@ const createUserProfileSectionWrapper = (): HTMLDivElement => createElement('div
 const bindEvents = (elements: HTMLElement[]): void => {
   const [menu] = elements
   menu.addEventListener('click', checkItem)
-
 }
 
 const createUserProfileSectionView = (): HTMLElement => {
   const profileSection = createUserProfileSection()
   const wrapper = createUserProfileSectionWrapper()
   const menu = generateMenuBlock()
-  wrapper.append(menu)
+  const information = createElement('div', ['profile__information', 'information'])
+  wrapper.append(menu, information)
   profileSection.append(wrapper)
   bindEvents([menu])
   return profileSection

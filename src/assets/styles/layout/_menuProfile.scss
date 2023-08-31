@@ -30,14 +30,16 @@
     @extend %transition;
 
     &:hover {
-      background-color: $color-primary;
-      border-radius: 5px 0 0 5px;
+      &:not(.active) {
+        background-color: $color-primary;
+        border-radius: 5px 0 0 5px;
+      }
     }
   }
 }
 
 .active {
-  background-color: $color-active;
+  background-color: $color-light;
   border-radius: 5px 0 0 5px;
 
   &::before {

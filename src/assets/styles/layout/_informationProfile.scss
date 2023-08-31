@@ -1,0 +1,26 @@
+.information {
+  width: 100%;
+  padding: 25px 15px;
+  border: 1px solid $color-primary;
+  border-left: 0;
+  border-radius: 0 7px 7px 0;
+}
+
+.information__title {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.information__content-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid $color-additional;
+}
+
+.information__content-title {
+  text-transform: uppercase;
+  font-weight: 700;
+}

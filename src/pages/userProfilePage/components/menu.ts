@@ -8,7 +8,6 @@ const navItemsArray = [
   'sign out'
 ]
 
-
 const createMenuBlock = (): HTMLDivElement => createElement('div', ['profile__menu', 'menu'])
 
 const createHeadingElement = (): HTMLHeadingElement => {
@@ -28,9 +27,7 @@ const generateNavList = (): HTMLUListElement => {
   navItemsArray.forEach(item => {
     const element = createListItemElement()
     element.textContent = item
-    if (item === 'personal details') {
-      element.classList.add('active')
-    }
+    element.setAttribute('data-type', item.split(' ')[0])
     list.append(element)
   })
   return list
