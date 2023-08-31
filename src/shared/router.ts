@@ -2,6 +2,7 @@ import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 
+
 type ControllerFunction = () => void;
 
 function createControllerFunction(renderFunction: ControllerFunction): ControllerFunction {
@@ -18,7 +19,8 @@ function updateContainer(content: string): void {
 export async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = await MainPageController();
+    appContainer.innerHTML = ''
+    appContainer.append(await MainPageController());
   }
 }
 
