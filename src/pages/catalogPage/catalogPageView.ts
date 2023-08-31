@@ -97,10 +97,10 @@ async function receiveMetaDescription(item: Product): Promise<ThreeLanguages> {
 
 async function receiveValueDiscounted(item: Product): Promise<ValuePrices> {
    const value: ValuePrices = {
-      type: `${item.masterData.current.masterVariant.prices[0].discounted.value.type}`,
-      currencyCode: `${item.masterData.current.masterVariant.prices[0].discounted.value.currencyCode}`,
-      centAmount: item.masterData.current.masterVariant.prices[0].discounted.value.centAmount,
-      fractionDigits: item.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits,
+      type: item.masterData.current.masterVariant.prices[0].discounted ? `${item.masterData.current.masterVariant.prices[0].discounted.value.type}` : '',
+      currencyCode: item.masterData.current.masterVariant.prices[0].discounted ? `${item.masterData.current.masterVariant.prices[0].discounted.value.currencyCode}` : '',
+      centAmount: item.masterData.current.masterVariant.prices[0].discounted ? item.masterData.current.masterVariant.prices[0].discounted.value.centAmount : 0,
+      fractionDigits: item.masterData.current.masterVariant.prices[0].discounted ? item.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits : 0,
    }
    return value;
 }
