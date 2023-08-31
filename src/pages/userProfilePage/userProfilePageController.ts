@@ -1,6 +1,5 @@
-
-import { renderArticle } from "./components/profile"
-import { getProfileData } from "./userProfilePageModel"
+import { renderArticle } from "./components/information"
+import { getBillingData, getPersonalData } from "./userProfilePageModel"
 
 export const getItemData = async (): Promise<void> => {
   const informationField = document.querySelector('.information')
@@ -8,9 +7,13 @@ export const getItemData = async (): Promise<void> => {
     informationField.firstChild.remove()
   }
   const checkedItem = document.querySelector('.nav__item.active')
-  if (checkedItem?.getAttribute('data-type') === 'personal') {
-    const data = await getProfileData()
-    renderArticle(data)
+  if (checkedItem && checkedItem.textContent && checkedItem.getAttribute('data-type') === 'personal') {
+    const data = await getPersonalData()
+    renderArticle(data, checkedItem.textContent)
+  }
+  if (checkedItem && checkedItem.textContent && checkedItem?.getAttribute('data-type') === 'billing') {
+    const data = await getBillingData()
+    renderArticle(data, checkedItem.textContent)
   }
 }
 
