@@ -1,9 +1,11 @@
 interface Address {
-  addressId: string;
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
+  addressId: string
+  defaultBillingAddressId?: string
+  defaultShippingAddressId?: string
+  street: string
+  city: string
+  postalCode: string
+  country: string
   apartment: string
   building: string
   company: string
@@ -38,6 +40,9 @@ export interface CustomerData {
   addresses: Address[]
   authenticationMode: string
   billingAddressIds: string[]
+  shippingAddressIds: string[]
+  defaultBillingAddressId?: string
+  defaultShippingAddressId?: string
   companyName: string
   createdAt: string
   createdBy: CreatedBy
@@ -54,7 +59,6 @@ export interface CustomerData {
   middleName: string
   password: string
   salutation: string
-  shippingAddressIds: string[]
   stores: string[]
   title: string
   version: number

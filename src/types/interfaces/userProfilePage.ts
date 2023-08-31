@@ -5,13 +5,15 @@ export interface PersonalData {
   birthDate: string
 }
 
-export interface BillingData {
+export interface AddressesData {
   apartment: string
   building: string
   city: string
   company: string
   postalCode: string
   region: string
-  state: string
+  state?: string
   street: string
+  country: string
+  default?: boolean
 }

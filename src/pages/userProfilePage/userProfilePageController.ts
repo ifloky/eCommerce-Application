@@ -1,5 +1,5 @@
 import { renderArticle } from "./components/information"
-import { getBillingData, getPersonalData } from "./userProfilePageModel"
+import { getBillingData, getPersonalData, getShippingData } from "./userProfilePageModel"
 
 export const getItemData = async (): Promise<void> => {
   const informationField = document.querySelector('.information')
@@ -7,13 +7,26 @@ export const getItemData = async (): Promise<void> => {
     informationField.firstChild.remove()
   }
   const checkedItem = document.querySelector('.nav__item.active')
-  if (checkedItem && checkedItem.textContent && checkedItem.getAttribute('data-type') === 'personal') {
-    const data = await getPersonalData()
-    renderArticle(data, checkedItem.textContent)
-  }
-  if (checkedItem && checkedItem.textContent && checkedItem?.getAttribute('data-type') === 'billing') {
-    const data = await getBillingData()
-    renderArticle(data, checkedItem.textContent)
+  if (checkedItem && checkedItem.textContent) {
+
+    if (checkedItem.getAttribute('data-type') === 'personal') {
+      const data = await getPersonalData()
+      renderArticle(data, checkedItem.textContent)
+    }
+    if (checkedItem?.getAttribute('data-type') === 'billing') {
+      const data = await getBillingData()
+      const title = checkedItem.textContent
+      data.forEach((address, ind) => {
+        renderArticle(address, `${title} #${ind + 1}`)
+      })
+    }
+    if (checkedItem?.getAttribute('data-type') === 'shipping') {
+      const data = await getShippingData()
+      const title = checkedItem.textContent
+      data.forEach((address, ind) => {
+        renderArticle(address, `${title} #${ind + 1}`)
+      })
+    }
   }
 }
 
