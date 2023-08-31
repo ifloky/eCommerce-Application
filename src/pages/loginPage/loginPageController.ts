@@ -1,4 +1,5 @@
 import { setCookie } from "../../shared/API"
+import Header from "../../widgets/header/headerView"
 
 export const isShowed = (event: Event): void => {
   const { target } = event
@@ -107,6 +108,7 @@ export async function loginUser(): Promise<void> {
     } = await response.json();
     setCookie("access_token", tokenResponse.access_token, tokenResponse.expires_in);
     setCookie("refresh_token", tokenResponse.refresh_token, 500);
+    Header.refresh(true);
   } catch (error) {
     throw new Error('' + error);
   }

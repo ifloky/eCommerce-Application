@@ -12,6 +12,7 @@
   background-color: transparent;
   color: $color-primary;
   border: 1px $color-primary solid;
+  cursor: pointer;
   @extend %transition;
 }
 
