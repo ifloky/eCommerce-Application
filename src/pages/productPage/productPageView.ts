@@ -1,18 +1,8 @@
 import { postPasswordFlow } from "../../shared/API";
 import { createElement } from "../../utils/abstract";
+import { ProductDetail } from "./productPageController";
 
-export interface ProductDetail {
-  [key: string]: string;
-};
 
-const product: ProductDetail = {
-  'id':'ididididididid',
-  'name': 'Seed eprst',
-  'link': 'link',
-  'price': 'price',
-  'sale': 'sale',
-  'description': 'description'
-}
 
 interface DataOfProduct {
   id: string;
@@ -57,7 +47,7 @@ productContainer.addEventListener('click', (e) => {
   }
 });
 
-export function productPageView(): HTMLElement {
+export function productPageView(product: ProductDetail): HTMLElement {
   productContainer.innerHTML = `
     <h1 class="product__title">${product.name}</h1>
     <div class="product__wrapper" data-id="${product.id}">

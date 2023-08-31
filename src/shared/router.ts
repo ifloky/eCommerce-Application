@@ -1,6 +1,6 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
-import { productPageView } from "../pages/productPage/productPageView";
+import { ProductPage } from "../pages/productPage/productPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 
 
@@ -45,7 +45,7 @@ async function catalogController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
-    appContainer.append(productPageView());
+    appContainer.append(ProductPage.render());
   }
 }
 
