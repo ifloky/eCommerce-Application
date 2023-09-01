@@ -1,9 +1,8 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
-import { catalogRender } from "../pages/catalogPage/catalogPageView";
+import { catalogRender, createCatalogItems, processProducts } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
-
 
 type ControllerFunction = () => void;
 
@@ -51,6 +50,14 @@ export function catalogController(): void {
   }
 }
 
+async function catalogItemsController(): Promise<void> {
+  await processProducts();
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(createCatalogItems());
+  }
+} 
 export function productController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
@@ -68,6 +75,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
   '/catalog': createControllerFunction(catalogController),
+  '/tomatoCorn': createControllerFunction(catalogItemsController),
   '/product': createControllerFunction(productController),
 };
 

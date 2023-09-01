@@ -8,7 +8,6 @@ let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
-
 type HttpMethod = 'GET' | 'POST';
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
@@ -55,10 +54,10 @@ const fetchWithAuthorization = async <T>(
   if (data) {
     requestOptions.body = JSON.stringify(data);
   }
-  
+
   const response: Response = await fetch(BASE_URL + '/' + BASE_PROJECT_KEY + url, requestOptions);
 
-  if (!response.ok) {    
+  if (!response.ok) {
     const errorMessage = createElement('div', ['error'])
     errorMessage.innerHTML = 'hey dude, check your input';
     document.body.appendChild(errorMessage)
