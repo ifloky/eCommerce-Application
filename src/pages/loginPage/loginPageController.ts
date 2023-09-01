@@ -71,6 +71,8 @@ export const isValid = (event: Event): void => {
   }
 }
 
+
+
 export const redirectToRegistrationPage = (event: Event): void => {
   const { target } = event
   if (target instanceof HTMLButtonElement && target.type === 'button') {
@@ -93,6 +95,9 @@ export const loginUser = async (event: Event): Promise<void> => {
     getAllTokens(email, password)
     const isCorrectUserData = await checkUser(email, password)
     if (isCorrectUserData.ok) {
+      const data = await isCorrectUserData.json()
+      const { id } = data.customer
+      localStorage.setItem('id', id)
       localStorage.setItem('login', 'true')
       homeController()
     }

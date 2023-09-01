@@ -9,7 +9,7 @@ export async function categoryNavigationView(categoryList: CategoryObject[]): Pr
   categoryNavigationWrapper.innerHTML = categoryList.map((categoryItem) => {
     return !categoryItem.parent 
     ? `<li class="category-navigation__item">
-        <a class="category-navigation__link" href="/${categoryItem.name['en-US']}">${categoryItem.name['en-US']}</a>
+        <a class="category-navigation__link" href="/${categoryItem.name['en-US']}" id="${categoryItem.id}">${categoryItem.name['en-US']}</a>
       </li>` 
     : '';
   }).join('');

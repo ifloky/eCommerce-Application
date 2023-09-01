@@ -4,10 +4,12 @@
 @import "./base/base.scss";
 @import "./components/buttons";
 @import "./components/cardProduct";
+@import "./components/slider";
 @import "./base/errors";
 @import "./layout/header/header";
 
 @import "./pages/loginPage";
 @import "./pages/registrationPage";
 @import "./pages/mainPage";
+@import "./pages/productPage";
 @import "./pages/catalogPage";
