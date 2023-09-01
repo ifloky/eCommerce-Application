@@ -5,8 +5,8 @@ const BASE_URL = process.env.BASE_URL || "";
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || "";
 let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 
-const USER_SECRET = process.env.USER_SECRET || "";
-const USER_ID = process.env.USER_ID || "";
+const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
+const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
 
 type HttpMethod = 'GET' | 'POST';
@@ -83,7 +83,7 @@ export function deleteCookie(name: string): void {
 
 export const fetchAndSetBearerToken = async (): Promise<void> => {
   try {
-    const token = await fetchBearerToken(USER_ID, USER_SECRET);
+    const token = await fetchBearerToken(DEVELOP_ID, DEVELOP_SECRET);
     BEARER_TOKEN = token;
     setCookie('token', token, 24);    
   } catch (error) {

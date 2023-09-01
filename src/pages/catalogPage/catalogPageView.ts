@@ -1,7 +1,11 @@
 /* eslint-disable no-console */
-import { fetchBearerToken, DEVELOP_ID, DEVELOP_SECRET } from "../../shared/API";
-
+import { fetchBearerToken} from "../../shared/API";
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices } from "../../types/interfaces/Product";
+
+const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
+const DEVELOP_ID = process.env.DEVELOP_ID || "";
+
+
 
 const getAllProductsInfo = async(): Promise<Product[]> => {
    const response = await fetch('https://api.us-central1.gcp.commercetools.com/bestshop-rs/products?limit=25', {
