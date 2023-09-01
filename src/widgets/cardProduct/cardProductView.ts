@@ -1,15 +1,5 @@
 import { Product } from "../../types/interfaces/Product";
-//  import { ProductCard } from "../../types/interfaces/widgets/ProductCard";
 import { createElement } from "../../utils/abstract";
-
-// TO DO: add this to call function
-// const productCard: ProductCard = {
-//   'img': 'masterData.current.masterVariant.images[0]',
-//   'name': 'masterData.current.name["en-US"]',
-//   'info': 'masterData.current.description["en-US"]',
-//   'price': 'masterData.current.masterVariant.prices.value.centAmount',
-//   'sale': 'masterData.current.masterVariant.prices.discounted.centAmount'
-// }
 
 export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);

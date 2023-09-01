@@ -164,10 +164,8 @@ export async function processProducts(): Promise<Product[]> {
         },
       }
     };
-      // console.log(oneProduct);
     productsResult.push(oneProduct);
   });
-  console.log(productsResult);
   return productsResult;
 }
 
