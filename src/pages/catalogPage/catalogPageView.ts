@@ -2,7 +2,7 @@
 import { fetchBearerToken, DEVELOP_ID, DEVELOP_SECRET } from "../../shared/API";
 
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices } from "../../types/interfaces/Product";
-
+import { cardProductView } from "../../widgets/cardProduct/cardProductView";
 const getAllProductsInfo = async(): Promise<Product[]> => {
    const response = await fetch('https://api.us-central1.gcp.commercetools.com/bestshop-rs/products?limit=25', {
       method: 'GET',
@@ -147,29 +147,39 @@ async function receiveMasterVariant(item: Product): Promise<MasterVariant> {
    return masterVariant;
 }
 
-async function processProducts(): Promise<void> {
+async function processProducts(): Promise<Product[]> {
    const allProducts = await getAllProductsInfo();
    allProducts.forEach(async item => {
-      const oneProduct: Product = {
-        id: item.id,
-        masterData: {
-          current: {
-            name: await receiveName(item),
-            description: await receiveDescription(item),
-            categories: await receiveCategories(item),
-            slug: await receiveSlug(item),
-            metaTitle: await receiveMetaTitle(item),
-            metaDescription: await receiveMetaDescription(item),
-            masterVariant: await receiveMasterVariant(item),
-          },
-        }
-      };
+    const oneProduct: Product = {
+      id: item.id,
+      masterData: {
+        current: {
+          name: await receiveName(item),
+          description: await receiveDescription(item),
+          categories: await receiveCategories(item),
+          slug: await receiveSlug(item),
+          metaTitle: await receiveMetaTitle(item),
+          metaDescription: await receiveMetaDescription(item),
+          masterVariant: await receiveMasterVariant(item),
+        },
+      }
+    };
       // console.log(oneProduct);
-      productsResult.push(oneProduct);
+    productsResult.push(oneProduct);
    });
-   console.log(productsResult);
+  console.log(productsResult);
+  console.log(Array.isArray(productsResult));
+  return productsResult;
   }
 
-processProducts();
-
-
+export async function createCatalogItems(): Promise<HTMLElement> {
+  await processProducts();
+  const allProductsCards = document.createElement('div');
+  allProductsCards.classList.add('catalogitems-wrapper');
+  console.log(productsResult.length);
+  for( let i = 0; i < productsResult.length; i +=1) {
+    allProductsCards.innerHTML += cardProductView;
+  }
+  console.log(allProductsCards.innerHTML);
+  return allProductsCards;
+}
