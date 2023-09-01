@@ -10,7 +10,7 @@ const productCard: ProductCard = {
   'sale': 'Sale-Price'
 }
 
-export async function cardProductView(): Promise<HTMLElement> {
+export function cardProductView(): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
 
   cardProductWrapper.innerHTML = ` 

@@ -16,7 +16,6 @@ export async function initializeApp(): Promise<void> {
     appContainer.id = "app";
     document.body.append(appContainer);
 
-
     const savedState = localStorage.getItem('appState');
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
