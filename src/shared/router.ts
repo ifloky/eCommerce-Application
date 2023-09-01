@@ -1,7 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
-import { catalogRender, createCatalogItems } from "../pages/catalogPage/catalogPageView";
+import { catalogRender, createCatalogItems, processProducts } from "../pages/catalogPage/catalogPageView";
 
 
 type ControllerFunction = () => void;
@@ -51,10 +51,11 @@ function catalogController(): void {
 }
 
 async function catalogItemsController(): Promise<void> {
+  await processProducts();
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
-    appContainer.append(await createCatalogItems());
+    appContainer.append(createCatalogItems());
   }
 }
 
