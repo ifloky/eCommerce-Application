@@ -1,15 +1,8 @@
 import { createElement } from "../../utils/abstract";
-import { createSliderElement } from "../../widgets/Slider/sliderView";
+import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
 import { ProductDetail } from "./productPageController";
 
-const productContainer = createElement('div', ['product__container'])
-
-productContainer.addEventListener('click', (e) => {
-  if ((e.target as HTMLElement).nodeName === 'BUTTON') {
-    // eslint-disable-next-line no-console
-    console.log('// TODO: add to cart func')
-  }
-});
+export const productContainer = createElement('div', ['product__container'])
 
 export function productPageView(product: ProductDetail): HTMLElement {
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
@@ -34,6 +27,14 @@ export function productPageView(product: ProductDetail): HTMLElement {
 
   const sliderElement = createSliderElement(arrayOfImageLinks);
   productContainer.querySelector('.product__image')?.append(sliderElement);
-
+  productContainer.addEventListener('click', (e) => {
+    
+    if ((e.target as HTMLElement).nodeName === 'BUTTON') {
+      // TODO: add to cart func'
+    }
+    if ((e.target as HTMLElement).classList.contains("slider__img")) {
+      showModal(e, arrayOfImageLinks);
+    }
+  });
   return productContainer;
 }
