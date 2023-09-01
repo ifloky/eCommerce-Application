@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
-import { fetchBearerToken, DEVELOP_ID, DEVELOP_SECRET } from "../../shared/API";
-
+import { getAnonymousFlow } from "../../shared/API";
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices } from "../../types/interfaces/Product";
+
 import { priceWithDiscount, priceWithoutDiscount } from "../../widgets/cardProduct/cardProductView";
 const getAllProductsInfo = async(): Promise<Product[]> => {
    const response = await fetch('https://api.us-central1.gcp.commercetools.com/bestshop-rs/products?limit=25', {
@@ -73,6 +72,7 @@ async function receiveSlug(item: Product): Promise<ThreeLanguages> {
     'en-US': `${item.masterData.current.slug['en-US']}`,
     ru: `${item.masterData.current.slug.ru}`,
     'be-BY': `${item.masterData.current.slug['be-BY']}`,
+
   }
   return slug;
 }
@@ -80,7 +80,7 @@ async function receiveSlug(item: Product): Promise<ThreeLanguages> {
 async function receiveMetaTitle(item: Product): Promise<ThreeLanguages> {
   const metaTitle: ThreeLanguages = {
     'en-US': `${item.masterData.current.metaTitle['en-US']}`,
-    ru: `${item.masterData.current.metaTitle.ru}`,
+     ru: `${item.masterData.current.metaTitle.ru}`,
     'be-BY': `${item.masterData.current.metaTitle['be-BY']}`,
   }
   return metaTitle;
@@ -89,7 +89,7 @@ async function receiveMetaTitle(item: Product): Promise<ThreeLanguages> {
 async function receiveMetaDescription(item: Product): Promise<ThreeLanguages> {
   const metaDescription: ThreeLanguages = {
     'en-US': `${item.masterData.current.metaDescription['en-US']}`,
-    ru: `${item.masterData.current.metaDescription.ru}`,
+     ru: `${item.masterData.current.metaDescription.ru}`,
     'be-BY': `${item.masterData.current.metaDescription['be-BY']}`,
   }
   return metaDescription;
@@ -168,6 +168,7 @@ export async function processProducts(): Promise<Product[]> {
   });
   return productsResult;
 }
+
 
 export function createCatalogItems(): HTMLElement {
   processProducts();
