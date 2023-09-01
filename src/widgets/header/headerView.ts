@@ -24,7 +24,7 @@ export function headerView(links: Links, signIn: boolean): string {
     </div>
     <a href=${links.cart} class="header__cart-btn btn-light">Cart</a>
     ${signIn ? `<div class="header__user-wrapper">
-          <a href=${links.profile} class="header__btn btn">Profile</a>
+          <a href="/profile" class="header__btn btn">Profile</a>
           <button id="signOut" class="header__btn btn">Sign Out</button>
         </div>`
       : `
