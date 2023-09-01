@@ -1,7 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
-import { ProductPage } from "../pages/productPage/productPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
+import { catalogRender } from "../pages/catalogPage/catalogPageView";
 
 
 type ControllerFunction = () => void;
@@ -17,7 +17,7 @@ function updateContainer(content: string): void {
   }
 }
 
-async function homeController(): Promise<void> {
+export async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
@@ -33,7 +33,8 @@ function logInController(): void {
   }
 }
 
-function registerController(): void {
+
+export function registerController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
@@ -41,14 +42,13 @@ function registerController(): void {
   }
 }
 
-async function catalogController(): Promise<void> {
+function catalogController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
-    appContainer.append(ProductPage.render());
+    appContainer.append(catalogRender());
   }
 }
-
 
 function notFoundController(): void {
   updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
@@ -58,7 +58,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/': createControllerFunction(homeController),
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
-  '/catalog': createControllerFunction(catalogController),
+  '/catalog': createControllerFunction(catalogController)
 };
 
 function handleRoute(): void {
