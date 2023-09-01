@@ -155,6 +155,5 @@ async function processProducts(): Promise<void> {
   }
 }
 
-processProducts();
 
-
+processProducts()
