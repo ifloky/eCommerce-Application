@@ -4,8 +4,10 @@ import { createElement } from '../utils/abstract';
 const BASE_URL = process.env.BASE_URL || "";
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || "";
 let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
-export const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
-export const DEVELOP_ID = process.env.DEVELOP_ID || "";
+
+const USER_SECRET = process.env.USER_SECRET || "";
+const USER_ID = process.env.USER_ID || "";
+
 
 type HttpMethod = 'GET' | 'POST';
 
@@ -81,7 +83,7 @@ export function deleteCookie(name: string): void {
 
 export const fetchAndSetBearerToken = async (): Promise<void> => {
   try {
-    const token = await fetchBearerToken(DEVELOP_ID, DEVELOP_SECRET);
+    const token = await fetchBearerToken(USER_ID, USER_SECRET);
     BEARER_TOKEN = token;
     setCookie('token', token, 24);    
   } catch (error) {
