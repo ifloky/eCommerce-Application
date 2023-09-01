@@ -2,7 +2,7 @@ export interface PersonalData {
   name: string,
   middleName: string,
   lastName: string,
-  birthDate: string
+  birthDay: string
 }
 
 export interface AddressesData {
@@ -16,4 +16,11 @@ export interface AddressesData {
   street: string
   country: string
   default?: boolean
+}
+
+export interface UpdatePersonalData {
+  name: string
+  middleName: string
+  lastName: string
+  birthDay: string
 }

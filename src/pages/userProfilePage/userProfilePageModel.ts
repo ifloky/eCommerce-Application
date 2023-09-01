@@ -1,12 +1,13 @@
+import { getCookie } from "../../shared/API";
 import { CustomerData } from "../../types/interfaces/customerData";
-import { AddressesData, PersonalData } from "../../types/interfaces/userProfilePage";
+import { AddressesData, PersonalData, UpdatePersonalData } from "../../types/interfaces/userProfilePage";
 
 const getCustomerData = async (): Promise<CustomerData> => {
   const url = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')}`
   const options = {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+      'Authorization': `Bearer ${getCookie('access_token')}`
     }
   }
   const response = await (await fetch(url, options)).json()
@@ -19,7 +20,7 @@ export const getPersonalData = async (): Promise<PersonalData> => {
     name: response.firstName,
     middleName: response.middleName,
     lastName: response.lastName,
-    birthDate: response.dateOfBirth
+    birthDay: response.dateOfBirth
   }
   return personalData
 }
@@ -34,6 +35,7 @@ export const getBillingData = async (): Promise<AddressesData[]> => {
     const isDefault = billingAddress?.id === response.defaultBillingAddressId
     const addressData = {
       country: billingAddress?.country || '',
+      state: billingAddress?.state || '',
       region: billingAddress?.region || '',
       city: billingAddress?.city || '',
       street: billingAddress?.streetName || '',
@@ -60,6 +62,7 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
     const isDefault = shippingAddress?.id === response.defaultShippingAddressId
     const addressData = {
       country: shippingAddress?.country || '',
+      state: shippingAddress?.state || '',
       region: shippingAddress?.region || '',
       city: shippingAddress?.city || '',
       street: shippingAddress?.streetName || '',
@@ -74,4 +77,39 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
     addressDataArray.push(addressData)
   })
   return addressDataArray
+}
+
+export const updatePersonalData = async (data: UpdatePersonalData): Promise<Response> => {
+  const { version } = await getCustomerData()
+  const url = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')} `
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getCookie('access_token')} `
+    },
+    body: JSON.stringify({
+      "version": version,
+      "actions": [
+        {
+          "action": "setFirstName",
+          "firstName": data.name
+        },
+        {
+          "action": "setMiddleName",
+          "middleName": data.middleName
+        },
+        {
+          "action": "setLastName",
+          "lastName": data.lastName
+        },
+        {
+          "action": "setDateOfBirth",
+          "dateOfBirth": data.birthDay
+        }
+      ]
+    })
+  }
+  const response = await fetch(url, options).catch(error => { throw new Error(error) })
+  return response
 }

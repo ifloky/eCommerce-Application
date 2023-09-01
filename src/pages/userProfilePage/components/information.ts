@@ -21,13 +21,13 @@ const createContentLine = (titleText: string, valueText: string): HTMLDivElement
   value.textContent = valueText
   if (titleText === 'default') {
     title.textContent = ''
-
     value.textContent = 'default address'
     line.classList.add('information__content-line_default')
   }
   line.append(title, value)
   return line
 }
+
 
 const createContentWrapper = (data: PersonalData | AddressesData): HTMLDivElement => {
   const wrapper = createElement('div', ['information__content'])

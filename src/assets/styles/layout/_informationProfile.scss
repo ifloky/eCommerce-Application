@@ -20,7 +20,7 @@
   padding: 10px 15px;
 
   &_default {
-    background-color: green;
+    background-color: $color-active;
 
     .information__content-value {
       text-transform: uppercase;
