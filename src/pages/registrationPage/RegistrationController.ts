@@ -121,9 +121,9 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
 }
 
 export function validationForm(registrationUser: HTMLElement):void {
-  const formInputs = registrationUser.querySelectorAll('.form-input');  
+  const formInputs = registrationUser.querySelectorAll('.form-input');
   registrationUser.querySelector('.registration-form')?.addEventListener('submit', (event) => {
-    let isValid = true;    
+    let isValid = true;
     formInputs.forEach((input) => {
         isValid = false;
         const errorMessage = document.createElement('div');

@@ -4,12 +4,14 @@ import { createElement } from '../utils/abstract';
 const BASE_URL = process.env.BASE_URL || "";
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || "";
 let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
+
 const USER_SECRET = process.env.USER_SECRET || "";
 const USER_ID = process.env.USER_ID || "";
 
+
 type HttpMethod = 'GET' | 'POST';
 
-const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
+export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
   const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/token';
   const body = new URLSearchParams({
     'grant_type': 'client_credentials'
