@@ -8,15 +8,19 @@ export function productPageView(product: ProductDetail): HTMLElement {
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
     (image) => image.url
   );
-
+  const discountedPrice = (product.masterData.current.masterVariant.prices[0].value.centAmount) / 100;
+  let oldPrice;
+  if(product.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
+    oldPrice = product.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
+  }
   productContainer.innerHTML = `
     <h1 class="product__title">${product.masterData.current.metaTitle['en-US']}</h1>
     <div class="product__wrapper" data-id="${product.id}">
       <div class="product__image"></div>
       <div class="product__buy-wrapper">
         <div class="product__price-wrapper">
-          <p class="product__price">${(product.masterData.current.masterVariant.prices[0].value.centAmount) / 100} USD</p>
-          <p class="product__price-sale">${(product.masterData.current.masterVariant.prices[0].discounted.value.centAmount) / 100} USD</p>
+          <p class="product__price">${oldPrice ? oldPrice + ' $' : ''}</p>
+          <p class="product__price-sale">${discountedPrice ? discountedPrice + ' $' : ''}</p>
         </div>
         <button class="btn product__to-cart" id="toCart">add to cart</button>
       </div>
@@ -26,15 +30,15 @@ export function productPageView(product: ProductDetail): HTMLElement {
   `;
 
   const sliderElement = createSliderElement(arrayOfImageLinks);
-  productContainer.querySelector('.product__image')?.append(sliderElement);
-  productContainer.addEventListener('click', (e) => {
-    
-    if ((e.target as HTMLElement).nodeName === 'BUTTON') {
-      // TODO: add to cart func'
-    }
-    if ((e.target as HTMLElement).classList.contains("slider__img")) {
-      showModal(e, arrayOfImageLinks);
+  const productImage = productContainer.querySelector('.product__image');
+  productImage?.append(sliderElement);
+  productImage?.addEventListener('click', (e) => {
+    if (e instanceof MouseEvent && e.target instanceof HTMLElement) {
+      if (e.target.classList.contains("slider__img")) {
+        showModal(e, arrayOfImageLinks);
+      }
     }
   });
+  
   return productContainer;
 }

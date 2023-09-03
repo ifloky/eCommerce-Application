@@ -63,15 +63,25 @@ const productTemplate: ProductDetail = {
 };
 
 
-const product = async (od: string): Promise<ProductDetail> => {
+export const product = async (od: string): Promise<ProductDetail> => {
   return getAnonymousFlow(`/products/${od}`);
 }
 
 export const ProductPage = {
-  render: (): HTMLElement => {return productPageView(productTemplate)},
-  update: async (od:string): Promise<HTMLElement> => {
-    const productData = await product(od);
-    return productPageView(productData);
+  render: (): void => {
+    const appContainer = document.getElementById('app');
+    if (appContainer) {
+      appContainer.innerHTML = ''
+      appContainer.append(productPageView(productTemplate))}
+  },
+      
+  update: async (od:string): Promise<void> => {
+    const appContainer = document.getElementById('app');
+    if (appContainer) {
+      appContainer.innerHTML = ''
+      const productData = await product(od);
+      appContainer.append(productPageView(productData))
+    };
   },
 };
 

@@ -1,10 +1,11 @@
 import { fetchBearerToken } from "../../shared/API";
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices } from "../../types/interfaces/Product";
+import { createElement } from "../../utils/abstract";
 
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
-import { priceWithDiscount, priceWithoutDiscount } from "../../widgets/cardProduct/cardProductView";
+import { priceWithDiscount } from "../../widgets/cardProduct/cardProductView";
 const getAllProductsInfo = async(): Promise<Product[]> => {
    const response = await fetch('https://api.us-central1.gcp.commercetools.com/bestshop-rs/products?limit=25', {
       method: 'GET',
@@ -23,15 +24,13 @@ const getAllProductsInfo = async(): Promise<Product[]> => {
 }
 
 export function catalogRender(): HTMLElement {
-  const catalogWrapper: HTMLDivElement = document.createElement('div');
-  const catalogWrapperTitle: HTMLElement = document.createElement('h2');
-  catalogWrapperTitle.classList.add('catalog-wrapper-title');
+  const catalogWrapper: HTMLDivElement = createElement('div', ['catalog-wrapper']);
+  const catalogWrapperTitle: HTMLElement = createElement('h2', ['catalog-wrapper-title']);
   catalogWrapperTitle.innerHTML = `Our seeds catalog`;
   catalogWrapper.append(catalogWrapperTitle);
-  catalogWrapper.classList.add('catalog-wrapper');
 
-  const catalogCategories: HTMLDivElement = document.createElement('div',);
-  catalogCategories.classList.add('catalog-wrapper-categories');
+  const catalogCategories: HTMLDivElement = createElement('div', ['catalog-wrapper-categories']);
+  catalogCategories.classList.add();
   catalogCategories.innerHTML = `<a class="catalog-item-title catalog-item-title-tomato" href="/tomatoCorn">Tomato, corn, broccoli, coliflower</a>
   <a class="catalog-item-title catalog-item-title-pumpkin" href="/otherSeeds">Other seeds</a>`;
 
@@ -174,17 +173,11 @@ export async function processProducts(): Promise<Product[]> {
 
 
 export function createCatalogItems(): HTMLElement {
-  processProducts();
   const allProductsCards = document.createElement('div');
   allProductsCards.classList.add('catalogitems-wrapper');
   productsResult.forEach(elem => {
-    if (elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount !== 0) {
-      const newElem = priceWithDiscount(elem);
-      allProductsCards.append(newElem)
-    } else {
-      const newElem = priceWithoutDiscount(elem);
-      allProductsCards.append(newElem)
-    }
+    const newElem = priceWithDiscount(elem);
+    allProductsCards.append(newElem)
   })
 
   return allProductsCards;

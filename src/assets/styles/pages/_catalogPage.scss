@@ -1,3 +1,10 @@
+.catalogitems-wrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
 .catalog-wrapper {
   border-radius: 7px;
   border: 1px solid #9C96E2;

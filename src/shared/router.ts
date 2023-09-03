@@ -59,11 +59,7 @@ async function catalogItemsController(): Promise<void> {
   }
 } 
 export function productController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(ProductPage.render());
-  }
+  ProductPage.render()
 }
 
 function notFoundController(): void {

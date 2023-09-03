@@ -54,11 +54,10 @@ export function showModal(ev: MouseEvent, imageUrls: string[]): void {
   const sliderContainer = createSliderElement(imageUrls);
   const closeButton = createElement('button', ['modal__close-button']);
   closeButton.innerHTML = 'X';
-
   modalContent.append(sliderContainer);
   modalContainer.append(closeButton, modalContent);
   productContainer.append(modalContainer);
-  
+    
   closeButton.addEventListener('click', () => {
     productContainer.removeChild(modalContainer);
   });
