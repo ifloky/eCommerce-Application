@@ -15,7 +15,9 @@ export interface AddressesData {
   state?: string
   street: string
   country: string
+  id: string
   default?: boolean
+  type: string
 }
 
 export interface UpdatePersonalData {

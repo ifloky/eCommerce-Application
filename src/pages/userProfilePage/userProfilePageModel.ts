@@ -1,6 +1,21 @@
 import { getCookie } from "../../shared/API";
 import { CustomerData } from "../../types/interfaces/customerData";
-import { AddressesData, PersonalData, UpdatePersonalData } from "../../types/interfaces/userProfilePage";
+import {
+  AddressesData,
+  PersonalData,
+  UpdatePersonalData
+} from "../../types/interfaces/userProfilePage";
+
+const urlUpdate = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')}`
+
+const optionsUpdate = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${getCookie('access_token')} `
+  },
+  body: ''
+}
 
 const getCustomerData = async (): Promise<CustomerData> => {
   const url = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')}`
@@ -34,6 +49,7 @@ export const getBillingData = async (): Promise<AddressesData[]> => {
     const billingAddress = addressesArray.find(address => address.id === addressId)
     const isDefault = billingAddress?.id === response.defaultBillingAddressId
     const addressData = {
+      default: isDefault,
       country: billingAddress?.country || '',
       state: billingAddress?.state || '',
       region: billingAddress?.region || '',
@@ -43,9 +59,8 @@ export const getBillingData = async (): Promise<AddressesData[]> => {
       apartment: billingAddress?.apartment || '',
       postalCode: billingAddress?.postalCode || '',
       company: billingAddress?.company || '',
-    }
-    if (isDefault) {
-      Object.defineProperty(addressData, 'default', { value: '', enumerable: true })
+      id: billingAddress?.id || '',
+      type: 'billing'
     }
     addressDataArray.push(addressData)
   })
@@ -61,6 +76,7 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
     const shippingAddress = addressesArray.find(address => address.id === addressId)
     const isDefault = shippingAddress?.id === response.defaultShippingAddressId
     const addressData = {
+      default: isDefault,
       country: shippingAddress?.country || '',
       state: shippingAddress?.state || '',
       region: shippingAddress?.region || '',
@@ -70,9 +86,8 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
       apartment: shippingAddress?.apartment || '',
       postalCode: shippingAddress?.postalCode || '',
       company: shippingAddress?.company || '',
-    }
-    if (isDefault) {
-      Object.defineProperty(addressData, 'default', { value: '', enumerable: true })
+      id: shippingAddress?.id || '',
+      type: 'shipping'
     }
     addressDataArray.push(addressData)
   })
@@ -81,35 +96,64 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
 
 export const updatePersonalData = async (data: UpdatePersonalData): Promise<Response> => {
   const { version } = await getCustomerData()
-  const url = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')} `
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getCookie('access_token')} `
-    },
-    body: JSON.stringify({
-      "version": version,
-      "actions": [
-        {
-          "action": "setFirstName",
-          "firstName": data.name
-        },
-        {
-          "action": "setMiddleName",
-          "middleName": data.middleName
-        },
-        {
-          "action": "setLastName",
-          "lastName": data.lastName
-        },
-        {
-          "action": "setDateOfBirth",
-          "dateOfBirth": data.birthDay
-        }
-      ]
-    })
+  const body = JSON.stringify({
+    "version": version,
+    "actions": [
+      {
+        "action": "setFirstName",
+        "firstName": data.name
+      },
+      {
+        "action": "setMiddleName",
+        "middleName": data.middleName
+      },
+      {
+        "action": "setLastName",
+        "lastName": data.lastName
+      },
+      {
+        "action": "setDateOfBirth",
+        "dateOfBirth": data.birthDay
+      }
+    ]
+  })
+  optionsUpdate.body = body
+  const response = await fetch(urlUpdate, optionsUpdate).catch(error => { throw new Error(error) })
+  return response
+}
+
+export const updateAddressData = async (data: AddressesData): Promise<Response> => {
+  const { id } = data
+  const { version } = await getCustomerData()
+  const body = {
+    version: version,
+    actions: [{
+      action: "changeAddress",
+      addressId: id,
+      address: data
+    }]
   }
-  const response = await fetch(url, options).catch(error => { throw new Error(error) })
+  optionsUpdate.body = JSON.stringify(body)
+  const response = await fetch(urlUpdate, optionsUpdate).catch(error => { throw new Error(error) })
+  return response
+}
+
+export const setDefaultAddress = async (data: AddressesData): Promise<Response> => {
+  const { id, type } = data
+  const { version } = await getCustomerData()
+  const actionsForBilling = {
+    action: "setDefaultBillingAddress",
+    addressId: id
+  }
+  const actionsForShipping = {
+    action: "setDefaultShippingAddress",
+    addressId: id
+  }
+  const body = {
+    version: version,
+    actions: [type === 'billing' ? actionsForBilling : actionsForShipping]
+  }
+  optionsUpdate.body = JSON.stringify(body)
+  const response = await fetch(urlUpdate, optionsUpdate).catch(error => { throw new Error(error) })
   return response
 }

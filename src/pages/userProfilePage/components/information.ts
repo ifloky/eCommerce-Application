@@ -28,13 +28,19 @@ const createContentLine = (titleText: string, valueText: string): HTMLDivElement
   return line
 }
 
-
 const createContentWrapper = (data: PersonalData | AddressesData): HTMLDivElement => {
   const wrapper = createElement('div', ['information__content'])
   const dataArr = Object.entries(data)
   dataArr.forEach(item => {
-    const line = createContentLine(item[0], item[1])
-    wrapper.append(line)
+    const [key, value] = item
+    if (key !== 'default') {
+      const line = createContentLine(key, value)
+      wrapper.append(line)
+    }
+    else if (value !== false) {
+      const line = createContentLine(key, value)
+      wrapper.append(line)
+    }
   })
   return wrapper
 }
@@ -47,7 +53,7 @@ export const generateArticle = (data: PersonalData | AddressesData, text: string
   return article
 }
 
-export const renderArticle = (data: PersonalData | AddressesData, title: string): void => {
+export const renderArticle = (data: PersonalData | AddressesData, title = ''): void => {
   const articleElement = generateArticle(data, title)
   const section = document.querySelector('.information')
   section?.append(articleElement)

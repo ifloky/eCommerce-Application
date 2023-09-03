@@ -1,11 +1,6 @@
-/* eslint-disable no-console */
-import {
-  AddressesData,
-  //  AddressesData,
-  PersonalData
-} from "../../../types/interfaces/userProfilePage";
+import { AddressesData, PersonalData } from "../../../types/interfaces/userProfilePage";
 import { createElement } from "../../../utils/abstract";
-import { updatePersonalDetails } from "../userProfilePageController";
+import { updateData } from "../userProfilePageController";
 
 const legendsTextContent = {
   personal: 'Edit personal details',
@@ -19,99 +14,112 @@ const createInputElement = (): HTMLInputElement => createElement('input', ['edit
 
 const createEditBlocksWrapper = (): HTMLDivElement => createElement('div', ['edit'])
 
-const createEditLineContent = (labelText: string, inputText: string): HTMLDivElement => {
+const createEditLineContent = (labelText: string, inputText: string, addressType: string): HTMLDivElement => {
   const line = createElement('div', ['edit__line-content'])
   const label = createLabelElement()
   label.textContent = labelText
-  label.setAttribute('for', labelText)
+  label.setAttribute('for', `${addressType}-${labelText}`)
   const input = createInputElement()
   if (labelText === 'birthDay') {
     input.type = 'date'
   }
+  if (labelText === 'id') {
+    input.disabled = true
+  }
   input.value = inputText
-  input.id = labelText
+  input.id = `${addressType}-${labelText}`
   line.append(label, input)
   return line
 }
 
-const createPersonalDetailsEditForm = (personalData: PersonalData): HTMLElement => {
-  const form = createElement('form', ['edit-personal'])
-  const dataArrays = Object.entries(personalData)
-  dataArrays.forEach(item => {
-    const [key, value] = item
-    const line = createEditLineContent(key, value)
-    form.append(line)
-  })
-  const editButton = createElement('button', ['button', 'button_edit'])
-  editButton.type = 'button'
-  editButton.textContent = 'Edit'
-  form.append(editButton)
-  return form
+const createSaveButton = (): HTMLButtonElement => {
+  const saveButton = createElement('button', ['button', 'button_save'])
+  saveButton.type = 'button'
+  saveButton.textContent = 'Save'
+  return saveButton
 }
 
-const createEditBlock = (text: string): HTMLDetailsElement => {
+const createInputCheckboxLine = (name: string): HTMLDivElement => {
+  const line = createElement('div', ['edit__line-content'])
+  const checkbox = createInputElement()
+  checkbox.classList.add('edit__input_checkbox')
+  checkbox.type = 'checkbox'
+  checkbox.id = `${name}-checkbox`
+  const label = createLabelElement()
+  label.setAttribute('for', `${name}-checkbox`)
+  label.textContent = 'Set this address like default'
+  line.append(label, checkbox)
+  return line
+}
+
+const createEditBlock = (text: string, name: string): HTMLDetailsElement => {
   const element = createElement('details', ['edit__details'])
+  element.setAttribute('id', name)
   const legend = createElement('summary', ['edit__legend'])
   legend.textContent = text
   element.append(legend)
   return element
 }
 
-const generatePersonalEditBlock = (personalData: PersonalData): HTMLDivElement => {
+const createPersonalDetailsEditForm = (personalData: PersonalData, name: string): HTMLElement => {
+  const form = createElement('form', ['edit__inner'])
+  const dataArrays = Object.entries(personalData)
+  dataArrays.forEach(item => {
+    const [key, value] = item
+    const line = createEditLineContent(key, value, name)
+    form.append(line)
+  })
+  const saveButton = createSaveButton()
+  form.append(saveButton)
+  return form
+}
+
+const generatePersonalEditBlock = (personalData: PersonalData, name: string): HTMLDivElement => {
   const wrapper = createEditBlocksWrapper()
-  const personalDetailsEdit = createEditBlock(legendsTextContent.personal)
-  const editForm = createPersonalDetailsEditForm(personalData)
+  const personalDetailsEdit = createEditBlock(legendsTextContent.personal, name)
+  const editForm = createPersonalDetailsEditForm(personalData, name)
   personalDetailsEdit.append(editForm)
   wrapper.append(personalDetailsEdit)
   return wrapper
 }
 
-const createBillingAddressesEditForm = (billingData: AddressesData[]): HTMLFormElement => {
-  const form = createElement('form', ['edit-billing'])
-  console.log(billingData);
-
+const createAddressEditForm = (data: AddressesData, addressType: string): HTMLFormElement => {
+  const form = createElement('form', ['edit__inner'])
+  const dataArr = Object.entries(data)
+  dataArr.forEach(item => {
+    const [key, value] = item
+    const line = createEditLineContent(key, value, addressType)
+    if (key !== 'default') {
+      form.append(line)
+    }
+  })
+  const saveButton = createSaveButton()
+  const checkbox = createInputCheckboxLine(addressType)
+  form.append(checkbox, saveButton)
   return form
 }
 
-const generateBillingEditBlock = (billingData: AddressesData[]): HTMLDivElement => {
+const generateAddressEditBlock = (data: AddressesData, title: string, name: string): HTMLDivElement => {
   const wrapper = createEditBlocksWrapper()
-  const billingAddressesEdit = createEditBlock(legendsTextContent.billing)
-  const editForm = createBillingAddressesEditForm(billingData)
+  const billingAddressesEdit = createEditBlock(title, name)
+  const editForm = createAddressEditForm(data, name)
   billingAddressesEdit.append(editForm)
   wrapper.append(billingAddressesEdit)
   return wrapper
 }
 
-const createShippingAddressesEditForm = (shippingData: AddressesData[]): HTMLFormElement => {
-  const form = createElement('form', ['edit-billing'])
-  console.log(shippingData);
-
-  return form
-}
-
-const generateShippingEditBlock = (shippingData: AddressesData[]): HTMLDivElement => {
-  const wrapper = createEditBlocksWrapper()
-  const shippingAddressesEdit = createEditBlock(legendsTextContent.shipping)
-  const editForm = createShippingAddressesEditForm(shippingData)
-  shippingAddressesEdit.append(editForm)
-  wrapper.append(shippingAddressesEdit)
-  return wrapper
-}
-
 const bindEvents = (): void => {
-  const personalForm = document.querySelector('.edit-personal')
-  personalForm?.addEventListener('click', updatePersonalDetails)
-
+  const allEditButtons = document.querySelectorAll('.button_save')
+  allEditButtons.forEach(editButton => {
+    editButton.addEventListener('click', updateData)
+  })
 }
 
-export const renderEditBlock = (personalData: PersonalData,
-  billingData: AddressesData[],
-  shippingData: AddressesData[]
-): void => {
+export const renderEditBlock = (personalData: PersonalData, billingData: AddressesData, shippingData: AddressesData): void => {
   const informationBlock = document.querySelector('.information')
-  const editPersonalDetails = generatePersonalEditBlock(personalData)
-  const editBillingAddresses = generateBillingEditBlock(billingData)
-  const editShippingAddresses = generateShippingEditBlock(shippingData)
+  const editPersonalDetails = generatePersonalEditBlock(personalData, 'personal')
+  const editBillingAddresses = generateAddressEditBlock(billingData, legendsTextContent.billing, 'billing')
+  const editShippingAddresses = generateAddressEditBlock(shippingData, legendsTextContent.shipping, 'shipping')
   informationBlock?.append(editPersonalDetails, editBillingAddresses, editShippingAddresses)
   bindEvents()
 } 
