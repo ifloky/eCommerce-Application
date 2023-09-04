@@ -8,9 +8,6 @@ let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
-export const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
-export const DEVELOP_ID = process.env.DEVELOP_ID || "";
-
 type HttpMethod = 'GET' | 'POST';
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
