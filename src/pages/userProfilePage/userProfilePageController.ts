@@ -1,5 +1,7 @@
+import { homeController, userProfilePageController } from "../../shared/router"
 import { renderEditBlock } from "./components/editProfile"
 import { renderArticle } from "./components/information"
+import { renderSignOutBlock } from "./components/signOut"
 import {
   getBillingData,
   getPersonalData,
@@ -38,10 +40,10 @@ export const getItemData = async (): Promise<void> => {
       const personalData = await getPersonalData()
       const billingData = await getBillingData()
       const shippingData = await getShippingData()
-      renderEditBlock(personalData,
-        billingData[0],
-        shippingData[0]
-      )
+      renderEditBlock(personalData, billingData[0], shippingData[0])
+    }
+    if (checkedItem.getAttribute('data-type') === 'sign') {
+      renderSignOutBlock()
     }
   }
 }
@@ -120,3 +122,12 @@ export const updateData = (event: Event): void => {
     }
   }
 }
+
+export const isSignOut = (event: Event): void => {
+  const { target } = event
+  if (target instanceof HTMLButtonElement && target.textContent === 'yes') {
+    localStorage.setItem('login', 'false')
+    homeController()
+  }
+  userProfilePageController()
+} 
