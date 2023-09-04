@@ -94,6 +94,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/tomato': createControllerFunction(tomatoCornController),
   '/otherSeeds': createControllerFunction(otherSeedsController),
   '/product': createControllerFunction(productController),
+  '/profile': createControllerFunction(userProfilePageController)
 };
 
 function handleRoute(): void {
