@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { getAnonymousFlow } from "../../shared/API";
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices, ProductResult } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
