@@ -10,8 +10,12 @@
   max-width: 85%;
   width: $content-width;
   display: flex;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
-.profile__menu {
-  flex-basis: 25%;
+.profile__information {
+  flex-basis: 100%;
 }

@@ -1,10 +1,21 @@
 .information {
-  width: 100%;
+  display: flex;
   padding: 25px 15px;
   border: 1px solid $color-primary;
   border-left: 0;
   border-radius: 0 7px 7px 0;
   background-color: $color-light;
+  box-sizing: border-box;
+
+  &__wrapper {
+    flex-basis: 100%;
+  }
+
+  @media (max-width: 768px) {
+    flex-basis: auto;
+    border-radius: 0 0 7px 7px;
+    border: 1px solid $color-primary;
+  }
 }
 
 .information__title {
@@ -50,6 +61,10 @@
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
+
+  @media (max-width: 500px) {
+    font-size: 14px;
+  }
 }
 
 .edit__inner {
@@ -63,6 +78,10 @@
   align-items: center;
   text-transform: uppercase;
   font-weight: 700;
+
+  @media (max-width: 500px) {
+    font-size: 14px;
+  }
 }
 
 .edit__input {
@@ -70,10 +89,19 @@
   padding: 10px 15px;
   outline: none;
   border: 1px solid $color-primary;
+  border-radius: 5px;
   width: 200px;
+
+  @media (max-width: 500px) {
+    width: 150px;
+  }
 
   &_checkbox {
     width: 20px;
+
+    @media (max-width: 500px) {
+      width: 15px;
+    }
   }
 }
 
@@ -88,4 +116,17 @@ button {
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid $color-primary;
+}
+
+.sign-out {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sign-out__buttons {
+  display: flex;
+  gap: 30px;
 }

@@ -2,7 +2,12 @@
   background: linear-gradient(180deg, $color-primary 0.00%, $color-additional 50.00%, $color-primary 100.00%);
   border-radius: 7px 0 0 7px;
   padding: 15px 0 15px 25px;
-  max-width: 300px;
+  min-width: 250px;
+
+  @media (max-width: 768px) {
+    flex-basis: auto;
+    border-radius: 7px 7px 0 0;
+  }
 }
 
 .menu__title {
@@ -33,6 +38,10 @@
         background-color: $color-primary;
         border-radius: 5px 0 0 5px;
       }
+    }
+
+    @media (max-width: 500px) {
+      font-size: 14px;
     }
   }
 }

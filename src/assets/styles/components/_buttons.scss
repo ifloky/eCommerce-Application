@@ -32,4 +32,10 @@
       @extend %transition;
     }
   }
+
+  &_sign-out {
+    width: 150px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 }
