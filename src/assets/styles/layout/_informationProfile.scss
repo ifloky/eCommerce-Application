@@ -126,7 +126,19 @@ button {
   flex-direction: column;
 }
 
+.sign-out__title {
+  text-align: center;
+
+  @media (max-width: 500px) {
+    max-width: 220px;
+  }
+}
+
 .sign-out__buttons {
   display: flex;
   gap: 30px;
+
+  @media (max-width: 500px) {
+    gap: 10px;
+  }
 }
