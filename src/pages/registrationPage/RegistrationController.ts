@@ -1,4 +1,5 @@
 import { postAnonymousFlow } from "../../shared/API";
+import { redirectToHomePage } from "../../shared/router";
 import { FieldsInfo } from "../../types/interfaces/interfaces";
 import { RegistrationInfo, Address } from "../../types/interfaces/interfaces";
 
@@ -116,6 +117,11 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
     registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0].addressId;
     registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1].addressId
     const response = await postAnonymousFlow('/customers', registrationInfo);
+    try {
+      redirectToHomePage()
+    } catch (error) {
+      throw Error(''+ error)
+    }
     return response;
   });
 }

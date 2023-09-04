@@ -126,4 +126,8 @@ export function startRouting(): void {
   });
 }
 
+export function redirectToHomePage(): void {
+  changeRoute('/');
+}
+
 startRouting();
