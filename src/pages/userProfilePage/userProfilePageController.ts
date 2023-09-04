@@ -80,7 +80,7 @@ export const updateAddress = (parent: HTMLElement): void => {
   const state = parent.querySelector(`#${parentId}-state`) as HTMLInputElement
   const region = parent.querySelector(`#${parentId}-region`) as HTMLInputElement
   const city = parent.querySelector(`#${parentId}-city`) as HTMLInputElement
-  const street = parent.querySelector(`#${parentId}-street`) as HTMLInputElement
+  const street = parent.querySelector(`#${parentId}-streetName`) as HTMLInputElement
   const building = parent.querySelector(`#${parentId}-building`) as HTMLInputElement
   const apartment = parent.querySelector(`#${parentId}-apartment`) as HTMLInputElement
   const postalCode = parent.querySelector(`#${parentId}-postalCode`) as HTMLInputElement
@@ -92,7 +92,7 @@ export const updateAddress = (parent: HTMLElement): void => {
     state: state.value,
     region: region.value,
     city: city.value,
-    street: street.value,
+    streetName: street.value,
     building: building.value,
     apartment: apartment.value,
     postalCode: postalCode.value,

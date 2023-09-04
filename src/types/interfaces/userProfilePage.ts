@@ -13,7 +13,7 @@ export interface AddressesData {
   postalCode: string
   region: string
   state?: string
-  street: string
+  streetName: string
   country: string
   id: string
   default?: boolean
