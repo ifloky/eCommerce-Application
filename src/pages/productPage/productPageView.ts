@@ -22,7 +22,7 @@ export function productPageView(product: ProductDetail): HTMLElement {
           <p class="product__price">${oldPrice ? oldPrice + ' $' : ''}</p>
           <p class="product__price-sale">${discountedPrice ? discountedPrice + ' $' : ''}</p>
         </div>
-        <button class="btn product__to-cart" id="toCart">add to cart</button>
+        <button class="button product__to-cart" id="toCart">add to cart</button>
       </div>
     </div>
     <p class="product__description">${product.masterData.current.description['en-US']}</p>

@@ -22,15 +22,15 @@ export function headerView(links: Links, signIn: boolean): string {
     <div class="navigation__wrapper">
       ${Navigation.render()}
     </div>
-    <a href=${links.cart} class="header__cart-btn btn-light">Cart</a>
+    <a href=${links.cart} class="header__cart-btn button-light">Cart</a>
     ${signIn ? `<div class="header__user-wrapper">
-          <a href="/profile" class="header__btn btn">Profile</a>
-          <button id="signOut" class="header__btn btn">Sign Out</button>
+          <a href="/profile" class="header__btn button">Profile</a>
+          <button id="signOut" class="header__btn button">Sign Out</button>
         </div>`
       : `
         <div class="header__user-wrapper">
-          <a href=${links.signIn} class="header__btn btn">Sign In</a>
-          <a href=${links.signUp} class="header__btn btn">Sign Up</a>
+          <a href=${links.signIn} class="header__btn button">Sign In</a>
+          <a href=${links.signUp} class="header__btn button">Sign Up</a>
         </div>`
     }
   </div>
