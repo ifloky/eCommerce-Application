@@ -1,7 +1,7 @@
 import { AddressesData, PersonalData } from "../../../types/interfaces/userProfilePage"
 import { createElement } from "../../../utils/abstract"
 
-const createArticleElement = (): HTMLElement => createElement('article', ['information_personal'])
+const createArticleElement = (): HTMLElement => createElement('article', ['information__wrapper'])
 
 const createTextElement = (): HTMLParagraphElement => createElement('p', ['information__text'])
 

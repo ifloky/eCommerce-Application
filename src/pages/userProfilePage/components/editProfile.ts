@@ -8,6 +8,7 @@ const legendsTextContent = {
   shipping: 'Edit shipping address'
 }
 
+
 const createLabelElement = (): HTMLLabelElement => createElement('label', ['edit__label'])
 
 const createInputElement = (): HTMLInputElement => createElement('input', ['edit__input'])
@@ -117,9 +118,11 @@ const bindEvents = (): void => {
 
 export const renderEditBlock = (personalData: PersonalData, billingData: AddressesData, shippingData: AddressesData): void => {
   const informationBlock = document.querySelector('.information')
+  const wrapper = createElement('div', ['information__wrapper'])
   const editPersonalDetails = generatePersonalEditBlock(personalData, 'personal')
   const editBillingAddresses = generateAddressEditBlock(billingData, legendsTextContent.billing, 'billing')
   const editShippingAddresses = generateAddressEditBlock(shippingData, legendsTextContent.shipping, 'shipping')
-  informationBlock?.append(editPersonalDetails, editBillingAddresses, editShippingAddresses)
+  wrapper.append(editPersonalDetails, editBillingAddresses, editShippingAddresses)
+  informationBlock?.append(wrapper)
   bindEvents()
 } 
