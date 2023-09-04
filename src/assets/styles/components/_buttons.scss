@@ -50,6 +50,12 @@
       border: 1px transparent solid;
       @extend %transition;
     }
+
+    &_save {
+      width: 200px;
+      align-self: end;
+      margin-top: 30px;
+    }
   }
 
   &_sign-out {
