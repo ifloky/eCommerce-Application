@@ -8,6 +8,7 @@ let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
+
 type HttpMethod = 'GET' | 'POST';
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
@@ -32,7 +33,7 @@ export const fetchBearerToken = async (clientId: string, clientSecret: string): 
   }
 
   const data = await response.json();
-  BEARER_TOKEN = data.access_token; 
+  BEARER_TOKEN = data.access_token;
   return data.access_token;
 };
 
@@ -101,7 +102,7 @@ const fetchAndSetBearerToken = async (): Promise<void> => {
   try {
     const token = await fetchBearerToken(DEVELOP_ID, DEVELOP_SECRET);
     BEARER_TOKEN = token;
-    setCookie('token', token, 24);    
+    setCookie('token', token, 24);
   } catch (error) {
     deleteCookie('token');
     throw new Error('' + error);
@@ -138,4 +139,3 @@ export const postPasswordFlow = async <T>(url: string, data: object): Promise<T>
   await fetchAndSetPasswordFlow();
   return fetchWithAuthorization<T>(url, 'POST', data);
 };
-

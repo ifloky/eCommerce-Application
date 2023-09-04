@@ -13,7 +13,7 @@
   height: 50px;
   width: 50px;
   background-size: contain;
-  background-image: url(../../../image/logo.png);
+  background-image: url(../../image/logo.png);
 }
 
 .navigation {
@@ -83,6 +83,7 @@
     z-index: 3;
     background-color: $color-light;
   }
+
   .header__btn {
     margin-left: 5px;
   }

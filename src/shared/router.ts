@@ -1,6 +1,7 @@
 import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
+import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
 import {  catalogRender, 
           createTomatoCorn, 
           createOtherSeeds,
@@ -36,12 +37,19 @@ export function logInController(): void {
   }
 }
 
-
 export function registerController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
     appContainer.append(RegistrationPageView())
+  }
+}
+
+export function userProfilePageController(): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(getUserProfileView)
   }
 }
 
