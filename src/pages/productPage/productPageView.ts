@@ -19,8 +19,8 @@ export function productPageView(product: ProductDetail): HTMLElement {
       <div class="product__image"></div>
       <div class="product__buy-wrapper">
         <div class="product__price-wrapper">
+          <p class="${discountedPrice ? "product__price-sale" : "product__price"}">${discountedPrice ? discountedPrice + ' $' : ''}</p>
           <p class="product__price">${oldPrice ? oldPrice + ' $' : ''}</p>
-          <p class="product__price-sale">${discountedPrice ? discountedPrice + ' $' : ''}</p>
         </div>
         <button class="button product__to-cart" id="toCart">add to cart</button>
       </div>

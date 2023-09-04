@@ -36,7 +36,10 @@ export function priceWithDiscount(elem: Product): HTMLElement {
   <div class="product-card__list">
     <h3>"${elem.masterData.current.name["en-US"]}"</h3>
     <p class="product-card__sub-info">"${elem.masterData.current.description["en-US"]}"</p>
-    <div class="product-card__price"><span class="product-card__price product-card__sale">${discountedPrice ? discountedPrice +' $': ''}</span>${price ? price + ' $' : ''}</div>
+    <div class="product-card__price-wrapper">
+    <span class="${discountedPrice ? "product-card__sale" : "product-card__price"}">${discountedPrice ? discountedPrice + ' $' : ''}</span>
+    <span class="product-card__price">${price ? price + ' $' : ''}</span>
+  </div>
   </div>`
   return cardProductWrapper
 }
