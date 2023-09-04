@@ -8,10 +8,10 @@ export function productPageView(product: ProductDetail): HTMLElement {
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
     (image) => image.url
   );
-  const discountedPrice = (product.masterData.current.masterVariant.prices[0].value.centAmount) / 100;
-  let oldPrice;
+  const price = (product.masterData.current.masterVariant.prices[0].value.centAmount) / 100;
+  let discountedPrice;
   if(product.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
-    oldPrice = product.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
+    discountedPrice = product.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
   }
   productContainer.innerHTML = `
     <h1 class="product__title">${product.masterData.current.metaTitle['en-US']}</h1>
@@ -19,8 +19,8 @@ export function productPageView(product: ProductDetail): HTMLElement {
       <div class="product__image"></div>
       <div class="product__buy-wrapper">
         <div class="product__price-wrapper">
-          <p class="${discountedPrice ? "product__price-sale" : "product__price"}">${discountedPrice ? discountedPrice + ' $' : ''}</p>
-          <p class="product__price">${oldPrice ? oldPrice + ' $' : ''}</p>
+          <p class="product__price-sale">${discountedPrice ? discountedPrice + ' $' : ''}</p>
+          <p class="${discountedPrice ? "product__price" :"product__price-sale"}">${price ? price + ' $' : ''}</p>
         </div>
         <button class="button product__to-cart" id="toCart">add to cart</button>
       </div>
@@ -28,7 +28,6 @@ export function productPageView(product: ProductDetail): HTMLElement {
     <p class="product__description">${product.masterData.current.description['en-US']}</p>
     <p class="product__sub-info">warranty 30 days</p>
   `;
-
   const sliderElement = createSliderElement(arrayOfImageLinks);
   const productImage = productContainer.querySelector('.product__image');
   productImage?.append(sliderElement);
@@ -39,6 +38,5 @@ export function productPageView(product: ProductDetail): HTMLElement {
       }
     }
   });
-  
   return productContainer;
 }

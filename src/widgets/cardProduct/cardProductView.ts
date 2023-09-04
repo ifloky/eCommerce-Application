@@ -7,7 +7,6 @@ import { createElement } from "../../utils/abstract";
 export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
-
   let discountedPrice;
   if(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
     discountedPrice = elem.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
@@ -37,9 +36,9 @@ export function priceWithDiscount(elem: Product): HTMLElement {
     <h3>"${elem.masterData.current.name["en-US"]}"</h3>
     <p class="product-card__sub-info">"${elem.masterData.current.description["en-US"]}"</p>
     <div class="product-card__price-wrapper">
-    <span class="${discountedPrice ? "product-card__sale" : "product-card__price"}">${discountedPrice ? discountedPrice + ' $' : ''}</span>
-    <span class="product-card__price">${price ? price + ' $' : ''}</span>
-  </div>
+      <span class="${discountedPrice ? "product-card__sale" : "product-card__price" }">${price ? price + ' $' : ''}</span>
+      <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
+    </div>
   </div>`
   return cardProductWrapper
 }
