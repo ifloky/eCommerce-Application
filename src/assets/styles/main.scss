@@ -9,6 +9,9 @@
 
 // Components
 @import "./components/buttons";
+@import "./components/cardProduct";
+@import "./components/slider";
+@import "./components/pagination";
 
 // Layout
 @import "./layout/header";
@@ -20,3 +23,5 @@
 @import "./pages/registrationPage";
 @import "./pages/mainPage";
 @import "./pages/userProfilePage"
+@import "./pages/productPage";
+@import "./pages/catalogPage";

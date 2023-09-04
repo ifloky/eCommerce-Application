@@ -2,6 +2,11 @@ import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
+import {  catalogRender, 
+          createTomatoCorn, 
+          createOtherSeeds,
+          createAllProducts } from "../pages/catalogPage/catalogPageView";
+import { ProductPage } from "../pages/productPage/productPageController";
 
 type ControllerFunction = () => void;
 
@@ -19,18 +24,18 @@ function updateContainer(content: string): void {
 export async function homeController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = await MainPageController();
+    appContainer.innerHTML = ''
+    appContainer.append(await MainPageController());
   }
 }
 
-function logInController(): void {
+export function logInController(): void {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
     appContainer.append(getLoginPageView);
   }
 }
-
 
 export function registerController(): void {
   const appContainer = document.getElementById('app');
@@ -48,6 +53,35 @@ export function userProfilePageController(): void {
   }
 }
 
+export async function catalogController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(catalogRender());
+    appContainer.append(await createAllProducts());
+  }
+}
+
+async function tomatoCornController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(await createTomatoCorn());
+  }
+} 
+
+async function otherSeedsController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(await createOtherSeeds());
+  }
+} 
+
+export function productController(): void {
+  ProductPage.render()
+}
+
 function notFoundController(): void {
   updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
 }
@@ -56,6 +90,10 @@ const routes: { [path: string]: ControllerFunction } = {
   '/': createControllerFunction(homeController),
   '/login': createControllerFunction(logInController),
   '/register': createControllerFunction(registerController),
+  '/catalog': createControllerFunction(catalogController),
+  '/tomato': createControllerFunction(tomatoCornController),
+  '/otherSeeds': createControllerFunction(otherSeedsController),
+  '/product': createControllerFunction(productController),
 };
 
 function handleRoute(): void {
@@ -94,6 +132,10 @@ export function startRouting(): void {
     const currentState = {};
     localStorage.setItem('appState', JSON.stringify(currentState));
   });
+}
+
+export function redirectToHomePage(): void {
+  changeRoute('/');
 }
 
 startRouting();

@@ -71,6 +71,8 @@ export const isValid = (event: Event): void => {
   }
 }
 
+
+
 export const redirectToRegistrationPage = (event: Event): void => {
   const { target } = event
   if (target instanceof HTMLButtonElement && target.type === 'button') {
