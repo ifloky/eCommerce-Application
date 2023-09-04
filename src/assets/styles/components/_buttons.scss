@@ -7,14 +7,14 @@
   text-decoration: none;
   padding: 10px 20px;
   white-space: nowrap;
-}
 
-.button-light:hover {
-  background-color: $color-primary;
-  color: $color-light;
-  border: 1px transparent solid;
-  cursor: pointer;
-  @extend %transition;
+  &:hover {
+    background-color: $color-primary;
+    color: $color-light;
+    border: 1px transparent solid;
+    cursor: pointer;
+    @extend %transition;
+  }
 }
 
 .button {
