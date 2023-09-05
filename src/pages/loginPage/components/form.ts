@@ -23,7 +23,7 @@ const generateButtonsBlock = (): HTMLDivElement => {
   return buttonsBlock;
 };
 
-const generateShowPasswordChecbox = (): HTMLDivElement => {
+const generateShowPasswordCheckbox = (): HTMLDivElement => {
   const wrapper = createWrapper();
   wrapper.classList.add('form__wrapper_toggle');
   const label = createLabelElement();
@@ -35,7 +35,7 @@ const generateShowPasswordChecbox = (): HTMLDivElement => {
   return wrapper;
 };
 
-const generteEmailField = (): HTMLDivElement => {
+const generateEmailField = (): HTMLDivElement => {
   const wrapper = createWrapper();
   const label = createLabelElement();
   label.setAttribute('for', 'email');
@@ -49,7 +49,7 @@ const generteEmailField = (): HTMLDivElement => {
   return wrapper;
 };
 
-const genertePasswordField = (): HTMLDivElement => {
+const generatePasswordField = (): HTMLDivElement => {
   const wrapper = createWrapper();
   wrapper.classList.add('form__wrapper_password');
   const label = createLabelElement();
@@ -61,15 +61,15 @@ const genertePasswordField = (): HTMLDivElement => {
   input.required = true;
   input.type = 'password';
   input.minLength = 8
-  const showPassword = generateShowPasswordChecbox();
+  const showPassword = generateShowPasswordCheckbox();
   wrapper.append(label, input, showPassword);
   return wrapper;
 };
 
 export const generateForm = (): HTMLFormElement => {
   const form = createFormElement();
-  const emailField = generteEmailField();
-  const passwordField = genertePasswordField();
+  const emailField = generateEmailField();
+  const passwordField = generatePasswordField();
   const buttonsBlock = generateButtonsBlock();
   form.append(emailField, passwordField, buttonsBlock);
   return form;

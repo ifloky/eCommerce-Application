@@ -1,5 +1,5 @@
 .product-card__wrapper {
-  width: 250px;
+  width: 220px;
   text-align: center;
   margin: 0 auto;
   background: $color-light;
@@ -8,7 +8,7 @@
 .product-card__image {
   position: relative;
   overflow: hidden;
-  min-height: 200px;
+  height: 160px;
 }
 .product-card__image a {
   display: block;

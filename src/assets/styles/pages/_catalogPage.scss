@@ -1,6 +1,11 @@
-.catalog-wrapper {
-  border-radius: 7px;
-  border: 1px solid #9C96E2;
+.catalog__items-wrapper {
+  padding: 20px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+}
+
+.catalog__wrapper {
   margin: 0 30px;
   margin-top: 40px;
   &-title {
@@ -11,25 +16,26 @@
 &-categories {
     padding: 15px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    gap: 10px;
     padding-bottom: 30px;
+
+    :hover {
+      background-color: $color-additional;
+      color: $color-light;
+      border-color: $color-additional;
+      @extend %transition;
+    }
   }
 }
-.catalog-item-title {
+
+.catalog__item-title {
   display: block;
   width: 250px;
   text-align: center;
-  padding: 60px 30px;
+  padding: 20px 40px;
   text-decoration: none;
   border-radius: 7px;
-  border: 1px solid #9C96E2;
-  background-size: cover;
-  background-repeat: no-repeat;
-  &-tomato {
-    background-image: url(../../image/catalogMainPageImages/tomato.jpeg);
-  }
-  &-pumpkin {
-    background-image: url(../../image/catalogMainPageImages/pumpkin.jpg);
-  }
+  border: 1px solid $color-primary;
 }

@@ -1,15 +1,27 @@
+// Abstracts
 @import './abstracts/constants';
 @import "./abstracts/placeholders";
+
+// Base
 @import "./base/typography";
 @import "./base/base.scss";
+@import "./base/errors";
+
+// Components
 @import "./components/buttons";
 @import "./components/cardProduct";
 @import "./components/slider";
-@import "./base/errors";
-@import "./layout/header/header";
+@import "./components/pagination";
 
+// Layout
+@import "./layout/header";
+@import "./layout/menuProfile";
+@import "./layout/informationProfile";
+
+// Pages
 @import "./pages/loginPage";
 @import "./pages/registrationPage";
 @import "./pages/mainPage";
+@import "./pages/userProfilePage";
 @import "./pages/productPage";
 @import "./pages/catalogPage";
