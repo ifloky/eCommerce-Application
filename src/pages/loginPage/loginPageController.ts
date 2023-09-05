@@ -1,4 +1,5 @@
-import { homeController, registerController } from "../../shared/router"
+import { redirectToHomePage, redirectToRegisterPage } from "../../shared/router"
+import Header from "../../widgets/header/headerView"
 import {
   checkUser,
   getAllTokens,
@@ -76,7 +77,7 @@ export const isValid = (event: Event): void => {
 export const redirectToRegistrationPage = (event: Event): void => {
   const { target } = event
   if (target instanceof HTMLButtonElement && target.type === 'button') {
-    registerController()
+    redirectToRegisterPage()
   }
 }
 
@@ -99,7 +100,8 @@ export const loginUser = async (event: Event): Promise<void> => {
       const { id } = data.customer
       localStorage.setItem('id', id)
       localStorage.setItem('login', 'true')
-      homeController()
+      Header.refresh(true);
+      redirectToHomePage()
     }
   }
 }

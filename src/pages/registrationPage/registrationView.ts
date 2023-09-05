@@ -85,7 +85,7 @@ registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <input type="checkbox" id="oneAddress" name="oneAddress" value="oneAddress">
       <label for="oneAddress">Use billing as shipping</label>
       <button class="button btn-registration" type="submit">Register</button>
-      <p>Already have an account? <a href=''>Sign in</a></p>
+      <p>Already have an account? <a href='/login'>Sign in</a></p>
       </form>
       `;
 

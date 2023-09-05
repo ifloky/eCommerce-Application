@@ -139,4 +139,12 @@ export function redirectToHomePage(): void {
   changeRoute('/');
 }
 
+export function redirectToRegisterPage(): void {
+  changeRoute('/register');
+}
+export function redirectToLoginPage(): void {
+  changeRoute('/login');
+}
+
+
 startRouting();

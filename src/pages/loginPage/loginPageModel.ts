@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from "../../shared/API"
 
 export const getAllTokens = async (email: string, password: string): Promise<string> => {
-  const credentials = `${process.env.USER_ID}:${process.env.USER_SECRET}`
+  const credentials = `${process.env.DEVELOP_ID}:${process.env.DEVELOP_SECRET}`
   const options = {
     method: 'POST',
     headers: {
