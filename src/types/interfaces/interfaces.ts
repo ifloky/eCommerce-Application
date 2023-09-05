@@ -21,6 +21,7 @@ export interface Address {
   country: string;
 }
 
+
 export interface RegistrationInfo {
   id: string,
   version: number,

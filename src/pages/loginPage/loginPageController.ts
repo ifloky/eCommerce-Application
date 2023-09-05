@@ -1,4 +1,5 @@
-import { homeController, registerController } from "../../shared/router"
+import { redirectToHomePage, redirectToRegisterPage } from "../../shared/router"
+import Header from "../../widgets/header/headerView"
 import {
   checkUser,
   getAllTokens,
@@ -6,13 +7,13 @@ import {
 
 export const isShowed = (event: Event): void => {
   const { target } = event
-  const passwordFeild = document.getElementById('password') as HTMLInputElement
+  const passwordField = document.getElementById('password') as HTMLInputElement
   if (target instanceof HTMLLabelElement && target.classList.contains('form__label')) {
     target.classList.toggle('form__label_show-pass')
-    if (passwordFeild.type === 'password') {
-      passwordFeild.type = 'text'
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text'
     } else {
-      passwordFeild.type = 'password'
+      passwordField.type = 'password'
     }
   }
 }
@@ -71,10 +72,12 @@ export const isValid = (event: Event): void => {
   }
 }
 
+
+
 export const redirectToRegistrationPage = (event: Event): void => {
   const { target } = event
   if (target instanceof HTMLButtonElement && target.type === 'button') {
-    registerController()
+    redirectToRegisterPage()
   }
 }
 
@@ -93,8 +96,12 @@ export const loginUser = async (event: Event): Promise<void> => {
     getAllTokens(email, password)
     const isCorrectUserData = await checkUser(email, password)
     if (isCorrectUserData.ok) {
+      const data = await isCorrectUserData.json()
+      const { id } = data.customer
+      localStorage.setItem('id', id)
       localStorage.setItem('login', 'true')
-      homeController()
+      Header.refresh(true);
+      redirectToHomePage()
     }
   }
 }
