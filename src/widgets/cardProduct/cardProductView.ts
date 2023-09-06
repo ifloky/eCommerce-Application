@@ -2,10 +2,9 @@ import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
 
-
-
 export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
+  cardProductWrapper.setAttribute('data-id', elem.id)
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
   let discountedPrice;
   if(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {

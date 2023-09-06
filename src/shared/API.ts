@@ -60,7 +60,7 @@ const fetchWithAuthorization = async <T>(
 
   if (!response.ok) {
     const errorMessage = createElement('div', ['error'])
-    errorMessage.innerHTML = 'hey dude, check your input';
+    errorMessage.innerHTML = 'Something went wrong';
     document.body.appendChild(errorMessage)
 
     setTimeout(() => {

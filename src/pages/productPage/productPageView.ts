@@ -1,8 +1,10 @@
 import { createElement } from "../../utils/abstract";
 import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
+import { addToCartFunction } from "../../widgets/cardProduct/cardProductConroller";
 import { ProductDetail } from "./productPageController";
 
 export const productContainer = createElement('div', ['product__container'])
+
 
 export function productPageView(product: ProductDetail): HTMLElement {
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
@@ -38,5 +40,7 @@ export function productPageView(product: ProductDetail): HTMLElement {
       }
     }
   });
+  const addToCartButton = productContainer.querySelector('#toCart');
+  addToCartButton?.addEventListener('click', (e: Event) => addToCartFunction(e));  
   return productContainer;
 }
