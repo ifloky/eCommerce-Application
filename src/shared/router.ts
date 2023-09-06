@@ -7,6 +7,8 @@ import {  catalogRender,
           createOtherSeeds,
           createAllProducts } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
+import { aboutUsPageView } from "../pages/catalogPage/aboutUsPage/aboutUsPageView";
+import { teamMembers } from "../pages/catalogPage/aboutUsPage/components/teamMembers";
 
 type ControllerFunction = () => void;
 
@@ -68,7 +70,7 @@ async function tomatoCornController(): Promise<void> {
     appContainer.innerHTML = ''
     appContainer.append(await createTomatoCorn());
   }
-} 
+}
 
 async function otherSeedsController(): Promise<void> {
   const appContainer = document.getElementById('app');
@@ -76,7 +78,15 @@ async function otherSeedsController(): Promise<void> {
     appContainer.innerHTML = ''
     appContainer.append(await createOtherSeeds());
   }
-} 
+}
+
+function aboutUsController(): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(aboutUsPageView(teamMembers));
+  }
+}
 
 export function productController(): void {
   ProductPage.render()
@@ -94,7 +104,8 @@ const routes: { [path: string]: ControllerFunction } = {
   '/tomato': createControllerFunction(tomatoCornController),
   '/otherSeeds': createControllerFunction(otherSeedsController),
   '/product': createControllerFunction(productController),
-  '/profile': createControllerFunction(userProfilePageController)
+  '/profile': createControllerFunction(userProfilePageController),
+  '/about': createControllerFunction(aboutUsController),
 };
 
 function handleRoute(): void {
