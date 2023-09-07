@@ -59,7 +59,7 @@
   font-size: 14px;
 }
 
-.busket {
+.basket {
   width: 42px;
   height: 17px;
   background-color: transparent;
@@ -68,6 +68,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(../../image/icons/cardProduct/buy_cart.svg);
+
   &:hover {
     background-color: $color-additional;
     background-image: url(../../image/icons/cardProduct/buy_cart_hover.svg);

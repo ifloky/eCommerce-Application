@@ -2,14 +2,16 @@ import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
-import {  catalogRender,
-          createTomatoCorn,
-          createOtherSeeds,
-          createAllProducts } from "../pages/catalogPage/catalogPageView";
+import {
+  catalogRender,
+  createTomatoCorn,
+  createOtherSeeds,
+  createAllProducts
+} from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
 import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
 import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
-import { busketPageView } from "../pages/busketPage/busketPageView";
+import { basketPageView } from "../pages/busketPage/basketPageView";
 
 type ControllerFunction = () => void;
 
@@ -89,11 +91,11 @@ function aboutUsController(): void {
   }
 }
 
-async function busketButtonController(): Promise<void> {
+async function basketButtonController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
-    appContainer.append(await busketPageView());
+    appContainer.append(await basketPageView());
   }
 }
 
@@ -115,7 +117,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/product': createControllerFunction(productController),
   '/profile': createControllerFunction(userProfilePageController),
   '/about': createControllerFunction(aboutUsController),
-  '/busket': createControllerFunction(busketButtonController),
+  '/basket': createControllerFunction(basketButtonController),
 };
 
 function handleRoute(): void {

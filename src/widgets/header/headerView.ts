@@ -6,10 +6,9 @@ import Navigation from "../Navigation/navigationController";
 
 const headerLinks: Links = {
   logoImage: './src/assets/image/logo.png',
-  cart: '/cart',
   signIn: '/login',
   signUp: '/register',
-  busketImage: '../../assets/image/icons/cardProduct/buy_cart.svg'
+  basketImage: '../../assets/image/icons/cardProduct/buy_cart.svg'
 }
 
 const headerWrapper = createElement('div', ['header__wrapper']);
@@ -23,14 +22,13 @@ export function headerView(links: Links, signIn: boolean): string {
     <div class="navigation__wrapper">
       ${Navigation.render()}
     </div>
-    <a href=${links.cart} class="header__cart-btn button-light">Cart</a>
     ${signIn ? `<div class="header__user-wrapper">
           <a href="/profile" class="header__btn button">Profile</a>
           <button id="signOut" class="header__btn button">Sign Out</button>
         </div>`
       : `
         <div class="header__user-wrapper">
-          <a href="/busket" class="header__btn button busket"> </a>
+          <a href="/basket" class="header__btn button basket"> </a>
           <a href=${links.signIn} class="header__btn button">Sign In</a>
           <a href=${links.signUp} class="header__btn button">Sign Up</a>
         </div>`
@@ -55,7 +53,7 @@ const Header = {
   refresh: refreshHeader
 };
 
-function signOut(event:Event):void {
+function signOut(event: Event): void {
   if ((event.target as HTMLElement).id === 'signOut') {
     deleteCookie('access_token');
     Header.refresh(false);
