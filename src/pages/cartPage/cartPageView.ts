@@ -1,6 +1,6 @@
-import { getAnonymousFlow } from "../../shared/API";
+import { getAnonymousFlow, getPasswordFlow } from "../../shared/API";
 import { createElement } from "../../utils/abstract";
-import { CartResponse } from "../../widgets/cardProduct/cardProductController";
+import { CartResponse, checkAuthorization } from "../../widgets/cardProduct/cardProductController";
 
 export interface CartResponseItem {
   id: string,
@@ -24,8 +24,14 @@ export interface CartResponseItem {
   }[];
 }
 
+
+
 export async function getProductInCart(): Promise<CartResponseItem> {
-  const cartResult: CartResponse = await getAnonymousFlow(`/carts`);
+  if (checkAuthorization()) {
+    const cartResult: CartResponse = await getPasswordFlow(`/me/carts`)
+    return cartResult.results[0]
+  }
+  const cartResult: CartResponse = await getAnonymousFlow(`/carts`)
   return cartResult.results[0]
 }
 

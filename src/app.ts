@@ -1,3 +1,4 @@
+import { returnCartItem } from "./pages/cartPage/cartPageView";
 import { MainPageController } from "./pages/mainPage/MainPageController"
 import { getCookie } from "./shared/API";
 import { startRouting } from "./shared/router";
@@ -19,6 +20,7 @@ export async function initializeApp(): Promise<void> {
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
     }
+    document.body.append(await returnCartItem());
     startRouting();
   } catch (error) {
     throw new Error();

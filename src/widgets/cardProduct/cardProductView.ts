@@ -7,15 +7,15 @@ export function priceWithDiscount(elem: Product): HTMLElement {
   cardProductWrapper.setAttribute('data-id', elem.id)
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
   let discountedPrice;
-  if(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
+  if (elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
     discountedPrice = elem.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
   }
-  cardProductWrapper?.addEventListener('click', (e)=> {
-    const productCardImage = cardProductWrapper.querySelector('.product-card__image');  
-   if ( productCardImage ) {  
-    e.preventDefault()
-    ProductPage.update(elem.id)
-   }
+  cardProductWrapper?.addEventListener('click', (e) => {
+    const productCardImage = cardProductWrapper.querySelector('.product-card__image');
+    if (productCardImage) {
+      e.preventDefault()
+      ProductPage.update(elem.id)
+    }
   })
   cardProductWrapper.innerHTML = `
   <div class="product-card__image">
@@ -35,7 +35,7 @@ export function priceWithDiscount(elem: Product): HTMLElement {
     <h3>"${elem.masterData.current.name["en-US"]}"</h3>
     <p class="product-card__sub-info">"${elem.masterData.current.description["en-US"]}"</p>
     <div class="product-card__price-wrapper">
-      <span class="${discountedPrice ? "product-card__sale" : "product-card__price" }">${price ? price + ' $' : ''}</span>
+      <span class="${discountedPrice ? "product-card__sale" : "product-card__price"}">${price ? price + ' $' : ''}</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
   </div>`

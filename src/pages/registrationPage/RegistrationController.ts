@@ -120,22 +120,22 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
     try {
       redirectToHomePage()
     } catch (error) {
-      throw Error(''+ error)
+      throw Error('' + error)
     }
     return response;
   });
 }
 
-export function validationForm(registrationUser: HTMLElement):void {
+export function validationForm(registrationUser: HTMLElement): void {
   const formInputs = registrationUser.querySelectorAll('.form-input');
   registrationUser.querySelector('.registration-form')?.addEventListener('submit', (event) => {
     let isValid = true;
     formInputs.forEach((input) => {
-        isValid = false;
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'error-message';
-        errorMessage.textContent = 'This field is required.';
-        input.parentElement?.appendChild(errorMessage);
+      isValid = false;
+      const errorMessage = document.createElement('div');
+      errorMessage.className = 'error-message';
+      errorMessage.textContent = 'This field is required.';
+      input.parentElement?.appendChild(errorMessage);
     });
 
     if (!isValid) {
