@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { TeamMember } from "../../types/interfaces/teamMemberInfo";
 
 function createOneMember(elem: TeamMember): HTMLElement {
