@@ -9,6 +9,7 @@ const headerLinks: Links = {
   cart: '/cart',
   signIn: '/login',
   signUp: '/register',
+  busketImage: '../../assets/image/icons/cardProduct/buy_cart.svg'
 }
 
 const headerWrapper = createElement('div', ['header__wrapper']);
@@ -29,6 +30,7 @@ export function headerView(links: Links, signIn: boolean): string {
         </div>`
       : `
         <div class="header__user-wrapper">
+          <a href="/busket" class="header__btn button busket"> </a>
           <a href=${links.signIn} class="header__btn button">Sign In</a>
           <a href=${links.signUp} class="header__btn button">Sign Up</a>
         </div>`

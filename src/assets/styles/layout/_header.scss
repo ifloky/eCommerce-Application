@@ -59,6 +59,21 @@
   font-size: 14px;
 }
 
+.busket {
+  width: 42px;
+  height: 17px;
+  background-color: transparent;
+  border: 1px #9C96E2 solid;
+  border-radius: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../../image/icons/cardProduct/buy_cart.svg);
+  &:hover {
+    background-color: $color-additional;
+    background-image: url(../../image/icons/cardProduct/buy_cart_hover.svg);
+  }
+}
+
 @media screen and (max-width: 968px) {
   .header {
     padding-bottom: 60px;

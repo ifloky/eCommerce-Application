@@ -2,13 +2,14 @@ import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
-import {  catalogRender, 
-          createTomatoCorn, 
+import {  catalogRender,
+          createTomatoCorn,
           createOtherSeeds,
           createAllProducts } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
 import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
 import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
+import { busketPageView } from "../pages/busketPage/busketPageView";
 
 type ControllerFunction = () => void;
 
@@ -88,6 +89,14 @@ function aboutUsController(): void {
   }
 }
 
+async function busketButtonController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(await busketPageView());
+  }
+}
+
 export function productController(): void {
   ProductPage.render()
 }
@@ -106,6 +115,7 @@ const routes: { [path: string]: ControllerFunction } = {
   '/product': createControllerFunction(productController),
   '/profile': createControllerFunction(userProfilePageController),
   '/about': createControllerFunction(aboutUsController),
+  '/busket': createControllerFunction(busketButtonController),
 };
 
 function handleRoute(): void {
