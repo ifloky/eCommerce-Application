@@ -1,0 +1,45 @@
+.about_wrapper {
+  padding: 20px;
+}
+.about_title {
+  text-align: center;
+  color: #9C96E2;
+}
+.item_wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 30px;
+  .Petrenko {
+    background-size: cover;
+    background-image: url(../../image/aboutUsPhotos/max.jpg);
+  }
+}
+.person_image {
+  display: block;
+  width: 250px;
+  height: 250px;
+  border: 1px #9C96E2 solid;
+  margin-right: 30px;
+  border-radius: 5px;
+  background-size: contain;
+  background-image: url(../../image/catalogMainPageImages/pumpkin.jpg);
+}
+
+.person_list {
+  width: 500px;
+}
+li::marker {
+    color:#9C96E2;
+}
+
+.footer__logo-link {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 100px;
+  height: 38px;
+  background-size: 100%;
+  background-image: url(../../../assets/image/rs_school_js.svg);
+}
