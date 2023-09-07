@@ -3,7 +3,7 @@
 }
 .about_title {
   text-align: center;
-  color: #9C96E2;
+  color: $color-primary;
 }
 .item_wrapper {
   padding: 20px;
@@ -11,11 +11,11 @@
   justify-content: center;
   align-items: center;
   column-gap: 30px;
-  .Petrenko {
+  .petrenko {
     background-size: cover;
     background-image: url(../../image/aboutUsPhotos/max.jpg);
   }
-  .Brutsis {
+  .brutsis {
     background-size: cover;
     background-image: url(../../image/aboutUsPhotos/vic.jpg);
   }
@@ -24,7 +24,7 @@
   display: block;
   width: 250px;
   height: 250px;
-  border: 1px #9C96E2 solid;
+  border: 1px $color-primary solid;
   margin-right: 30px;
   border-radius: 5px;
 }
@@ -33,7 +33,7 @@
   width: 500px;
 }
 li::marker {
-    color:#9C96E2;
+    color: $color-primary;
 }
 
 .footer__logo-link {
