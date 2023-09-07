@@ -1,6 +1,6 @@
 import { createElement } from "../../utils/abstract";
 import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
-import { addToCartFunction } from "../../widgets/cardProduct/cardProductConroller";
+import { addToCartFunction } from "../../widgets/cardProduct/cardProductController";
 import { ProductDetail } from "./productPageController";
 
 export const productContainer = createElement('div', ['product__container'])

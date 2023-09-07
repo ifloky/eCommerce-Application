@@ -2,10 +2,12 @@ import { getLoginPageView } from "../pages/loginPage/loginPageView";
 import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
-import {  catalogRender, 
-          createTomatoCorn, 
-          createOtherSeeds,
-          createAllProducts } from "../pages/catalogPage/catalogPageView";
+import {
+  catalogRender,
+  createTomatoCorn,
+  createOtherSeeds,
+  createAllProducts
+} from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
 
 type ControllerFunction = () => void;
@@ -68,7 +70,7 @@ async function tomatoCornController(): Promise<void> {
     appContainer.innerHTML = ''
     appContainer.append(await createTomatoCorn());
   }
-} 
+}
 
 async function otherSeedsController(): Promise<void> {
   const appContainer = document.getElementById('app');
@@ -76,7 +78,7 @@ async function otherSeedsController(): Promise<void> {
     appContainer.innerHTML = ''
     appContainer.append(await createOtherSeeds());
   }
-} 
+}
 
 export function productController(): void {
   ProductPage.render()
