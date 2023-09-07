@@ -30,6 +30,9 @@
 .person_list {
   width: 500px;
 }
+li::marker {
+    color:#9C96E2;
+}
 
 .footer__logo-link {
   display: block;
