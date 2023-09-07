@@ -1,4 +1,4 @@
-import { TeamMember } from "../../../../types/interfaces/teamMemberInfo";
+import { TeamMember } from "../../../types/interfaces/teamMemberInfo";
 
 export const teamMembers: TeamMember[] = [
   {
@@ -19,7 +19,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: 'Viktar',
     age: 43,
-    about: 'blablabla',
+    about: 'Im graduated from Belarus State Economic Unversity in 2005. My specilization is state and municipal management. Since 2006 I\'m working at LLC Tabak-invest as a chief of fashion retail department. I\'m married and have 2 children.',
     github: 'https://github.com/viktarbrutsis',
     class: 'Brutsis'
   }

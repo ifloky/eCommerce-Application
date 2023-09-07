@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { TeamMember } from "../../../types/interfaces/teamMemberInfo";
+import { TeamMember } from "../../types/interfaces/teamMemberInfo";
 
 function createOneMember(elem: TeamMember): HTMLElement {
   const oneMemberProfileWrapper = document.createElement('div');

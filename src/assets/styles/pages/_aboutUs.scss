@@ -15,6 +15,10 @@
     background-size: cover;
     background-image: url(../../image/aboutUsPhotos/max.jpg);
   }
+  .Brutsis {
+    background-size: cover;
+    background-image: url(../../image/aboutUsPhotos/vic.jpg);
+  }
 }
 .person_image {
   display: block;
@@ -23,8 +27,6 @@
   border: 1px #9C96E2 solid;
   margin-right: 30px;
   border-radius: 5px;
-  background-size: contain;
-  background-image: url(../../image/catalogMainPageImages/pumpkin.jpg);
 }
 
 .person_list {

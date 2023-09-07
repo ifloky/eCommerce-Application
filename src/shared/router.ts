@@ -7,8 +7,8 @@ import {  catalogRender,
           createOtherSeeds,
           createAllProducts } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
-import { aboutUsPageView } from "../pages/catalogPage/aboutUsPage/aboutUsPageView";
-import { teamMembers } from "../pages/catalogPage/aboutUsPage/components/teamMembers";
+import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
+import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
 
 type ControllerFunction = () => void;
 
