@@ -9,6 +9,9 @@ import {
   createAllProducts
 } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
+import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
+import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
+import { basketPageView } from "../pages/busketPage/basketPageView";
 
 type ControllerFunction = () => void;
 
@@ -80,6 +83,22 @@ async function otherSeedsController(): Promise<void> {
   }
 }
 
+function aboutUsController(): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(aboutUsPageView(teamMembers));
+  }
+}
+
+async function basketButtonController(): Promise<void> {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = ''
+    appContainer.append(await basketPageView());
+  }
+}
+
 export function productController(): void {
   ProductPage.render()
 }
@@ -96,7 +115,9 @@ const routes: { [path: string]: ControllerFunction } = {
   '/tomato': createControllerFunction(tomatoCornController),
   '/otherSeeds': createControllerFunction(otherSeedsController),
   '/product': createControllerFunction(productController),
-  '/profile': createControllerFunction(userProfilePageController)
+  '/profile': createControllerFunction(userProfilePageController),
+  '/about': createControllerFunction(aboutUsController),
+  '/basket': createControllerFunction(basketButtonController),
 };
 
 function handleRoute(): void {

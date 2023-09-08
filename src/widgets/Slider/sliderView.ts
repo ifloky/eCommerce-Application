@@ -26,7 +26,7 @@ export function createSliderElement(imageUrls: string[]): HTMLElement {
       const dotStyle = dot.style;
       dotStyle.backgroundColor = '#fefefe';
     });
-    dots[currentIndex].style.backgroundColor = '#9C96E2';
+    dots[currentIndex].style.backgroundColor = '$color-primary';
     slider.style.backgroundImage = `url('${currentImageUrl}')`;
     slider.setAttribute('data-url', imageUrls[currentIndex])
   }
@@ -57,7 +57,7 @@ export function showModal(ev: MouseEvent, imageUrls: string[]): void {
   modalContent.append(sliderContainer);
   modalContainer.append(closeButton, modalContent);
   productContainer.append(modalContainer);
-    
+
   closeButton.addEventListener('click', () => {
     productContainer.removeChild(modalContainer);
   });
