@@ -68,6 +68,3 @@ export async function sendDataToCart(e: Event): Promise<void> {
   addProductToCart(data, cartId)
 }
 
-// render item in cart:
-
-
