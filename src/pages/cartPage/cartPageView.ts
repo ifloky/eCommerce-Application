@@ -24,8 +24,6 @@ export interface CartResponseItem {
   }[];
 }
 
-
-
 export async function getProductInCart(): Promise<CartResponseItem> {
   if (checkAuthorization()) {
     const cartResult: CartResponse = await getPasswordFlow(`/me/carts`)
@@ -54,3 +52,6 @@ export async function returnCartItem(): Promise<HTMLElement> {
 
   return cardItem;
 }
+
+// TODO: replace to cart page
+// document.body.append(await returnCartItem());

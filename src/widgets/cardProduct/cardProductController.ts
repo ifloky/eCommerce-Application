@@ -16,15 +16,6 @@ export function checkAuthorization(): boolean {
   return false
 }
 
-async function checkCart(): Promise<boolean> {
-  if (checkAuthorization()) {
-    const response: CartResponse = await getPasswordFlow(`/me/carts`);
-    return !!response.count
-  }
-  const response: CartResponse = await getAnonymousFlow(`/carts`);
-  return !!response.count
-}
-
 async function createCart(): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts`, {})
@@ -43,8 +34,7 @@ export async function getCartData(): Promise<CartResponse> {
 };
 
 
-export async function addProductToCart(data: object): Promise<void> {
-  const cartId = (await getCartData()).results[0].id;
+export async function addProductToCart(data: object, cartId: string): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts/${cartId}`, data)
   }
@@ -53,13 +43,15 @@ export async function addProductToCart(data: object): Promise<void> {
 
 
 export async function sendDataToCart(e: Event): Promise<void> {
-  const cartExists = await checkCart();
-  if (cartExists) {
+  const cartExists = await getCartData();
+  if (!cartExists.count) {
     createCart();
   }
   const target = e.target as HTMLElement;
   const parentId = target.closest('[data-id]')?.getAttribute('data-id');
-  const cartDataVersion = (await getCartData()).results[0].version;
+  const [cartResponse] = (await getCartData()).results;
+  const cartId = cartResponse.id;
+  const cartDataVersion = cartResponse.version;
   const data = {
     "version": cartDataVersion,
     "actions": [{
@@ -73,7 +65,7 @@ export async function sendDataToCart(e: Event): Promise<void> {
       }
     }]
   }
-  addProductToCart(data)
+  addProductToCart(data, cartId)
 }
 
 // render item in cart:
