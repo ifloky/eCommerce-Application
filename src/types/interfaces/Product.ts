@@ -39,7 +39,7 @@ export interface MasterVariant {
   images: Image[],
 }
 interface Current {
-  name:  ThreeLanguages,
+  name: ThreeLanguages,
   description: ThreeLanguages,
   categories: TypeIdAndId[],
   slug: ThreeLanguages,

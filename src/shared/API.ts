@@ -8,7 +8,7 @@ let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
-type HttpMethod = 'GET' | 'POST';
+type HttpMethod = 'GET' | 'POST' | 'DELETE';
 
 export function setCookie(name: string, value: string, expiresInHours: number): void {
   const expires = new Date(Date.now() + expiresInHours * 3600000).toUTCString();
@@ -133,4 +133,15 @@ export const getPasswordFlow = async <T>(url: string): Promise<T> => {
 export const postPasswordFlow = async <T>(url: string, data: object): Promise<T> => {
   await fetchAndSetPasswordFlow();
   return fetchWithAuthorization<T>(url, 'POST', data);
+};
+
+
+export const deleteAnonymousFlow = async <T>(url: string, data: object): Promise<T> => {
+  await fetchAndSetBearerToken();
+  return fetchWithAuthorization<T>(url, 'DELETE', data);
+};
+
+export const deletePasswordFlow = async <T>(url: string, data: object): Promise<T> => {
+  await fetchAndSetPasswordFlow();
+  return fetchWithAuthorization<T>(url, 'DELETE', data);
 };

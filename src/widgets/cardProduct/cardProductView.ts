@@ -1,7 +1,7 @@
+import { sendDataToCart } from "../../pages/busketPage/basketPageController";
 import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
-import { sendDataToCart } from "./cardProductController";
 
 function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Product): void {
   const productCardImage = cardProductWrapper.querySelector('.product-card__image');
@@ -20,7 +20,7 @@ export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   cardProductWrapper.setAttribute('data-id', elem.id)
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
-  const discountedPrice = elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount;
+  const discountedPrice = Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100;
   cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem))
   cardProductWrapper.innerHTML = `
   <div class="product-card__image">
