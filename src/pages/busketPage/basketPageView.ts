@@ -1,7 +1,6 @@
 import { createElement } from "../../utils/abstract";
 import { getAnonymousFlow, getPasswordFlow } from "../../shared/API";
 import { CartResponse, checkAuthorization, sendDeleteProductFromCart } from "./basketPageController";
-
 export interface CartResponseItem {
   id: string,
   lineItems?: {
@@ -67,7 +66,6 @@ export async function returnCartItem(): Promise<HTMLElement> {
     `;
     cardItem.appendChild(productElement);
   });
-
   return cardItem;
 }
 

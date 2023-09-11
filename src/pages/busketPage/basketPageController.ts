@@ -27,7 +27,6 @@ async function createCart(): Promise<void> {
   })
 }
 
-
 export async function getCartData(): Promise<CartResponse> {
   if (checkAuthorization()) {
     const response: CartResponse = await getPasswordFlow(`/me/carts`);
@@ -36,7 +35,6 @@ export async function getCartData(): Promise<CartResponse> {
   const response: CartResponse = await getAnonymousFlow(`/carts`);
   return response
 };
-
 
 export async function addProductToCart(data: object, cartId: string): Promise<void> {
   if (checkAuthorization()) {
@@ -51,7 +49,6 @@ export async function deleteProductFromCart(data: object, cartId: string, cartDa
   }
   await deleteAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
 }
-
 
 export async function sendDataToCart(e: Event): Promise<void> {
   let cartExists = await getCartData();

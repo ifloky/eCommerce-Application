@@ -5,7 +5,6 @@ import { ProductDetail } from "./productPageController";
 
 export const productContainer = createElement('div', ['product__container'])
 
-
 export function productPageView(product: ProductDetail): HTMLElement {
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
     (image) => image.url
