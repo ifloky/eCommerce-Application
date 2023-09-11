@@ -59,7 +59,7 @@ function aboutUsController(): void {
   updateContainer(aboutUsPageView(teamMembers));
 }
 
-async function basketButtonController(): Promise<void> {
+export async function basketButtonController(): Promise<void> {
   updateContainer(await basketPageView());
 }
 

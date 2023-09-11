@@ -2,7 +2,7 @@ import { createElement } from "../../utils/abstract";
 import { getAnonymousFlow, getPasswordFlow } from "../../shared/API";
 import { CartResponse, checkAuthorization, sendDeleteProductFromCart } from "./basketPageController";
 export interface CartResponseItem {
-  id: string,
+  id: string;
   lineItems?: {
     id: string;
     name: {
@@ -10,20 +10,24 @@ export interface CartResponseItem {
     };
     price: {
       value: {
-        centAmount: string
-      }
-    }
+        centAmount: string;
+      };
+    };
     totalPrice: {
-      centAmount: string
-    }
-    quantity: number,
+      centAmount: string;
+    };
+    quantity: number;
     variant: {
       images: {
-        url: string
-      }[]
-    }
+        url: string;
+      }[];
+    };
   }[];
+  totalPrice?: {
+    centAmount: string;
+  };
 }
+
 
 export async function getProductInCart(): Promise<CartResponseItem> {
   if (checkAuthorization()) {
@@ -35,10 +39,13 @@ export async function getProductInCart(): Promise<CartResponseItem> {
 }
 
 function clickDelete(e: Event, productsInCart: HTMLElement): void {
-  const productElement = productsInCart.querySelector('.product__delete-button');
-  if (e.target === productElement) {
-    sendDeleteProductFromCart(e);
-  }
+  const productElements = Array.from(productsInCart.getElementsByClassName('product__delete-button'));
+
+  productElements.forEach(async (elem) => {
+    if (elem === e.target) {
+      await sendDeleteProductFromCart(e);
+    }
+  });
 }
 
 const entryBasket = createElement('div', ['product-none']);
@@ -46,11 +53,14 @@ const entryBasket = createElement('div', ['product-none']);
 export async function returnCartItem(): Promise<HTMLElement> {
   const cardItem = createElement('div', ['basket__cart-items']);
   const productsInCart = await getProductInCart();
-  if (!productsInCart) {
+  if (!productsInCart.lineItems?.length) {
     entryBasket.innerHTML = "";
     entryBasket.innerHTML = "basket is empty"
     return entryBasket;
   }
+  const cartAllPrice = createElement('div', ['basket__cart-all-price']);
+  const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
+  cartAllPrice.innerHTML = 'Total cost:' + (totalPriceAmount / 1000) + '$' || 'Total cost:';
   productsInCart.lineItems?.forEach(item => {
     const productElement = createElement('div', ['product']);
     productElement.setAttribute('data-id', item.id)
@@ -65,6 +75,7 @@ export async function returnCartItem(): Promise<HTMLElement> {
       <button class="product__delete-button button-light">DELETE</button>
     `;
     cardItem.appendChild(productElement);
+    cardItem.appendChild(cartAllPrice);
   });
   return cardItem;
 }

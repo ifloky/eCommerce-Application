@@ -1,4 +1,6 @@
-import { deleteAnonymousFlow, deletePasswordFlow, getAnonymousFlow, getCookie, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API";
+/* eslint-disable no-console */
+import { getAnonymousFlow, getCookie, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API";
+import { basketButtonController } from "../../shared/router";
 
 export interface CartResponse {
   count: number
@@ -45,9 +47,9 @@ export async function addProductToCart(data: object, cartId: string): Promise<vo
 
 export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: string): Promise<void> {
   if (checkAuthorization()) {
-    await deletePasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data)
+    await postPasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data)
   }
-  await deleteAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
+  await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
 }
 
 export async function sendDataToCart(e: Event): Promise<void> {
@@ -57,7 +59,15 @@ export async function sendDataToCart(e: Event): Promise<void> {
     cartExists = await getCartData();
   }
   const target = e.target as HTMLElement;
-  const parentId = target.closest('[data-id]')?.getAttribute('data-id');
+  const parentElement = target.closest('[data-id]');
+  let parentId
+  let productPrice
+  let productPriceNumber
+  if (parentElement) {
+    parentId = parentElement.getAttribute('data-id');
+    productPrice = parentElement.querySelector('.product-card__price')?.innerHTML || '';
+    productPriceNumber = Number(productPrice.slice(0, -2)) * 1000;
+  }
   const [cartResponse] = cartExists.results;
   const cartId = cartResponse.id;
   const cartDataVersion = cartResponse.version;
@@ -70,7 +80,7 @@ export async function sendDataToCart(e: Event): Promise<void> {
       "quantity": 1,
       "externalPrice": {
         "currencyCode": "USD",
-        "centAmount": 4000
+        "centAmount": productPriceNumber
       }
     }]
   }
@@ -84,9 +94,14 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   const cartId = cartResponse.id;
   const cartDataVersion = cartResponse.version;
   const data = {
-    "action": "removeLineItem",
-    "lineItemId": parentId
+    "version": cartDataVersion,
+    "actions": [{
+      "action": "removeLineItem",
+      "lineItemId": parentId,
+      "variantId": 1,
+      "quantity": 1,
+    }]
   }
-  deleteProductFromCart(data, cartId, cartDataVersion)
+  await deleteProductFromCart(data, cartId, cartDataVersion);
+  await basketButtonController();
 }
-
