@@ -19,84 +19,48 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-function updateContainer(content: string): void {
+export async function updateContainer(element: HTMLElement): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = content;
+    appContainer.innerHTML = '';
+    appContainer.append(element);
   }
 }
-
 export async function homeController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await MainPageController());
-  }
+  updateContainer(await MainPageController())
 }
 
 export function logInController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(getLoginPageView);
-  }
+  updateContainer(getLoginPageView);
 }
 
 export function registerController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(RegistrationPageView())
-  }
+  updateContainer(RegistrationPageView())
 }
 
 export function userProfilePageController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(getUserProfileView)
-  }
+  updateContainer(getUserProfileView)
 }
 
 export async function catalogController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(catalogRender());
-    appContainer.append(await createAllProducts());
-  }
+  updateContainer(catalogRender());
+  updateContainer(await createAllProducts());
 }
 
 async function tomatoCornController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await createTomatoCorn());
-  }
+  updateContainer(await createTomatoCorn());
 }
 
 async function otherSeedsController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await createOtherSeeds());
-  }
+  updateContainer(await createOtherSeeds());
 }
 
 function aboutUsController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(aboutUsPageView(teamMembers));
-  }
+  updateContainer(aboutUsPageView(teamMembers));
 }
 
 async function basketButtonController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await basketPageView());
-  }
+  updateContainer(await basketPageView());
 }
 
 export function productController(): void {
@@ -104,7 +68,11 @@ export function productController(): void {
 }
 
 function notFoundController(): void {
-  updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = '';
+    appContainer.innerHTML = '<div class="main-container"><h1>404 - Page Not Found</h1><a href="/"</div>';
+  }
 }
 
 const routes: { [path: string]: ControllerFunction } = {
