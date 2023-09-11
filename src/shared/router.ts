@@ -11,7 +11,8 @@ import {
 import { ProductPage } from "../pages/productPage/productPageController";
 import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
 import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
-import { basketPageView } from "../pages/busketPage/basketPageView";
+import { basketPageView } from "../pages/basketPage/basketPageView";
+import { createElement } from "../utils/abstract";
 
 type ControllerFunction = () => void;
 
@@ -26,6 +27,7 @@ export async function updateContainer(element: HTMLElement): Promise<void> {
     appContainer.append(element);
   }
 }
+
 export async function homeController(): Promise<void> {
   updateContainer(await MainPageController())
 }
@@ -43,10 +45,11 @@ export function userProfilePageController(): void {
 }
 
 export async function catalogController(): Promise<void> {
-  updateContainer(catalogRender());
-  updateContainer(await createAllProducts());
+  const container = createElement('div');
+  container.appendChild(catalogRender());
+  container.appendChild(await createAllProducts());
+  await updateContainer(container);
 }
-
 async function tomatoCornController(): Promise<void> {
   updateContainer(await createTomatoCorn());
 }
@@ -136,6 +139,11 @@ export function redirectToRegisterPage(): void {
 export function redirectToLoginPage(): void {
   changeRoute('/login');
 }
+
+export function redirectToCatalog(): void {
+  changeRoute('/catalog');
+}
+
 
 
 startRouting();

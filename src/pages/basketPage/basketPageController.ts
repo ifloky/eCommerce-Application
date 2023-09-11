@@ -102,6 +102,10 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
       "quantity": 1,
     }]
   }
+  console.log(parentId);
+
   await deleteProductFromCart(data, cartId, cartDataVersion);
-  await basketButtonController();
+  if (window.location.pathname === '/basket') {
+    await basketButtonController();
+  }
 }

@@ -1,6 +1,7 @@
 import { createElement } from "../../utils/abstract";
 import { getAnonymousFlow, getPasswordFlow } from "../../shared/API";
 import { CartResponse, checkAuthorization, sendDeleteProductFromCart } from "./basketPageController";
+import { redirectToCatalog } from "../../shared/router";
 export interface CartResponseItem {
   id: string;
   lineItems?: {
@@ -55,7 +56,11 @@ export async function returnCartItem(): Promise<HTMLElement> {
   const productsInCart = await getProductInCart();
   if (!productsInCart.lineItems?.length) {
     entryBasket.innerHTML = "";
-    entryBasket.innerHTML = "basket is empty"
+    entryBasket.innerHTML = `<h2>basket is empty</h2>`
+    const buttonToCatalog = createElement('button', ['button']);
+    buttonToCatalog.innerHTML = 'Go to catalog'
+    buttonToCatalog.onclick = (): void => redirectToCatalog();
+    entryBasket.append(buttonToCatalog);
     return entryBasket;
   }
   const cartAllPrice = createElement('div', ['basket__cart-all-price']);

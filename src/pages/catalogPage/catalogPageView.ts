@@ -181,7 +181,7 @@ async function createCategoryProducts(categoryCreator: () => Promise<Product[]>)
 
   await Promise.all(productsInCategory.map(async (elem) => {
     const newElem = priceWithDiscount(elem);
-    allProductsCards.appendChild(newElem);
+    allProductsCards.appendChild(await newElem);
   })).then(() => {
     const appContainer = document.getElementById('app');
     appContainer?.append(paginationView(productsInCategory));
