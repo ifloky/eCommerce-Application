@@ -23,7 +23,7 @@ export function catalogRender(): HTMLElement {
   return catalogWrapper;
 }
 
-async function receiveName(item: Product): Promise<ThreeLanguages>{
+async function receiveName(item: Product): Promise<ThreeLanguages> {
   const name: ThreeLanguages = {
     'en-US': `${item.masterData.current.name['en-US']}`,
     'ru': `${item.masterData.current.name.ru}`,

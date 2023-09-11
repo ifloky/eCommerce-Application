@@ -1,23 +1,27 @@
+import { sendDataToCart } from "../../pages/busketPage/basketPageController";
 import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
 
-
+function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Product): void {
+  const productCardImage = cardProductWrapper.querySelector('.product-card__image');
+  const productAddToCartButton = cardProductWrapper.querySelector('.product-card__add-to-cart');
+  if (productCardImage && e.target !== productAddToCartButton) {
+    e.preventDefault()
+    e.stopPropagation()
+    ProductPage.update(elem.id)
+  }
+  if (e.target === productAddToCartButton) {
+    sendDataToCart(e)
+  }
+}
 
 export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
+  cardProductWrapper.setAttribute('data-id', elem.id)
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
-  let discountedPrice;
-  if(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
-    discountedPrice = elem.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
-  }
-  cardProductWrapper?.addEventListener('click', (e)=> {
-    const productCardImage = cardProductWrapper.querySelector('.product-card__image');  
-   if ( productCardImage ) {  
-    e.preventDefault()
-    ProductPage.update(elem.id)
-   }
-  })
+  const discountedPrice = Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100;
+  cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem))
   cardProductWrapper.innerHTML = `
   <div class="product-card__image">
     <a href="#">
@@ -27,7 +31,6 @@ export function priceWithDiscount(elem: Product): HTMLElement {
     <a class="product-card__detail-link" href="#"></a>
     <div class="product-card__actions">
       <div class="product-card__actions-btn">
-        <a class="product-card__add-to-cart" href="" title="add to cart"></a>
         <a class="product-card__add-to-wishlist" href="" title="add to favorite"></a>
       </div>
     </div>
@@ -36,10 +39,12 @@ export function priceWithDiscount(elem: Product): HTMLElement {
     <h3>"${elem.masterData.current.name["en-US"]}"</h3>
     <p class="product-card__sub-info">"${elem.masterData.current.description["en-US"]}"</p>
     <div class="product-card__price-wrapper">
-      <span class="${discountedPrice ? "product-card__sale" : "product-card__price" }">${price ? price + ' $' : ''}</span>
+      <span class="${discountedPrice ? "product-card__sale" : "product-card__price"}">${price ? price + ' $' : ''}</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
+    <button class="button-light product-card__add-to-cart " id="addToCart">add to cart</button>
   </div>`
+
   return cardProductWrapper
 }
 

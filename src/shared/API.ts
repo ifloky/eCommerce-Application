@@ -8,8 +8,30 @@ let BEARER_TOKEN = process.env.BEARER_TOKEN || "";
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || "";
 const DEVELOP_ID = process.env.DEVELOP_ID || "";
 
+type HttpMethod = 'GET' | 'POST' | 'DELETE';
 
-type HttpMethod = 'GET' | 'POST';
+export function setCookie(name: string, value: string, expiresInHours: number): void {
+  const expires = new Date(Date.now() + expiresInHours * 3600000).toUTCString();
+  document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/; secure; sameSite=strict`;
+}
+
+export function getCookie(name: string): string {
+  const decodedName = decodeURIComponent(name);
+  const cookies = document.cookie.split('; ');
+  const matchingCookie = cookies.find(cookie => {
+    const [cookieName] = cookie.split('=');
+    return cookieName === decodedName;
+  });
+  if (matchingCookie) {
+    const [, cookieValue] = matchingCookie.split('=');
+    return decodeURIComponent(cookieValue);
+  }
+  return '';
+}
+
+export function deleteCookie(name: string): void {
+  document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
   const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/token';
@@ -33,7 +55,7 @@ export const fetchBearerToken = async (clientId: string, clientSecret: string): 
   }
 
   const data = await response.json();
-  BEARER_TOKEN = data.access_token;
+  BEARER_TOKEN = data.access_token || getCookie("token");
   return data.access_token;
 };
 
@@ -60,7 +82,7 @@ const fetchWithAuthorization = async <T>(
 
   if (!response.ok) {
     const errorMessage = createElement('div', ['error'])
-    errorMessage.innerHTML = 'hey dude, check your input';
+    errorMessage.innerHTML = 'Something went wrong';
     document.body.appendChild(errorMessage)
 
     setTimeout(() => {
@@ -70,33 +92,6 @@ const fetchWithAuthorization = async <T>(
 
   return response.json();
 };
-
-
-export function setCookie(name: string, value: string, expiresInHours: number): void {
-  const expires = new Date(Date.now() + expiresInHours * 3600000).toUTCString();
-  document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/; secure; sameSite=strict`;
-}
-
-export function getCookie(name: string): string {
-  const decodedName = decodeURIComponent(name);
-  const cookies = document.cookie.split('; ');
-
-  const matchingCookie = cookies.find(cookie => {
-    const [cookieName] = cookie.split('=');
-    return cookieName === decodedName;
-  });
-
-  if (matchingCookie) {
-    const [, cookieValue] = matchingCookie.split('=');
-    return decodeURIComponent(cookieValue);
-  }
-
-  return '';
-}
-
-export function deleteCookie(name: string): void {
-  document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-}
 
 const fetchAndSetBearerToken = async (): Promise<void> => {
   try {
@@ -138,4 +133,15 @@ export const getPasswordFlow = async <T>(url: string): Promise<T> => {
 export const postPasswordFlow = async <T>(url: string, data: object): Promise<T> => {
   await fetchAndSetPasswordFlow();
   return fetchWithAuthorization<T>(url, 'POST', data);
+};
+
+
+export const deleteAnonymousFlow = async <T>(url: string, data: object): Promise<T> => {
+  await fetchAndSetBearerToken();
+  return fetchWithAuthorization<T>(url, 'DELETE', data);
+};
+
+export const deletePasswordFlow = async <T>(url: string, data: object): Promise<T> => {
+  await fetchAndSetPasswordFlow();
+  return fetchWithAuthorization<T>(url, 'DELETE', data);
 };
