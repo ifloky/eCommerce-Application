@@ -40,7 +40,6 @@ export function headerView(links: Links, signIn: boolean): string {
 function createHeader(signIn: boolean): void {
   headerWrapper.innerHTML = headerView(headerLinks, signIn);
   document.body.append(headerWrapper)
-  startRouting();
 }
 
 function refreshHeader(signIn: boolean): void {
