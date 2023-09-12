@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getAnonymousFlow, getCookie, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API";
 import { basketButtonController } from "../../shared/router";
 
@@ -102,8 +101,6 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
       "quantity": 1,
     }]
   }
-  console.log(parentId);
-
   await deleteProductFromCart(data, cartId, cartDataVersion);
   if (window.location.pathname === '/basket') {
     await basketButtonController();
