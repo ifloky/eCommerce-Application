@@ -1,4 +1,4 @@
-import { sendDataToCart } from "../../pages/busketPage/basketPageController";
+import { sendDataToCart, sendDeleteProductFromCart } from "../../pages/basketPage/basketPageController";
 import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
@@ -11,8 +11,14 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
     e.stopPropagation()
     ProductPage.update(elem.id)
   }
-  if (e.target === productAddToCartButton) {
-    sendDataToCart(e)
+  if (productAddToCartButton && e.target === productAddToCartButton) {
+    if (productAddToCartButton.innerHTML !== `delete from cart`) {
+      productAddToCartButton.innerHTML = `delete from cart`;
+      sendDataToCart(e);
+    } else {
+      productAddToCartButton.innerHTML = `add to cart`;
+      sendDeleteProductFromCart(e)
+    }
   }
 }
 
