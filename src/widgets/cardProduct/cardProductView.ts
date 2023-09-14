@@ -1,4 +1,4 @@
-import { sendDataToCart } from "../../pages/busketPage/basketPageController";
+import { sendDataToCart } from "../../pages/basketPage/basketPageController";
 import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";

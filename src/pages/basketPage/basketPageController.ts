@@ -89,4 +89,3 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   }
   deleteProductFromCart(data, cartId, cartDataVersion)
 }
-

@@ -3,15 +3,16 @@ import { MainPageController } from "../pages/mainPage/MainPageController";
 import RegistrationPageView from "../pages/registrationPage/registrationView";
 import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
 import {
-  catalogRender,
+  // catalogRender,
   createTomatoCorn,
   createOtherSeeds,
-  createAllProducts
+  // createAllProducts
 } from "../pages/catalogPage/catalogPageView";
 import { ProductPage } from "../pages/productPage/productPageController";
 import { aboutUsPageView } from "../pages/aboutUsPage/aboutUsPageView";
 import { teamMembers } from "../pages/aboutUsPage/components/teamMembers";
-import { basketPageView } from "../pages/busketPage/basketPageView";
+import { basketPageView } from "../pages/basketPage/basketPageView";
+import { getCatalogView } from "../pages/catalogPage/catalogPageViewPanakir";
 
 type ControllerFunction = () => void;
 
@@ -62,8 +63,10 @@ export async function catalogController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = ''
-    appContainer.append(catalogRender());
-    appContainer.append(await createAllProducts());
+    const catalogView = await getCatalogView()
+    appContainer.append(catalogView)
+    // appContainer.append(catalogRender());
+    // appContainer.append(await createAllProducts());
   }
 }
 

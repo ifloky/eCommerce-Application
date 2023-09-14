@@ -1,13 +1,16 @@
 import { Product } from "../../../types/interfaces/Product"
 import { createElement } from "../../../utils/abstract"
 
-
 function returnButtonPages(items: Product[]): string {
-  const countPages = Math.ceil(items.length / 10);
+  const countPages = Math.ceil(items.length / 8);
   let buttonPages: string = ''
-  if (countPages > 1) {
+  if (countPages > 0) {
     for (let i = 1; i <= countPages; i += 1) {
-      buttonPages += `<button class="button-light" id="${i}">${i}</button>`;
+      if (i !== 1) {
+        buttonPages += `<button class="button-light" id="${i}">${i}</button>`;
+      } else {
+        buttonPages += `<button class="button-light active" id="${i}">${i}</button>`;
+      }
     }
   }
   return buttonPages;
@@ -26,5 +29,3 @@ export function paginationView(items: Product[]): HTMLElement {
 
   return paginationWrapper;
 }
-
-
