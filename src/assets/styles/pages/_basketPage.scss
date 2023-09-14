@@ -19,8 +19,8 @@
 
       &__delete-button {
         position: absolute;
-        transform: translateX(-50%);
-        right: 0;
+        transform: translate(-50%, -1px);
+        right: -4px;
         height: 40px;
       }
     }
