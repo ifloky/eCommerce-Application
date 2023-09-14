@@ -1,6 +1,6 @@
 import { createElement } from "../../utils/abstract";
 import { getAnonymousFlow, getPasswordFlow } from "../../shared/API";
-import { CartResponse, checkAuthorization, sendDeleteProductFromCart } from "./basketPageController";
+import { CartResponse, checkAuthorization, createCart, sendDeleteProductFromCart } from "./basketPageController";
 import { redirectToCatalog } from "../../shared/router";
 export interface CartResponseItem {
   id: string;
@@ -31,17 +31,21 @@ export interface CartResponseItem {
 
 
 export async function getProductInCart(): Promise<CartResponseItem> {
+  let cartResult: CartResponse
   if (checkAuthorization()) {
-    const cartResult: CartResponse = await getPasswordFlow(`/me/carts`)
-    return cartResult.results[0]
+    cartResult = await getPasswordFlow(`/me/carts`);
+    if (!cartResult.results[0]) {
+      createCart()
+      cartResult = await getPasswordFlow(`/me/carts`);
+    }
+  } else {
+    cartResult = await getAnonymousFlow(`/carts`)
   }
-  const cartResult: CartResponse = await getAnonymousFlow(`/carts`)
   return cartResult.results[0]
 }
 
 function clickDelete(e: Event, productsInCart: HTMLElement): void {
   const productElements = Array.from(productsInCart.getElementsByClassName('product__delete-button'));
-
   productElements.forEach(async (elem) => {
     if (elem === e.target) {
       await sendDeleteProductFromCart(e);
@@ -54,6 +58,8 @@ const entryBasket = createElement('div', ['product-none']);
 export async function returnCartItem(): Promise<HTMLElement> {
   const cardItem = createElement('div', ['basket__cart-items']);
   const productsInCart = await getProductInCart();
+  console.log('productsInCart', productsInCart);
+
   if (!productsInCart.lineItems?.length) {
     entryBasket.innerHTML = "";
     entryBasket.innerHTML = `<h2>basket is empty</h2>`
@@ -88,6 +94,6 @@ export async function returnCartItem(): Promise<HTMLElement> {
 export async function basketPageView(): Promise<HTMLElement> {
   const basketWrapper = createElement('div', ['basket__card-wrapper']);
   basketWrapper.innerHTML = '';
-  basketWrapper.append(await returnCartItem() || "basket is entry");
+  basketWrapper.append(await returnCartItem());
   return basketWrapper;
 }

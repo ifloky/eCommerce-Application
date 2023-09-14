@@ -5,7 +5,7 @@ export interface CartResponse {
   count: number
   results: {
     id: string;
-    version: string
+    version: number
   }[];
 }
 
@@ -17,7 +17,7 @@ export function checkAuthorization(): boolean {
   return false
 }
 
-async function createCart(): Promise<void> {
+export async function createCart(): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts`, {
       "currency": "USD"
@@ -29,24 +29,27 @@ async function createCart(): Promise<void> {
 }
 
 export async function getCartData(): Promise<CartResponse> {
+  let response: CartResponse
   if (checkAuthorization()) {
-    const response: CartResponse = await getPasswordFlow(`/me/carts`);
-    return response
+    response = await getPasswordFlow(`/me/carts`);
+  } else {
+    response = await getAnonymousFlow(`/carts`);
   }
-  const response: CartResponse = await getAnonymousFlow(`/carts`);
   return response
 };
 
 export async function addProductToCart(data: object, cartId: string): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts/${cartId}`, data)
+  } else {
+    await postAnonymousFlow(`/carts/${cartId}`, data)
   }
-  await postAnonymousFlow(`/carts/${cartId}`, data)
 }
 
-export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: string): Promise<void> {
+export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: number): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data)
+    return
   }
   await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
 }
