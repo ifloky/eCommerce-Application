@@ -1,31 +1,47 @@
-import { Product } from "../../../types/interfaces/Product"
-import { createElement } from "../../../utils/abstract"
+import { createElement } from '../../../utils/abstract';
+import { LIMIT } from '../catalogPageModel';
 
-function returnButtonPages(items: Product[]): string {
-  const countPages = Math.ceil(items.length / 8);
-  let buttonPages: string = ''
-  if (countPages > 0) {
-    for (let i = 1; i <= countPages; i += 1) {
-      if (i !== 1) {
-        buttonPages += `<button class="button-light" id="${i}">${i}</button>`;
-      } else {
-        buttonPages += `<button class="button-light active" id="${i}">${i}</button>`;
-      }
+const createButtonElement = (): HTMLButtonElement => createElement('button', ['pagination__button', 'button']);
+
+const createNavigationButtonsBlock = (): HTMLDivElement => {
+  const navigation = createElement('div', ['pagination__buttons']);
+  const total = Math.ceil(Number(sessionStorage.getItem('productCount')) / LIMIT);
+  for (let i = 1; i <= total; i++) {
+    const button = createButtonElement();
+    button.classList.add('button_nav');
+    if (i === 1) {
+      button.classList.add('active');
     }
+    button.textContent = `${i}`;
+
+    navigation.append(button);
   }
-  return buttonPages;
-}
+  return navigation;
+};
 
-export function paginationView(items: Product[]): HTMLElement {
-  const paginationWrapper = createElement('div', ['pagination__wrapper']);
+const createPrevButton = (): HTMLButtonElement => {
+  const prevButton = createButtonElement();
+  prevButton.classList.add('button_prev');
+  prevButton.textContent = '<<';
+  return prevButton;
+};
+const createNextButton = (): HTMLButtonElement => {
+  const nextButton = createButtonElement();
+  nextButton.classList.add('button_next');
+  nextButton.textContent = '>>';
+  return nextButton;
+};
 
-  try {
-    const buttonPages = returnButtonPages(items);
+const createPaginationBlock = (): HTMLDivElement => {
+  const pagination = createElement('div', ['pagination']);
+  return pagination;
+};
 
-    paginationWrapper.innerHTML = `<button class="button" id="buttonPrev">Prev</button>${buttonPages || '...'}<button class="button" id="buttonNext">Next</button>`;
-  } catch (error) {
-    throw Error("" + error);
-  }
-
-  return paginationWrapper;
-}
+export const generatePaginationView = (): HTMLDivElement => {
+  const pagination = createPaginationBlock();
+  const navigation = createNavigationButtonsBlock();
+  const prevButton = createPrevButton();
+  const nextButton = createNextButton();
+  pagination.append(prevButton, navigation, nextButton);
+  return pagination;
+};
