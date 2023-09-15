@@ -39,7 +39,7 @@ export interface MasterVariant {
   images: Image[],
 }
 interface Current {
-  name:  ThreeLanguages,
+  name: ThreeLanguages,
   description: ThreeLanguages,
   categories: TypeIdAndId[],
   slug: ThreeLanguages,
@@ -59,4 +59,32 @@ export interface Product {
 
 export interface ProductResult {
   results: Product[];
+}
+
+
+export interface ProductDetail {
+  id: string;
+  masterData: {
+    current: {
+      metaTitle: { [key: string]: string };
+      description: { [key: string]: string };
+      masterVariant: {
+        images: [
+          {
+            url: ''
+          },
+        ];
+        prices: {
+          value: {
+            centAmount: number;
+          };
+          discounted: {
+            value: {
+              centAmount: number;
+            };
+          };
+        }[];
+      };
+    };
+  };
 }

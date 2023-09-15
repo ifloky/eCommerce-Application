@@ -1,7 +1,9 @@
 import { getAnonymousFlow } from "../../shared/API";
 import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrices, ProductResult } from "../../types/interfaces/Product";
 import { createElement } from "../../utils/abstract";
-import { priceWithDiscount } from "../../widgets/cardProduct/cardProductView";
+import { checkItemInBasketForCatalog } from "../../widgets/cardProduct/cardProductController";
+import { cardProductViewElement } from "../../widgets/cardProduct/cardProductView";
+import { getCartData } from "../basketPage/basketPageController";
 import { paginationView } from "./components/pagination";
 
 const getAllProductsInfo = async (): Promise<ProductResult> => {
@@ -23,7 +25,7 @@ export function catalogRender(): HTMLElement {
   return catalogWrapper;
 }
 
-async function receiveName(item: Product): Promise<ThreeLanguages>{
+async function receiveName(item: Product): Promise<ThreeLanguages> {
   const name: ThreeLanguages = {
     'en-US': `${item.masterData.current.name['en-US']}`,
     'ru': `${item.masterData.current.name.ru}`,
@@ -176,12 +178,12 @@ export async function createAllProductsCategory(): Promise<Product[]> {
 async function createCategoryProducts(categoryCreator: () => Promise<Product[]>): Promise<HTMLElement> {
   const allProductsCards = document.createElement('div');
   allProductsCards.classList.add('catalog__items-wrapper');
-
+  const cartData = await getCartData();
   const productsInCategory = await categoryCreator();
-
   await Promise.all(productsInCategory.map(async (elem) => {
-    const newElem = priceWithDiscount(elem);
-    allProductsCards.appendChild(newElem);
+    const checkInCart = await checkItemInBasketForCatalog(elem.id, cartData);
+    const newElem = cardProductViewElement(elem, checkInCart);
+    allProductsCards.appendChild(await newElem);
   })).then(() => {
     const appContainer = document.getElementById('app');
     appContainer?.append(paginationView(productsInCategory));

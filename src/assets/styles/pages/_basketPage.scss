@@ -1,0 +1,49 @@
+.basket {
+  &__cart-items {
+  padding: 20px 40px;
+
+    & .product {
+      display: flex;
+      border: 1px $color-active solid;
+      border-radius: 7px;
+      margin-bottom: 20px;
+
+      &__image {
+        width: 100px;
+      }
+
+      &__info {
+        margin-top: 20px;
+        margin-left: 20px;
+      }
+
+      &__delete-button {
+        position: absolute;
+        transform: translate(-50%, -1px);
+        right: -4px;
+        height: 40px;
+      }
+    }
+  }
+
+  &__cart-all-price {
+    display: flex;
+    justify-content: end;
+    font-weight: 700;
+    font-size: 18px;
+  }
+}
+
+.product-none  {
+  width: 300px;
+  margin: 0 auto;
+  font-size: 24px;
+  font-weight: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & .button {
+    margin-top: 20px;
+  }
+}
