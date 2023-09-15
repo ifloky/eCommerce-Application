@@ -1,5 +1,6 @@
 import { createElement, displayMessage } from "../../utils/abstract";
-import { getProductInCart, sendDeleteProductFromCart } from "./basketPageController";
+import { sendDeleteProductFromCart } from "./basketPageController";
+import { getProductInCart } from "./basketPageModel";
 import { redirectToCatalog } from "../../shared/router";
 
 function clickDelete(e: Event, productsInCart: HTMLElement): void {

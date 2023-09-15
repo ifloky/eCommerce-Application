@@ -2,7 +2,9 @@ import { ProductDetail } from "../../types/interfaces/Product";
 import { CartResponse, lineItem } from "../../types/interfaces/basketPage";
 import { createElement, displayMessage } from "../../utils/abstract";
 import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
-import { getCartData, sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../basketPage/basketPageController";
+import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../basketPage/basketPageController";
+import { getCartData } from "../basketPage/basketPageModel";
+
 import { ProductPage } from "./productPageController";
 
 async function buttonToCardClick(e: Event): Promise<void> {
@@ -81,7 +83,6 @@ export async function productPageView(product: ProductDetail): Promise<HTMLEleme
       }
     }
   });
-
   const addToCartButton = productContainer.querySelector('#toCart');
   addToCartButton?.addEventListener('click', (e: Event) => buttonToCardClick(e));
 

@@ -1,7 +1,7 @@
 import { getCookie } from "../../shared/API";
 import { basketButtonController } from "../../shared/router";
 import { CartResponse, lineItem } from "../../types/interfaces/basketPage";
-import { addProductToCart, createCart, deleteProductFromCart, getCartData } from "./basketModel";
+import { addProductToCart, createCart, deleteProductFromCart, getCartData } from "./basketPageModel";
 
 export function checkAuthorization(): boolean {
   const user = getCookie('access_token');
