@@ -1,33 +1,6 @@
 import { getAnonymousFlow } from "../../shared/API";
+import { ProductDetail } from "../../types/interfaces/Product";
 import { productPageView } from "./productPageView";
-
-export interface ProductDetail {
-  id: string;
-  masterData: {
-    current: {
-      metaTitle: { [key: string]: string };
-      description: { [key: string]: string };
-      masterVariant: {
-        images: [
-          {
-            url: ''
-          },
-        ];
-        prices: {
-          value: {
-            centAmount: number; 
-          };
-          discounted: {
-            value: {
-              centAmount: number; 
-            };
-          };
-        }[];
-      };
-    };
-  };
-}
-
 
 const productTemplate: ProductDetail = {
   id: 'undefined',
@@ -48,11 +21,11 @@ const productTemplate: ProductDetail = {
         prices: [
           {
             value: {
-              centAmount: 0 
+              centAmount: 0
             },
             discounted: {
               value: {
-                centAmount: 0 
+                centAmount: 0
               }
             }
           }
@@ -68,21 +41,21 @@ export const product = async (od: string): Promise<ProductDetail> => {
 }
 
 export const ProductPage = {
-  render: (): void => {
+  render: async (): Promise<void> => {
     const appContainer = document.getElementById('app');
     if (appContainer) {
       appContainer.innerHTML = ''
-      appContainer.append(productPageView(productTemplate))}
+      appContainer.append(await productPageView(productTemplate))
+    }
   },
-      
-  update: async (od:string): Promise<void> => {
+
+  update: async (id: string): Promise<void> => {
     const appContainer = document.getElementById('app');
     if (appContainer) {
       appContainer.innerHTML = ''
-      const productData = await product(od);
-      appContainer.append(productPageView(productData))
+      const productData = await product(id);
+      appContainer.append(await productPageView(productData))
     };
   },
 };
 
-ProductPage.update('a7b1d167-9a03-43e5-b423-db8d36cc5a86')

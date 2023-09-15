@@ -1,7 +1,7 @@
-import { sendDataToCart, sendDeleteProductFromCart } from "../../pages/basketPage/basketPageController";
+import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../../pages/basketPage/basketPageController";
 import { ProductPage } from "../../pages/productPage/productPageController";
 import { Product } from "../../types/interfaces/Product";
-import { createElement } from "../../utils/abstract";
+import { createElement, displayMessage } from "../../utils/abstract";
 
 function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Product): void {
   const productCardImage = cardProductWrapper.querySelector('.product-card__image');
@@ -17,12 +17,13 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
       sendDataToCart(e);
     } else {
       productAddToCartButton.innerHTML = `add to cart`;
-      sendDeleteProductFromCart(e)
+      sendDeleteProductFromCartAfterAdd(e)
+      displayMessage('product was deleted', true)
     }
   }
 }
 
-export function priceWithDiscount(elem: Product): HTMLElement {
+export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   cardProductWrapper.setAttribute('data-id', elem.id)
   const price = elem.masterData.current.masterVariant.prices[0].value.centAmount / 100;
@@ -48,9 +49,7 @@ export function priceWithDiscount(elem: Product): HTMLElement {
       <span class="${discountedPrice ? "product-card__sale" : "product-card__price"}">${price ? price + ' $' : ''}</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
-    <button class="button-light product-card__add-to-cart " id="addToCart">add to cart</button>
+    <button class="button-light product-card__add-to-cart " id="addToCart">${inCart ? 'add to cart' : 'delete from cart'}</button>
   </div>`
-
   return cardProductWrapper
 }
-
