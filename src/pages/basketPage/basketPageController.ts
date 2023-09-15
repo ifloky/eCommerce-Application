@@ -1,7 +1,7 @@
 import { getCookie } from "../../shared/API";
 import { basketButtonController } from "../../shared/router";
 import { CartResponse, lineItem } from "../../types/interfaces/basketPage";
-import { addProductToCart, createCart, deleteProductFromCart, getCartData } from "./basketPageModel";
+import { addProductToCart, createCart, deleteAllProductsFromCart, deleteProductFromCart, getCartData } from "./basketPageModel";
 
 export function checkAuthorization(): boolean {
   const user = getCookie('access_token');
@@ -9,6 +9,13 @@ export function checkAuthorization(): boolean {
     return true
   }
   return false
+}
+
+async function cartResponse(): Promise<[string, number]> {
+  const [cartResponseResults] = (await getCartData()).results;
+  const cartId = cartResponseResults.id;
+  const cartDataVersion = cartResponseResults.version;
+  return [cartId, cartDataVersion];
 }
 
 export async function sendDataToCart(e: Event): Promise<void> {
@@ -27,9 +34,7 @@ export async function sendDataToCart(e: Event): Promise<void> {
     productPrice = parentElement.querySelector('.product-card__price')?.innerHTML || '';
     productPriceNumber = Number(productPrice.slice(0, -2)) * 1000;
   }
-  const [cartResponse] = cartExists.results;
-  const cartId = cartResponse.id;
-  const cartDataVersion = cartResponse.version;
+  const [cartId, cartDataVersion] = await cartResponse();
   const data = {
     "version": cartDataVersion,
     "actions": [{
@@ -49,9 +54,7 @@ export async function sendDataToCart(e: Event): Promise<void> {
 export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   const target = e.target as HTMLElement;
   const parentId = target.closest('[data-id]')?.getAttribute('data-id');
-  const [cartResponse] = (await getCartData()).results;
-  const cartId = cartResponse.id;
-  const cartDataVersion = cartResponse.version;
+  const [cartId, cartDataVersion] = await cartResponse();
   const data = {
     "version": cartDataVersion,
     "actions": [{
@@ -79,9 +82,7 @@ export async function checkItemInBasketForDelete(e: Event): Promise<string | und
 
 export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void> {
   const targetItem = await checkItemInBasketForDelete(e);
-  const [cartResponse] = (await getCartData()).results;
-  const cartId = cartResponse.id;
-  const cartDataVersion = cartResponse.version;
+  const [cartId, cartDataVersion] = await cartResponse();
   const data = {
     "version": cartDataVersion,
     "actions": [{
@@ -95,4 +96,15 @@ export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void>
   if (window.location.pathname === '/basket') {
     await basketButtonController();
   }
+}
+
+// TODO: custom confirm popup
+export async function deleteAllProductsFromCartController(): Promise<void> {
+  const [cartId, cartDataVersion] = await cartResponse();
+  // eslint-disable-next-line no-alert
+  const result = window.confirm("Are you sure? (Type 'yes' to confirm)");
+  if (result) {
+    await deleteAllProductsFromCart(cartId, cartDataVersion);
+  }
+  await basketButtonController()
 }

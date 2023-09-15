@@ -1,5 +1,5 @@
 import { createElement, displayMessage } from "../../utils/abstract";
-import { sendDeleteProductFromCart } from "./basketPageController";
+import { sendDeleteProductFromCart, deleteAllProductsFromCartController } from "./basketPageController";
 import { getProductInCart } from "./basketPageModel";
 import { redirectToCatalog } from "../../shared/router";
 
@@ -13,22 +13,25 @@ function clickDelete(e: Event, productsInCart: HTMLElement): void {
   });
 }
 
-const entryBasket = createElement('div', ['product-none']);
+const emptyBasket = createElement('div', ['product-none']);
+const deleteAllProductButton = createElement('button', ['button-light', 'basket__delete-all-button'], 'Delete all');
+deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController)
 
 export async function returnCartItem(): Promise<HTMLElement> {
   const cardItem = createElement('div', ['basket__cart-items']);
   const productsInCart = await getProductInCart();
-  if (!productsInCart.lineItems?.length) {
-    entryBasket.innerHTML = "";
-    entryBasket.innerHTML = `<h2>basket is empty</h2>`
+  if (!productsInCart || !productsInCart.lineItems?.length) {
+    emptyBasket.innerHTML = "";
+    emptyBasket.innerHTML = `<h2>basket is empty</h2>`
     const buttonToCatalog = createElement('button', ['button'], 'Go to catalog');
     buttonToCatalog.onclick = (): void => redirectToCatalog();
-    entryBasket.append(buttonToCatalog);
-    return entryBasket;
+    emptyBasket.append(buttonToCatalog);
+    return emptyBasket;
   }
   const cartAllPrice = createElement('div', ['basket__cart-all-price']);
   const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
   cartAllPrice.innerHTML = 'Total cost:' + (totalPriceAmount / 100) + '$' || 'Total cost:';
+  cardItem.appendChild(deleteAllProductButton)
   productsInCart.lineItems?.forEach(item => {
     const productElement = createElement('div', ['product']);
     productElement.setAttribute('data-id', item.id)

@@ -1,4 +1,4 @@
-import { getAnonymousFlow, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API"
+import { deleteAnonymousFlow, deletePasswordFlow, getAnonymousFlow, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API"
 import { CartResponse, CartResponseItem } from "../../types/interfaces/basketPage"
 import { checkAuthorization } from "./basketPageController"
 
@@ -49,7 +49,15 @@ export async function addProductToCart(data: object, cartId: string): Promise<vo
 export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: number): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data)
-    return
+  } else {
+    await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
   }
-  await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data)
+}
+
+export async function deleteAllProductsFromCart(cartId: string, version: number): Promise<void> {
+  if (checkAuthorization()) {
+    await deletePasswordFlow(`/me/carts/${cartId}?version=${version}`, {})
+  } else {
+    await deleteAnonymousFlow(`/carts/${cartId}?version=${version}`, {})
+  }
 }
