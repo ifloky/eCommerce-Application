@@ -1,15 +1,29 @@
 import { Product } from '../../types/interfaces/Product';
 import { priceWithDiscount } from '../../widgets/cardProduct/cardProductView';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
+import { generateAllProductsCard } from './catalogPageView';
 import { generatePaginationView } from './components/pagination';
 
-export const selectCategory = (event: Event): void => {
+export const selectCategory = async (event: Event): Promise<void> => {
   const { target } = event;
   if (target instanceof HTMLButtonElement) {
+    const parent = document.querySelector('.catalog__buttons')
+    parent?.querySelectorAll('.catalog__button').forEach(button => {
+      button.classList.remove('button_active')
+    })
     const id = target.getAttribute('data-id');
     if (id) {
       getProductCategory(id);
     }
+    if (target.classList.contains('catalog__button_all')) {
+      document.querySelector('.catalog__container')?.remove()
+      document.querySelector('.pagination')?.remove()
+      sessionStorage.removeItem('categoryId')
+      const allProducts = await generateAllProductsCard()
+      const pagination = generatePaginationView()
+      document.querySelector('.catalog__wrapper')?.append(allProducts, pagination)
+    }
+    target.classList.add('button_active')
   }
 };
 
@@ -59,9 +73,9 @@ const moveToSelectedPage = async (event: Event): Promise<void> => {
   if (target instanceof HTMLButtonElement && parent) {
     const allButtons = parent?.querySelectorAll('.button');
     allButtons?.forEach((button) => {
-      button.classList.remove('active');
+      button.classList.remove('button_active');
     });
-    target.classList.add('active');
+    target.classList.add('button_active');
     if (target.textContent) {
       checkDisabled(target, parent);
       const selectedPage = +target.textContent;

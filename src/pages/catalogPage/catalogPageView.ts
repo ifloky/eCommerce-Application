@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createElement } from '../../utils/abstract';
 import { priceWithDiscount } from '../../widgets/cardProduct/cardProductView';
 import { selectCategory } from './catalogPageController';
@@ -19,6 +18,10 @@ const createButtonElement = (): HTMLButtonElement => {
 const createButtonsForCategories = async (): Promise<HTMLDivElement> => {
   const buttonsWrapper = createElement('div', ['catalog__buttons']);
   const allCategories = await getCategoriesData();
+  const allCategoriesButton = createButtonElement()
+  allCategoriesButton.classList.add('catalog__button_all', 'button_active')
+  allCategoriesButton.textContent = 'All categories'
+  buttonsWrapper.append(allCategoriesButton)
   allCategories.forEach((category) => {
     const name = category.categoryName;
     const button = createButtonElement();
@@ -29,7 +32,7 @@ const createButtonsForCategories = async (): Promise<HTMLDivElement> => {
   return buttonsWrapper;
 };
 
-const generateAllProductsCard = async (): Promise<HTMLElement> => {
+export const generateAllProductsCard = async (): Promise<HTMLElement> => {
   const wrapper = createElement('div', ['catalog__container']);
   const products = (await getAllProducts()).results;
   products.forEach((product) => {

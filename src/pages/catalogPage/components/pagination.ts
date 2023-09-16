@@ -11,7 +11,7 @@ const createNavigationButtonsBlock = (): HTMLDivElement => {
     const button = createButtonElement();
     button.classList.add('button_nav');
     if (i === 1) {
-      button.classList.add('active');
+      button.classList.add('button_active');
     }
     button.textContent = `${i}`;
 
@@ -27,6 +27,7 @@ const createPrevButton = (): HTMLButtonElement => {
   prevButton.textContent = '<<';
   return prevButton;
 };
+
 const createNextButton = (): HTMLButtonElement => {
   const nextButton = createButtonElement();
   nextButton.classList.add('button_next');
@@ -34,10 +35,7 @@ const createNextButton = (): HTMLButtonElement => {
   return nextButton;
 };
 
-const createPaginationBlock = (): HTMLDivElement => {
-  const pagination = createElement('div', ['pagination']);
-  return pagination;
-};
+const createPaginationBlock = (): HTMLDivElement => createElement('div', ['pagination']);
 
 const bindEvents = (parent: HTMLDivElement): void => {
   const pagination = parent;
