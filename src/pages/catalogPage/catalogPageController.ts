@@ -1,6 +1,7 @@
 import { Product } from '../../types/interfaces/Product';
 import { priceWithDiscount } from '../../widgets/cardProduct/cardProductView';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
+import { generatePaginationView } from './components/pagination';
 
 export const selectCategory = (event: Event): void => {
   const { target } = event;
@@ -21,6 +22,15 @@ export const renderSelectedCategory = (data: Product[]): void => {
     const productCard = priceWithDiscount(product);
     catalogPage?.append(productCard);
   });
+};
+
+export const generatePaginationForSelectedCategory = (): void => {
+  const catalogWrapper = document.querySelector('.catalog__wrapper');
+  if (catalogWrapper?.querySelector('.pagination')) {
+    catalogWrapper?.querySelector('.pagination')?.remove();
+  }
+  const pagination = generatePaginationView();
+  catalogWrapper?.append(pagination);
 };
 
 const checkDisabled = (element: Element, parent: Element): void => {
@@ -55,7 +65,15 @@ const moveToSelectedPage = async (event: Event): Promise<void> => {
     if (target.textContent) {
       checkDisabled(target, parent);
       const selectedPage = +target.textContent;
-      const products = (await getAllProducts((selectedPage - 1) * 3)).results;
+      let products: Product[] = [];
+      if (sessionStorage.getItem('categoryId')) {
+        const id = sessionStorage.getItem('categoryId');
+        if (typeof id === 'string') {
+          products = (await getProductCategory(id, (selectedPage - 1) * 3)).results;
+        }
+      } else {
+        products = (await getAllProducts((selectedPage - 1) * 3)).results;
+      }
       renderSelectedCategory(products);
     }
   }

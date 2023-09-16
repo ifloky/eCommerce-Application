@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { getAnonymousFlow } from '../../shared/API';
 import { Product } from '../../types/interfaces/Product';
+import { generatePaginationForSelectedCategory, renderSelectedCategory } from './catalogPageController';
 
 type Category = {
   ancestors?: string[];
@@ -39,7 +40,7 @@ type Category = {
   versionModifiedAt: string;
 };
 
-type responseTypeProduct = {
+export type responseTypeProduct = {
   count: number;
   limit: number;
   offset: number;
@@ -66,6 +67,7 @@ export const getAllProducts = async (offset = 0): Promise<responseTypeProduct> =
   const path = `/products?limit=${LIMIT}&offset=${offset}`;
   const response: responseTypeProduct = await getAnonymousFlow(path);
   sessionStorage.setItem('productCount', `${response.total}`);
+  console.log(response.results[0]);
   return response;
 };
 
@@ -85,10 +87,15 @@ export const getCategoriesData = async (): Promise<CategoryData[]> => {
   return categoriesData;
 };
 
-export const getProductCategory = async (id: string): Promise<void> => {
-  const response: responseTypeProduct = await getAnonymousFlow(
-    `/product-projections/search?filter=categories.id:"${id}"`,
-  );
+export const getProductCategory = async (id: string, offset = 0): Promise<responseTypeProduct> => {
+  const path = `/product-projections/search?filter=categories.id:"${id}"&limit=${LIMIT}&offset=${offset}`;
+  const response: responseTypeProduct = await getAnonymousFlow(path);
   const productsOfSelectedCategory = response.results;
-  console.log(productsOfSelectedCategory);
+  sessionStorage.setItem('productCount', `${response.total}`);
+  if (sessionStorage.getItem('categoryId') !== id) {
+    generatePaginationForSelectedCategory();
+    sessionStorage.setItem('categoryId', `${id}`);
+  }
+  renderSelectedCategory(productsOfSelectedCategory);
+  return response;
 };

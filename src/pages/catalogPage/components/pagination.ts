@@ -1,4 +1,5 @@
 import { createElement } from '../../../utils/abstract';
+import { changePage } from '../catalogPageController';
 import { LIMIT } from '../catalogPageModel';
 
 const createButtonElement = (): HTMLButtonElement => createElement('button', ['pagination__button', 'button']);
@@ -22,7 +23,7 @@ const createNavigationButtonsBlock = (): HTMLDivElement => {
 const createPrevButton = (): HTMLButtonElement => {
   const prevButton = createButtonElement();
   prevButton.classList.add('button_prev');
-  prevButton.disabled = true
+  prevButton.disabled = true;
   prevButton.textContent = '<<';
   return prevButton;
 };
@@ -38,11 +39,17 @@ const createPaginationBlock = (): HTMLDivElement => {
   return pagination;
 };
 
+const bindEvents = (parent: HTMLDivElement): void => {
+  const pagination = parent;
+  pagination?.addEventListener('click', changePage);
+};
+
 export const generatePaginationView = (): HTMLDivElement => {
   const pagination = createPaginationBlock();
   const navigation = createNavigationButtonsBlock();
   const prevButton = createPrevButton();
   const nextButton = createNextButton();
+  bindEvents(pagination);
   pagination.append(prevButton, navigation, nextButton);
   return pagination;
 };

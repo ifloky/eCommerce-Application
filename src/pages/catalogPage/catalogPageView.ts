@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { createElement } from '../../utils/abstract';
 import { priceWithDiscount } from '../../widgets/cardProduct/cardProductView';
-import { changePage, selectCategory } from './catalogPageController';
+import { selectCategory } from './catalogPageController';
 import { getAllProducts, getCategoriesData } from './catalogPageModel';
 import { generatePaginationView } from './components/pagination';
 
@@ -42,8 +42,6 @@ const generateAllProductsCard = async (): Promise<HTMLElement> => {
 const bindEvents = (parent: HTMLElement): void => {
   const buttons = parent.querySelector('.catalog__buttons');
   buttons?.addEventListener('click', selectCategory);
-  const pagination = parent.querySelector('.pagination');
-  pagination?.addEventListener('click', changePage);
 };
 
 const generateCatalogView = async (): Promise<HTMLElement> => {

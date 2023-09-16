@@ -1,15 +1,13 @@
-import { createElement } from "../../utils/abstract";
-import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
-import { sendDataToCart } from "../basketPage/basketPageController";
-import { ProductDetail } from "./productPageController";
+import { createElement } from '../../utils/abstract';
+import { createSliderElement, showModal } from '../../widgets/Slider/sliderView';
+import { sendDataToCart } from '../basketPage/basketPageController';
+import { ProductDetail } from './productPageController';
 
-export const productContainer = createElement('div', ['product__container'])
+export const productContainer = createElement('div', ['product__container']);
 
 export function productPageView(product: ProductDetail): HTMLElement {
-  const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map(
-    (image) => image.url
-  );
-  const price = (product.masterData.current.masterVariant.prices[0].value.centAmount) / 100;
+  const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map((image) => image.url);
+  const price = product.masterData.current.masterVariant.prices[0].value.centAmount / 100;
   let discountedPrice;
   if (product.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) {
     discountedPrice = product.masterData.current.masterVariant.prices[0].discounted.value.centAmount / 100;
@@ -21,7 +19,7 @@ export function productPageView(product: ProductDetail): HTMLElement {
       <div class="product__buy-wrapper">
         <div class="product__price-wrapper">
           <p class="product__price-sale">${discountedPrice ? discountedPrice + ' $' : ''}</p>
-          <p class="${discountedPrice ? "product__price" : "product__price-sale"}">${price ? price + ' $' : ''}</p>
+          <p class="${discountedPrice ? 'product__price' : 'product__price-sale'}">${price ? price + ' $' : ''}</p>
         </div>
         <button class="button product__to-cart" id="toCart">add to cart</button>
       </div>
@@ -34,7 +32,7 @@ export function productPageView(product: ProductDetail): HTMLElement {
   productImage?.append(sliderElement);
   productImage?.addEventListener('click', (e) => {
     if (e instanceof MouseEvent && e.target instanceof HTMLElement) {
-      if (e.target.classList.contains("slider__img")) {
+      if (e.target.classList.contains('slider__img')) {
         showModal(e, arrayOfImageLinks);
       }
     }
