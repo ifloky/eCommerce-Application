@@ -3,7 +3,7 @@ import { MasterVariant, Product, ThreeLanguages, TypeIdAndId, Prices, ValuePrice
 import { createElement } from "../../utils/abstract";
 import { checkItemInBasketForCatalog } from "../../widgets/cardProduct/cardProductController";
 import { cardProductViewElement } from "../../widgets/cardProduct/cardProductView";
-import { getCartData } from "../basketPage/basketPageController";
+import { getCartData } from "../basketPage/basketPageModel";
 import { paginationView } from "./components/pagination";
 
 const getAllProductsInfo = async (): Promise<ProductResult> => {

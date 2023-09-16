@@ -26,6 +26,14 @@
     }
   }
 
+  &__delete-all-button {
+    position: relative;
+    transform: translateX(-100%);
+    left: 100%;
+    margin-bottom: 40px;
+    border-color: $color-invalid;
+  }
+
   &__cart-all-price {
     display: flex;
     justify-content: end;
