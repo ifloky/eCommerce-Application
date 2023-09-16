@@ -27,7 +27,7 @@
   cursor: pointer;
   @extend %transition;
 
-  &:hover {
+  &:not(&:disabled):hover {
     background-color: transparent;
     color: $color-primary;
     border: 1px $color-primary solid;
@@ -67,5 +67,10 @@
       font-size: 12px;
       width: 100%;
     }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1);
   }
 }

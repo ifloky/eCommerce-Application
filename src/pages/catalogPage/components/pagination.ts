@@ -22,6 +22,7 @@ const createNavigationButtonsBlock = (): HTMLDivElement => {
 const createPrevButton = (): HTMLButtonElement => {
   const prevButton = createButtonElement();
   prevButton.classList.add('button_prev');
+  prevButton.disabled = true
   prevButton.textContent = '<<';
   return prevButton;
 };
