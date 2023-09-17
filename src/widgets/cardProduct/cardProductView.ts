@@ -19,14 +19,19 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
 export function priceWithDiscount(elem: Product): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   cardProductWrapper.setAttribute('data-id', elem.id);
-  const price = elem.masterData ? Number(elem.masterData.current.masterVariant.prices[0].value.centAmount) / 100 : Number(elem.masterVariant?.prices[0].value.centAmount) / 100;
-  const discountedPrice = elem.masterData ? Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100 : Number(elem.masterVariant?.prices[0].discounted?.value.centAmount) / 100;
-  const image = elem.masterData ? elem.masterData?.current.masterVariant.images[0].url : elem.masterVariant?.images[0].url;
+  const price = elem.masterData
+    ? Number(elem.masterData.current.masterVariant.prices[0].value.centAmount) / 100
+    : Number(elem.masterVariant?.prices[0].value.centAmount) / 100;
+  const discountedPrice = elem.masterData
+    ? Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100
+    : Number(elem.masterVariant?.prices[0].discounted?.value.centAmount) / 100;
+  const image = elem.masterData
+    ? elem.masterData?.current.masterVariant.images[0].url
+    : elem.masterVariant?.images[0].url;
   const name = elem.name ? elem.name['en-US'] : elem.masterData?.current.name['en-US'];
   const description = elem.description ? elem.description['en-US'] : elem.masterData?.current.description['en-US'];
   cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem));
-  cardProductWrapper.innerHTML = `
-  <div class="product-card__image">
+  cardProductWrapper.innerHTML = ` <div class="product-card__image">
     <a href="#">
       <img src="${image}">
       <div class="product-card__shadow"></div>
@@ -42,11 +47,12 @@ export function priceWithDiscount(elem: Product): HTMLElement {
     <h3>"${name}"</h3>
     <p class="product-card__sub-info">"${description}"</p>
     <div class="product-card__price-wrapper">
-      <span class="${discountedPrice ? 'product-card__sale' : 'product-card__price'}">${price ? price + ' $' : ''
-    }</span>
+      <span class="${discountedPrice ? 'product-card__sale' : 'product-card__price'}">${
+        price ? price + ' $' : ''
+      }</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
     <button class="button-light product-card__add-to-cart " id="addToCart">add to cart</button>
-  </div>`
+  </div>`;
   return cardProductWrapper;
 }
