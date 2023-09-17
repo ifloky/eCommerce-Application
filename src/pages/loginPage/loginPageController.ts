@@ -1,4 +1,7 @@
-import { redirectToHomePage, redirectToRegisterPage } from "../../shared/router"
+import {
+  redirectToHomePage,
+  redirectToRegisterPage
+} from "../../shared/router"
 import Header from "../../widgets/header/headerView"
 import {
   checkUser,
@@ -18,51 +21,47 @@ export const isShowed = (event: Event): void => {
   }
 }
 
-const validationEmail = (target: HTMLInputElement): void => {
-  const emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})$/
-  if (!target.value.match(emailPattern)) {
-    target.setCustomValidity('')
-    if (target.value.indexOf(' ') !== -1) {
-      target.setCustomValidity('')
-      target.setCustomValidity('Please, check your email. It must not contain whitespace.')
-      if (target.value === '') {
-        target.setCustomValidity('')
-      } else {
-        target.setCustomValidity('')
-        target.setCustomValidity('Please, check your email. It must be properly formatted (e.g., user@example.com).')
-      }
+const validationEmail = (target: HTMLInputElement): boolean => {
+  const isValid = false
+  const email = target.value
+  const parent = target.parentElement
+  const emailPattern = /^\S\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})$/
+  const errorText = parent?.querySelector('.form__error-text_email')
+  if (!email.match(emailPattern) && errorText) {
+    if (!email.includes('@')) {
+      errorText.textContent = 'Email address must contain an "@" symbol separating local part and domain name.'
+    } else {
+      errorText.textContent = 'Email address must be properly formatted (e.g., user@example.com).'
     }
-  } else {
-    target.setCustomValidity('')
+    if (email === '') errorText.textContent = 'Please, enter your email address'
   }
+  else if (errorText) { errorText.textContent = '' }
+  if (errorText && errorText.textContent !== '') return isValid
+  return !isValid
 }
 
-const validationPassword = (target: HTMLInputElement): void => {
-  const { value } = target
-  if (!/(?=.[a-z])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one lowercase letter (a-z).')
-  } else if (!/(?=.[A-Z])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one uppercase letter (A-Z).')
-  } else if (!/(?=.[0-9])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one digit (0-9).')
-  } else if (!/(?=.[!@#$%^&*])/.test(value)) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must contain at least one special character (e.g., !@#$%^&*).')
-  } else if (value.includes(' ')) {
-    target.setCustomValidity('')
-    target.setCustomValidity('Password must not contain whitespace.')
+const validationPassword = (target: HTMLInputElement): boolean => {
+  const password = target.value
+  const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+  const parent = target.parentElement
+  const errorText = parent?.querySelector('.form__error-text_password')
+  const isValid = false
+  if (!password.match(passwordPattern) && errorText) {
+    errorText.textContent = 'Password must be at least 8 characters long.Password must contain at least one uppercase letter (A-Z), at least one lowercase letter(a-z), at least one digit(0 - 9), at least one special character (e.g., !@#$%^&*).'
+  } else if (errorText) {
+    errorText.textContent = ''
   }
-  else {
-    target.setCustomValidity('')
-  }
+  if (errorText && errorText.textContent !== '') return isValid
+  return !isValid
 }
 
 export const isValid = (event: Event): void => {
   const { target } = event
+  let isValidEmail = false
+  let isValidPassword = false
   if (target instanceof HTMLInputElement) {
+    isValidEmail = validationEmail(target)
+    isValidPassword = validationPassword(target)
     if (target.id === 'email') {
       validationEmail(target)
     }
@@ -70,9 +69,8 @@ export const isValid = (event: Event): void => {
       validationPassword(target)
     }
   }
+  sessionStorage.setItem('isValid', `${isValidEmail && isValidPassword}`)
 }
-
-
 
 export const redirectToRegistrationPage = (event: Event): void => {
   const { target } = event
@@ -83,25 +81,30 @@ export const redirectToRegistrationPage = (event: Event): void => {
 
 export const loginUser = async (event: Event): Promise<void> => {
   const { target } = event
-  if (target instanceof HTMLButtonElement && target.type === 'submit') {
-    const emailField = document.getElementById('email')
-    const passwordField = document.getElementById('password')
-    let email = ''
-    let password = ''
-    if (emailField instanceof HTMLInputElement && passwordField instanceof HTMLInputElement) {
-      email = emailField.value
-      password = passwordField.value
-    }
-    event.preventDefault()
-    getAllTokens(email, password)
-    const isCorrectUserData = await checkUser(email, password)
-    if (isCorrectUserData.ok) {
-      const data = await isCorrectUserData.json()
-      const { id } = data.customer
-      localStorage.setItem('id', id)
-      localStorage.setItem('login', 'true')
-      Header.refresh(true);
-      redirectToHomePage()
+  const isValidData = sessionStorage.getItem('isValid')
+  if (isValidData) {
+    if (target instanceof HTMLButtonElement && target.type === 'submit') {
+      const emailField = document.getElementById('email')
+      const passwordField = document.getElementById('password')
+      let email = ''
+      let password = ''
+      if (emailField instanceof HTMLInputElement && passwordField instanceof HTMLInputElement) {
+        email = emailField.value
+        password = passwordField.value
+      }
+      event.preventDefault()
+      getAllTokens(email, password)
+      const isCorrectUserData = await (await checkUser(email, password)).customer
+      if (isCorrectUserData) {
+        const { id } = isCorrectUserData
+        console.log(id);
+
+        localStorage.setItem('id', id)
+        localStorage.setItem('login', 'true')
+        Header.refresh(true);
+        redirectToHomePage()
+      }
     }
   }
+  sessionStorage.removeItem('isValid')
 }

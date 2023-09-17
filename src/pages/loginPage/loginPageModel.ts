@@ -1,4 +1,7 @@
-import { getCookie, setCookie } from "../../shared/API"
+
+import { postAnonymousFlow, setCookie } from "../../shared/API"
+import { CustomerData } from "../../types/interfaces/customerData"
+
 
 export const getAllTokens = async (email: string, password: string): Promise<string> => {
   const credentials = `${process.env.DEVELOP_ID}:${process.env.DEVELOP_SECRET}`
@@ -19,22 +22,15 @@ export const getAllTokens = async (email: string, password: string): Promise<str
   return response.access_token
 }
 
-export const checkUser = async (email: string, password: string): Promise<Response> => {
-  const token = getCookie('access_token') ? getCookie('access_token') : await getAllTokens(email, password)
-  const options = {
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
-      "password": password
-    }),
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
+type responseCustomer = {
+  customer: CustomerData
+}
+
+export const checkUser = async (email: string, password: string): Promise<responseCustomer> => {
+  const body = {
+    "email": email,
+    "password": password
   }
-  const url = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/login`
-  const response = await fetch(url, options)
-    .then(data => data)
-    .catch(error => { throw new Error(error) })
+  const response: responseCustomer = await postAnonymousFlow('/login', body)
   return response
 }

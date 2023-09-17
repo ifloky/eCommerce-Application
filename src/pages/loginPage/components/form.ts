@@ -4,6 +4,8 @@ const createFormElement = (): HTMLFormElement => createElement('form', ['login-p
 
 const createWrapper = (): HTMLDivElement => createElement('div', ['form__wrapper']);
 
+const createTextElement = (): HTMLSpanElement => createElement('span', ['form__error-text'])
+
 const createInputElement = (): HTMLInputElement => createElement('input', ['form__input']);
 
 const createLabelElement = (): HTMLLabelElement => createElement('label', ['form__label']);
@@ -37,6 +39,8 @@ const generateShowPasswordCheckbox = (): HTMLDivElement => {
 
 const generateEmailField = (): HTMLDivElement => {
   const wrapper = createWrapper();
+  const errorText = createTextElement()
+  errorText.classList.add('form__error-text_email')
   const label = createLabelElement();
   label.setAttribute('for', 'email');
   label.textContent = '* Email ';
@@ -44,14 +48,17 @@ const generateEmailField = (): HTMLDivElement => {
   input.setAttribute('id', 'email');
   input.classList.add('input', 'input_email');
   input.type = 'email';
+  input.pattern = '^\\S$'
   input.required = true
-  wrapper.append(label, input);
+  wrapper.append(label, input, errorText);
   return wrapper;
 };
 
 const generatePasswordField = (): HTMLDivElement => {
   const wrapper = createWrapper();
   wrapper.classList.add('form__wrapper_password');
+  const errorText = createTextElement()
+  errorText.classList.add('form__error-text_password')
   const label = createLabelElement();
   label.setAttribute('for', 'password');
   label.textContent = '* Password';
@@ -62,7 +69,7 @@ const generatePasswordField = (): HTMLDivElement => {
   input.type = 'password';
   input.minLength = 8
   const showPassword = generateShowPasswordCheckbox();
-  wrapper.append(label, input, showPassword);
+  wrapper.append(label, input, showPassword, errorText);
   return wrapper;
 };
 
