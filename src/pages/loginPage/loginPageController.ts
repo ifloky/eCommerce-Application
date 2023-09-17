@@ -97,8 +97,6 @@ export const loginUser = async (event: Event): Promise<void> => {
       const isCorrectUserData = await (await checkUser(email, password)).customer
       if (isCorrectUserData) {
         const { id } = isCorrectUserData
-        console.log(id);
-
         localStorage.setItem('id', id)
         localStorage.setItem('login', 'true')
         Header.refresh(true);
