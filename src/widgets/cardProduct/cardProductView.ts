@@ -1,7 +1,7 @@
-import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../../pages/basketPage/basketPageController";
-import { ProductPage } from "../../pages/productPage/productPageController";
-import { Product } from "../../types/interfaces/Product";
-import { createElement, displayMessage } from "../../utils/abstract";
+import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from '../../pages/basketPage/basketPageController';
+import { ProductPage } from '../../pages/productPage/productPageController';
+import { Product } from '../../types/interfaces/Product';
+import { createElement, displayMessage } from '../../utils/abstract';
 
 function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Product): void {
   const productCardImage = cardProductWrapper.querySelector('.product-card__image');
@@ -17,13 +17,13 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
       sendDataToCart(e);
     } else {
       productAddToCartButton.innerHTML = `add to cart`;
-      sendDeleteProductFromCartAfterAdd(e)
-      displayMessage('product was deleted', true)
+      sendDeleteProductFromCartAfterAdd(e);
+      displayMessage('product was deleted', true);
     }
   }
 }
 
-export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElement {
+export function cardProductViewElement(elem: Product, inCart = true): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   cardProductWrapper.setAttribute('data-id', elem.id);
   const price = elem.masterData
@@ -38,9 +38,8 @@ export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElem
   const name = elem.name ? elem.name['en-US'] : elem.masterData?.current.name['en-US'];
   const description = elem.description ? elem.description['en-US'] : elem.masterData?.current.description['en-US'];
   cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem));
-  cardProductWrapper.innerHTML = ` <div class="product-card__image">
-    <a href="#">
-      <img src="${image}">
+  cardProductWrapper.innerHTML = `<div class="product-card__image">
+    <a href="#"><img src="${image}">
       <div class="product-card__shadow"></div>
     </a>
     <a class="product-card__detail-link" href="#"></a>
@@ -50,8 +49,7 @@ export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElem
       </div>
     </div>
   </div>
-  <div class="product-card__list">
-    <h3>"${name}"</h3>
+  <div class="product-card__list"><h3>"${name}"</h3>
     <p class="product-card__sub-info">"${description}"</p>
     <div class="product-card__price-wrapper">
       <span class="${discountedPrice ? 'product-card__sale' : 'product-card__price'}">${
@@ -59,7 +57,9 @@ export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElem
       }</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
-    <button class="button-light product-card__add-to-cart " id="addToCart">${inCart ? 'add to cart' : 'delete from cart'}</button>
-  </div>`
-  return cardProductWrapper
+    <button class="button-light product-card__add-to-cart " id="addToCart">${
+      inCart ? 'add to cart' : 'delete from cart'
+    }</button>
+  </div>`;
+  return cardProductWrapper;
 }

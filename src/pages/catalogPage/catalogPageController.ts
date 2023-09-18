@@ -1,5 +1,5 @@
 import { Product } from '../../types/interfaces/Product';
-import { priceWithDiscount } from '../../widgets/cardProduct/cardProductView';
+import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
 import { generateAllProductsCard } from './catalogPageView';
 import { generatePaginationView } from './components/pagination';
@@ -7,23 +7,23 @@ import { generatePaginationView } from './components/pagination';
 export const selectCategory = async (event: Event): Promise<void> => {
   const { target } = event;
   if (target instanceof HTMLButtonElement) {
-    const parent = document.querySelector('.catalog__buttons')
-    parent?.querySelectorAll('.catalog__button').forEach(button => {
-      button.classList.remove('button_active')
-    })
+    const parent = document.querySelector('.catalog__buttons');
+    parent?.querySelectorAll('.catalog__button').forEach((button) => {
+      button.classList.remove('button_active');
+    });
     const id = target.getAttribute('data-id');
     if (id) {
       getProductCategory(id);
     }
     if (target.classList.contains('catalog__button_all')) {
-      document.querySelector('.catalog__container')?.remove()
-      document.querySelector('.pagination')?.remove()
-      sessionStorage.removeItem('categoryId')
-      const allProducts = await generateAllProductsCard()
-      const pagination = generatePaginationView()
-      document.querySelector('.catalog__wrapper')?.append(allProducts, pagination)
+      document.querySelector('.catalog__container')?.remove();
+      document.querySelector('.pagination')?.remove();
+      sessionStorage.removeItem('categoryId');
+      const allProducts = await generateAllProductsCard();
+      const pagination = generatePaginationView();
+      document.querySelector('.catalog__wrapper')?.append(allProducts, pagination);
     }
-    target.classList.add('button_active')
+    target.classList.add('button_active');
   }
 };
 
@@ -33,7 +33,7 @@ export const renderSelectedCategory = (data: Product[]): void => {
     catalogPage.firstChild.remove();
   }
   data.forEach((product) => {
-    const productCard = priceWithDiscount(product);
+    const productCard = cardProductViewElement(product);
     catalogPage?.append(productCard);
   });
 };
@@ -98,7 +98,7 @@ const moveToNextOrPrevPage = (event: Event): void => {
   if (target instanceof HTMLButtonElement) {
     const parent = target.closest('.pagination');
     const navigation = document.querySelector('.pagination__buttons');
-    const activePage = parent?.querySelector('.active');
+    const activePage = parent?.querySelector('.button_active');
     const activePageNumber = Number(activePage?.textContent);
     const prevButton = parent?.querySelector('.button_prev');
     const nextButton = parent?.querySelector('.button_next');
@@ -110,12 +110,12 @@ const moveToNextOrPrevPage = (event: Event): void => {
       shiftNumber = activePageNumber + 1;
     }
     navigation?.querySelectorAll('.button_nav').forEach(async (button) => {
-      button.classList.remove('active');
+      button.classList.remove('button_active');
       if (Number(button.textContent) === shiftNumber) {
         if (prevButton instanceof HTMLButtonElement && nextButton instanceof HTMLButtonElement && parent) {
           checkDisabled(button, parent);
         }
-        button.classList.add('active');
+        button.classList.add('button_active');
         const products = (await getAllProducts((shiftNumber - 1) * 3)).results;
         renderSelectedCategory(products);
       }

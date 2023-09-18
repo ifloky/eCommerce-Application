@@ -1,4 +1,3 @@
-
 import { getLoginPageView } from '../pages/loginPage/loginPageView';
 import { MainPageController } from '../pages/mainPage/MainPageController';
 import RegistrationPageView from '../pages/registrationPage/registrationView';
@@ -72,7 +71,7 @@ function aboutUsController(): void {
   }
 }
 
-async function basketButtonController(): Promise<void> {
+export async function basketButtonController(): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
     appContainer.innerHTML = '';
