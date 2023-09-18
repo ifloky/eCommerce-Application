@@ -20,6 +20,7 @@ deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartContro
 export async function returnCartItem(): Promise<HTMLElement> {
   const cardItem = createElement('div', ['basket__cart-items']);
   const productsInCart = await getProductInCart();
+
   if (!productsInCart || !productsInCart.lineItems?.length) {
     emptyBasket.innerHTML = "";
     emptyBasket.innerHTML = `<h2>basket is empty</h2>`

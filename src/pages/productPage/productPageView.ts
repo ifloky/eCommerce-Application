@@ -4,7 +4,6 @@ import { createElement, displayMessage } from "../../utils/abstract";
 import { createSliderElement, showModal } from "../../widgets/Slider/sliderView";
 import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../basketPage/basketPageController";
 import { getCartData } from "../basketPage/basketPageModel";
-
 import { ProductPage } from "./productPageController";
 
 async function buttonToCardClick(e: Event): Promise<void> {
@@ -78,13 +77,12 @@ export async function productPageView(product: ProductDetail): Promise<HTMLEleme
   productImage?.append(sliderElement);
   productImage?.addEventListener('click', (e) => {
     if (e instanceof MouseEvent && e.target instanceof HTMLElement) {
-      if (e.target.classList.contains("slider__img")) {
+      if (e.target.classList.contains('slider__img')) {
         showModal(e, arrayOfImageLinks);
       }
     }
   });
   const addToCartButton = productContainer.querySelector('#toCart');
   addToCartButton?.addEventListener('click', (e: Event) => buttonToCardClick(e));
-
   return productContainer;
 }

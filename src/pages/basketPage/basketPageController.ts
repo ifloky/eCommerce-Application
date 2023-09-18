@@ -34,7 +34,9 @@ export async function sendDataToCart(e: Event): Promise<void> {
     productPrice = parentElement.querySelector('.product-card__price')?.innerHTML || '';
     productPriceNumber = Number(productPrice.slice(0, -2)) * 1000;
   }
+  
   const [cartId, cartDataVersion] = await cartResponse();
+  
   const data = {
     "version": cartDataVersion,
     "actions": [{
