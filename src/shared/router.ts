@@ -144,6 +144,9 @@ export function redirectToCatalog(): void {
   changeRoute('/catalog');
 }
 
+export function redirectToBasket(): void {
+  changeRoute('/basket');
+}
 
 
 startRouting();

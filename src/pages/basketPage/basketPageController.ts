@@ -1,6 +1,7 @@
 import { getCookie } from "../../shared/API";
 import { basketButtonController } from "../../shared/router";
 import { CartResponse, lineItem } from "../../types/interfaces/basketPage";
+import { confirmPopUp } from "../../utils/abstract";
 import { addProductToCart, createCart, deleteAllProductsFromCart, deleteProductFromCart, getCartData } from "./basketPageModel";
 
 export function checkAuthorization(): boolean {
@@ -90,15 +91,15 @@ export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void>
   }
 }
 
-// TODO: custom confirm popup
+
+
 export async function deleteAllProductsFromCartController(): Promise<void> {
   const [cartId, cartDataVersion] = await cartResponse();
-  // eslint-disable-next-line no-alert
-  const result = window.confirm("Are you sure? (Type 'yes' to confirm)");
-  if (result) {
+  const confirm = await confirmPopUp.confirm('Are you sure you want to do this?');
+  if (confirm) {
     await deleteAllProductsFromCart(cartId, cartDataVersion);
+    await basketButtonController()
   }
-  await basketButtonController()
 }
 
 export async function sendMinusProductAmount(e: Event): Promise<void> {
@@ -132,7 +133,7 @@ export async function changeProductAmount(e: Event, quantity: number): Promise<v
       "lineItemId": parentId,
       "quantity": quantity,
     }],
-
   }
-  await addProductToCart(data, cartId)
+  await addProductToCart(data, cartId);
+  basketButtonController()
 }
