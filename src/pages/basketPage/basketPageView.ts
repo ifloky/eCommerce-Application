@@ -1,9 +1,23 @@
 import { createElement, displayMessage } from "../../utils/abstract";
-import { sendDeleteProductFromCart, deleteAllProductsFromCartController } from "./basketPageController";
+import { sendDeleteProductFromCart, deleteAllProductsFromCartController, changeProductAmount } from "./basketPageController";
 import { getProductInCart } from "./basketPageModel";
 import { redirectToCatalog } from "../../shared/router";
+import { CartResponseItem } from "../../types/interfaces/basketPage";
 
-function clickDelete(e: Event, productsInCart: HTMLElement): void {
+function clickProduct(e: Event, productsInCart: HTMLElement): void {
+  const target = e.target as HTMLElement;
+  const quantityParentElement = target.closest('[data-id]');
+  const quantityElement = quantityParentElement?.querySelector('.product__count-amount')
+  const quantity = Number(quantityElement?.innerHTML) || 0;
+
+  if (e.target === target && target.classList.contains('button__add-amount')) {
+    const newAddQuantity = quantity + 1
+    changeProductAmount(e, newAddQuantity);
+  }
+  if (e.target === target && target.classList.contains('button__minus-amount')) {
+    const newMinusQuantity = quantity - 1
+    changeProductAmount(e, newMinusQuantity);
+  }
   const productElements = Array.from(productsInCart.getElementsByClassName('product__delete-button'));
   productElements.forEach(async (elem) => {
     if (elem === e.target) {
@@ -15,41 +29,54 @@ function clickDelete(e: Event, productsInCart: HTMLElement): void {
 
 const emptyBasket = createElement('div', ['product-none']);
 const deleteAllProductButton = createElement('button', ['button-light', 'basket__delete-all-button'], 'Delete all');
-deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController)
+const addAmount = createElement('button', ['button-light', 'button__add-amount'], '+')
+const minusAmount = createElement('button', ['button-light', 'button__minus-amount'], '-')
 
-export async function returnCartItem(): Promise<HTMLElement> {
-  const cardItem = createElement('div', ['basket__cart-items']);
-  const productsInCart = await getProductInCart();
+function checkEmptyBasket(): HTMLElement {
+  emptyBasket.innerHTML = "";
+  emptyBasket.innerHTML = `<h2>basket is empty</h2>`
+  const buttonToCatalog = createElement('button', ['button'], 'Go to catalog');
+  buttonToCatalog.onclick = (): void => redirectToCatalog();
+  emptyBasket.append(buttonToCatalog);
+  return emptyBasket;
+}
 
-  if (!productsInCart || !productsInCart.lineItems?.length) {
-    emptyBasket.innerHTML = "";
-    emptyBasket.innerHTML = `<h2>basket is empty</h2>`
-    const buttonToCatalog = createElement('button', ['button'], 'Go to catalog');
-    buttonToCatalog.onclick = (): void => redirectToCatalog();
-    emptyBasket.append(buttonToCatalog);
-    return emptyBasket;
-  }
+export async function productList(productsInCart: CartResponseItem): Promise<HTMLElement> {
+  const cardItemWrapper = createElement('div', ['basket__cart-items']);
   const cartAllPrice = createElement('div', ['basket__cart-all-price']);
   const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
   cartAllPrice.innerHTML = 'Total cost:' + (totalPriceAmount / 100) + '$' || 'Total cost:';
-  cardItem.appendChild(deleteAllProductButton)
+  deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController)
+  cardItemWrapper.appendChild(deleteAllProductButton)
   productsInCart.lineItems?.forEach(item => {
     const productElement = createElement('div', ['product']);
     productElement.setAttribute('data-id', item.id)
-    productElement.addEventListener('click', (e: Event): void => clickDelete(e, cardItem))
+    productElement.setAttribute('data-productId', item.productId)
+    productElement.addEventListener('click', (e: Event): void => clickProduct(e, cardItemWrapper))
     productElement.innerHTML = `
       <img src="${item.variant.images[0].url}" width="200" class="product__image" alt="product-image">
       <div class="product__info">
         <div class="product__name">Name: ${item.name["en-US"]}</div>
-        <div class="product__price">Price: ${Number(item.price.value.centAmount) / 100} $</div>
-        <div class="product__count">Count: ${item.quantity}</div>
+        <div class="product__price">Price: <span class="product__price-amount"> ${Number(item.price.value.centAmount) / 100} </span>$</div>
+          ${minusAmount.outerHTML}
+          <div class="product__count">Count: <span class="product__count-amount"> ${item.quantity} </span> </div>
+          ${addAmount.outerHTML}
       </div>
       <button class="product__delete-button button-light">DELETE</button>
     `;
-    cardItem.appendChild(productElement);
-    cardItem.appendChild(cartAllPrice);
+    cardItemWrapper.append(productElement);
+    cardItemWrapper.appendChild(cartAllPrice);
+    
   });
-  return cardItem;
+  return cardItemWrapper;
+}
+
+export async function returnCartItem(): Promise<HTMLElement> {
+  const productsInCart = await getProductInCart();
+  if (!productsInCart || !productsInCart.lineItems?.length) {
+    return checkEmptyBasket()
+  } 
+  return productList(productsInCart)
 }
 
 export async function basketPageView(): Promise<HTMLElement> {
