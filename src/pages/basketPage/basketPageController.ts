@@ -31,7 +31,9 @@ export async function sendDataToCart(e: Event): Promise<void> {
   if (parentElement) {
     parentId = parentElement.getAttribute('data-id');
   }
+  
   const [cartId, cartDataVersion] = await cartResponse();
+  
   const data = {
     "version": cartDataVersion,
     "actions": [{
