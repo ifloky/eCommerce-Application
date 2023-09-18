@@ -1,7 +1,8 @@
 import { createElement } from '../../utils/abstract';
+import { isShowed, isValid } from '../../widgets/forms/forms';
 import { generateForm } from './components/form';
 import { generateHeaderBlock } from './components/header';
-import { loginUser, isShowed, isValid, redirectToRegistrationPage } from './loginPageController';
+import { loginUser, redirectToRegistrationPage } from './loginPageController';
 
 const createLoginPage = (): HTMLElement => createElement('section', ['login-page']);
 
@@ -11,7 +12,7 @@ const bindEvents = (elements: HTMLElement[]): void => {
   form.addEventListener('input', isValid);
   form.addEventListener('click', loginUser);
   form.addEventListener('click', redirectToRegistrationPage);
-}
+};
 
 const createLoginPageWrapper = (): HTMLDivElement => createElement('div', ['login-page__wrapper']);
 const createLoginPageView = (): HTMLElement => {
@@ -21,7 +22,7 @@ const createLoginPageView = (): HTMLElement => {
   const form = generateForm();
   wrapper.append(header, form);
   loginPage.append(wrapper);
-  bindEvents([form])
+  bindEvents([form]);
   return loginPage;
 };
 
