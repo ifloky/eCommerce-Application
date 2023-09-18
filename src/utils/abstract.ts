@@ -30,10 +30,12 @@ const createConfirm = (message: string): Promise<boolean> => {
     const buttonNo = createElement('button', ['button-light','confirm-wrapper__button-no'], "NO");
     confirmWrapper.append(buttonYes,buttonNo)
     document.body.appendChild(confirmWrapper);
+    
     buttonYes.addEventListener('click', () => {
       complete(true);
       confirmWrapper.remove();
     })
+    
     buttonNo.addEventListener('click', () => {
       complete(false)
       confirmWrapper.remove();

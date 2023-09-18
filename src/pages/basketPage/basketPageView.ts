@@ -4,7 +4,6 @@ import { getProductInCart } from "./basketPageModel";
 import { redirectToCatalog } from "../../shared/router";
 import { CartResponseItem } from "../../types/interfaces/basketPage";
 
-
 function clickProduct(e: Event, productsInCart: HTMLElement): void {
   const target = e.target as HTMLElement;
   const quantityParentElement = target.closest('[data-id]');
@@ -41,8 +40,6 @@ function checkEmptyBasket(): HTMLElement {
   emptyBasket.append(buttonToCatalog);
   return emptyBasket;
 }
-
-
 
 export async function productList(productsInCart: CartResponseItem): Promise<HTMLElement> {
   const cardItemWrapper = createElement('div', ['basket__cart-items']);

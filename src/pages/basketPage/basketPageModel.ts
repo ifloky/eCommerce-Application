@@ -2,7 +2,6 @@ import { deleteAnonymousFlow, deletePasswordFlow, getAnonymousFlow, getPasswordF
 import { CartResponse, CartResponseItem } from "../../types/interfaces/basketPage"
 import { cartResponse, checkAuthorization } from "./basketPageController"
 
-
 export async function createCart(): Promise<void> {
   if (checkAuthorization()) {
     await postPasswordFlow(`/me/carts`, {

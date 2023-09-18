@@ -91,8 +91,6 @@ export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void>
   }
 }
 
-
-
 export async function deleteAllProductsFromCartController(): Promise<void> {
   const [cartId, cartDataVersion] = await cartResponse();
   const confirm = await confirmPopUp.confirm('Are you sure you want to do this?');
