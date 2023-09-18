@@ -1,6 +1,6 @@
 import { deleteAnonymousFlow, deletePasswordFlow, getAnonymousFlow, getPasswordFlow, postAnonymousFlow, postPasswordFlow } from "../../shared/API"
 import { CartResponse, CartResponseItem } from "../../types/interfaces/basketPage"
-import { checkAuthorization } from "./basketPageController"
+import { cartResponse, checkAuthorization } from "./basketPageController"
 
 
 export async function createCart(): Promise<void> {
@@ -60,4 +60,20 @@ export async function deleteAllProductsFromCart(cartId: string, version: number)
   } else {
     await deleteAnonymousFlow(`/carts/${cartId}?version=${version}`, {})
   }
+}
+
+export async function sendMinusProductAmount(e: Event): Promise<void> {
+  const target = e.target as HTMLElement;
+  const targetParentID = target.closest('[data-id]')?.getAttribute('data-id');
+  const [cartId, cartDataVersion] = await cartResponse();
+  const data = {
+    "version": cartDataVersion,
+    "actions": [{
+      "action": "removeLineItem",
+      "lineItemId": targetParentID,
+      "variantId": 1,
+      "quantity": 1,
+    }]
+  }
+  await deleteProductFromCart(data, cartId, cartDataVersion);
 }

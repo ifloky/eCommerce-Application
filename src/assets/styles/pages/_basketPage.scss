@@ -23,6 +23,13 @@
         right: -4px;
         height: 40px;
       }
+
+      &__count {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+      }
     }
   }
 
@@ -54,4 +61,8 @@
   & .button {
     margin-top: 20px;
   }
+}
+
+.button__minus-amount, .product__count {
+  float:left
 }

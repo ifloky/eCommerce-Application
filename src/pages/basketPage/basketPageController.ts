@@ -11,7 +11,7 @@ export function checkAuthorization(): boolean {
   return false
 }
 
-async function cartResponse(): Promise<[string, number]> {
+export async function cartResponse(): Promise<[string, number]> {
   const [cartResponseResults] = (await getCartData()).results;
   const cartId = cartResponseResults.id;
   const cartDataVersion = cartResponseResults.version;
@@ -27,12 +27,8 @@ export async function sendDataToCart(e: Event): Promise<void> {
   const target = e.target as HTMLElement;
   const parentElement = target.closest('[data-id]');
   let parentId
-  let productPrice
-  let productPriceNumber
   if (parentElement) {
     parentId = parentElement.getAttribute('data-id');
-    productPrice = parentElement.querySelector('.product-card__price')?.innerHTML || '';
-    productPriceNumber = Number(productPrice.slice(0, -2)) * 1000;
   }
   const [cartId, cartDataVersion] = await cartResponse();
   const data = {
@@ -42,10 +38,6 @@ export async function sendDataToCart(e: Event): Promise<void> {
       "productId": parentId,
       "variantId": 1,
       "quantity": 1,
-      "externalPrice": {
-        "currencyCode": "USD",
-        "centAmount": productPriceNumber
-      }
     }]
   }
   addProductToCart(data, cartId)
@@ -107,4 +99,40 @@ export async function deleteAllProductsFromCartController(): Promise<void> {
     await deleteAllProductsFromCart(cartId, cartDataVersion);
   }
   await basketButtonController()
+}
+
+export async function sendMinusProductAmount(e: Event): Promise<void> {
+  const target = e.target as HTMLElement;
+  const targetParentID = target.closest('[data-id]')?.getAttribute('data-id');
+  const [cartId, cartDataVersion] = await cartResponse();
+  const data = {
+    "version": cartDataVersion,
+    "actions": [{
+      "action": "removeLineItem",
+      "lineItemId": targetParentID,
+      "variantId": 1,
+      "quantity": 1,
+    }]
+  }
+  await deleteProductFromCart(data, cartId, cartDataVersion);
+}
+
+export async function changeProductAmount(e: Event, quantity: number): Promise<void> {
+  const target = e.target as HTMLElement;
+  const parentElement = target.closest('[data-id]');
+  let parentId
+  if (parentElement) {
+    parentId = parentElement.getAttribute('data-id');
+  }
+  const [cartId, cartDataVersion] = await cartResponse();
+  const data = {
+    "version": cartDataVersion,
+    "actions": [{
+      "action": "changeLineItemQuantity",
+      "lineItemId": parentId,
+      "quantity": quantity,
+    }],
+
+  }
+  await addProductToCart(data, cartId)
 }
