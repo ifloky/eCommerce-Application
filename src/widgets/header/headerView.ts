@@ -23,6 +23,7 @@ export function headerView(links: Links, signIn: boolean): string {
       ${Navigation.render()}
     </div>
     ${signIn ? `<div class="header__user-wrapper">
+          <a href="/basket" class="header__btn button basket"> </a>
           <a href="/profile" class="header__btn button">Profile</a>
           <button id="signOut" class="header__btn button">Sign Out</button>
         </div>`
