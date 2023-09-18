@@ -1,7 +1,7 @@
-import { sendDataToCart } from '../../pages/basketPage/basketPageController';
-import { ProductPage } from '../../pages/productPage/productPageController';
-import { Product } from '../../types/interfaces/Product';
-import { createElement } from '../../utils/abstract';
+import { sendDataToCart, sendDeleteProductFromCartAfterAdd } from "../../pages/basketPage/basketPageController";
+import { ProductPage } from "../../pages/productPage/productPageController";
+import { Product } from "../../types/interfaces/Product";
+import { createElement, displayMessage } from "../../utils/abstract";
 
 function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Product): void {
   const productCardImage = cardProductWrapper.querySelector('.product-card__image');
@@ -11,12 +11,19 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
     e.stopPropagation();
     ProductPage.update(elem.id);
   }
-  if (e.target === productAddToCartButton) {
-    sendDataToCart(e);
+  if (productAddToCartButton && e.target === productAddToCartButton) {
+    if (productAddToCartButton.innerHTML !== `delete from cart`) {
+      productAddToCartButton.innerHTML = `delete from cart`;
+      sendDataToCart(e);
+    } else {
+      productAddToCartButton.innerHTML = `add to cart`;
+      sendDeleteProductFromCartAfterAdd(e)
+      displayMessage('product was deleted', true)
+    }
   }
 }
 
-export function priceWithDiscount(elem: Product): HTMLElement {
+export function cardProductViewElement(elem: Product, inCart: boolean): HTMLElement {
   const cardProductWrapper = createElement('div', ['product-card__wrapper']);
   cardProductWrapper.setAttribute('data-id', elem.id);
   const price = elem.masterData
@@ -52,7 +59,7 @@ export function priceWithDiscount(elem: Product): HTMLElement {
       }</span>
       <span class="product-card__price">${discountedPrice ? discountedPrice + ' $' : ''}</span>
     </div>
-    <button class="button-light product-card__add-to-cart " id="addToCart">add to cart</button>
-  </div>`;
-  return cardProductWrapper;
+    <button class="button-light product-card__add-to-cart " id="addToCart">${inCart ? 'add to cart' : 'delete from cart'}</button>
+  </div>`
+  return cardProductWrapper
 }

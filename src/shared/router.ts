@@ -1,3 +1,4 @@
+
 import { getLoginPageView } from '../pages/loginPage/loginPageView';
 import { MainPageController } from '../pages/mainPage/MainPageController';
 import RegistrationPageView from '../pages/registrationPage/registrationView';
@@ -14,10 +15,11 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-function updateContainer(content: string): void {
+export async function updateContainer(element: HTMLElement): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = content;
+    appContainer.innerHTML = '';
+    appContainer.append(element);
   }
 }
 
@@ -83,7 +85,11 @@ export function productController(): void {
 }
 
 function notFoundController(): void {
-  updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = '';
+    appContainer.innerHTML = '<div class="main-container"><h1>404 - Page Not Found</h1><a href="/"</div>';
+  }
 }
 
 const routes: { [path: string]: ControllerFunction } = {
@@ -144,6 +150,10 @@ export function redirectToRegisterPage(): void {
 }
 export function redirectToLoginPage(): void {
   changeRoute('/login');
+}
+
+export function redirectToCatalog(): void {
+  changeRoute('/catalog');
 }
 
 startRouting();

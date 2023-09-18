@@ -10,6 +10,11 @@
   color: $color-light;
 }
 
+.positive {
+  background-color: $color-green;
+  border-color: $color-darkest-green;
+}
+
 .invalid-input {
   outline: none;
   border: 1px $color-invalid solid !important; 
