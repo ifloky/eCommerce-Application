@@ -1,3 +1,4 @@
+import { setCountProductInBasket } from './pages/basketPage/basketPageController';
 import { MainPageController } from './pages/mainPage/MainPageController';
 import { getCookie } from './shared/API';
 import { startRouting } from './shared/router';
@@ -18,6 +19,7 @@ export async function initializeApp(): Promise<void> {
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
     }
+    await setCountProductInBasket();
     startRouting();
   } catch (error) {
     throw new Error();

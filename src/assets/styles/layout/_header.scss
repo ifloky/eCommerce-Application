@@ -60,6 +60,7 @@
 }
 
 .basket {
+  position: relative;
   width: 42px;
   height: 17px;
   background-color: transparent;
@@ -72,6 +73,18 @@
   &:hover {
     background-color: $color-additional;
     background-image: url(../../image/icons/cardProduct/buy_cart_hover.svg);
+  }
+
+  &__count-item {
+    position: absolute;
+    top: -13px;
+    right: 10px;
+    background: #fefefe;
+    font-size: 16px;
+    color: #ac7ed1;
+    padding: 2px 4px;
+    border: 1px solid #ac7ed1;
+    border-radius: 7px;
   }
 }
 

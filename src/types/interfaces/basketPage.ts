@@ -23,7 +23,7 @@ export interface lineItem {
 export interface CartResponseItem {
   id: string;
   version: number;
-  lineItems?: lineItem[];
+  lineItems: lineItem[];
   totalPrice?: {
     centAmount: string;
   };

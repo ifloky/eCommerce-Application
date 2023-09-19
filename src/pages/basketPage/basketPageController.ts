@@ -34,6 +34,18 @@ const dataObj = function dataObj(cartDataVersion: number, action: string, parent
   return dataObject;
 };
 
+export async function countProductInBasket(): Promise<string> {
+  const countProductInCart = (await getCartData()).results[0].lineItems.length.toString() || '';
+  return countProductInCart;
+}
+
+export async function setCountProductInBasket(): Promise<void> {
+  const countItemElement = document.querySelector('.basket__count-item');
+  if (countItemElement) {
+    countItemElement.innerHTML = await countProductInBasket();
+  }
+}
+
 export async function cartResponse(): Promise<CartInfo> {
   const [cartResponseResults] = (await getCartData()).results;
   const cartId = cartResponseResults.id;
@@ -52,9 +64,10 @@ export async function sendDataToCart(e: Event): Promise<void> {
   const parentElement = target.closest('[data-id]');
   const parentId = parentElement?.getAttribute('data-id') || '';
   const { cartId, cartDataVersion } = await cartResponse();
-
   const data = dataObj(cartDataVersion, 'addLineItem', parentId);
-  addProductToCart(data, cartId);
+
+  await addProductToCart(data, cartId);
+  await setCountProductInBasket();
 }
 
 export async function sendDeleteProductFromCart(e: Event): Promise<void> {
@@ -64,6 +77,7 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   const data = dataObj(cartDataVersion, 'removeLineItem', parentId, 9999);
 
   await deleteProductFromCart(data, cartId, cartDataVersion);
+  await setCountProductInBasket();
   await basketPageRender();
 }
 
@@ -82,9 +96,8 @@ export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void>
   const { cartId, cartDataVersion } = await cartResponse();
   const data = dataObj(cartDataVersion, 'removeLineItem', targetItem);
   await deleteProductFromCart(data, cartId, cartDataVersion);
-  if (window.location.pathname === '/basket') {
-    await basketPageRender();
-  }
+  await setCountProductInBasket();
+  await basketPageRender();
 }
 
 export async function deleteAllProductsFromCartController(): Promise<void> {
@@ -92,6 +105,7 @@ export async function deleteAllProductsFromCartController(): Promise<void> {
   const confirm = await confirmPopUp.confirm('Are you sure you want to do this?');
   if (confirm) {
     await deleteAllProductsFromCart(cartId, cartDataVersion);
+    await setCountProductInBasket();
     await basketPageRender();
   }
 }
@@ -100,9 +114,13 @@ export async function changeProductAmount(e: Event, quantity: number): Promise<v
   const target = e.target as HTMLElement;
   const parentElement = target.closest('[data-id]');
   const parentId = parentElement?.getAttribute('data-id') || '';
-
   const { cartId, cartDataVersion } = await cartResponse();
   const data = dataObj(cartDataVersion, 'changeLineItemQuantity', parentId, quantity);
+  const countItemElement = document.querySelector('.basket__count-item');
+  if (countItemElement) {
+    countItemElement.innerHTML = await countProductInBasket();
+  }
   await addProductToCart(data, cartId);
-  basketPageRender();
+  await setCountProductInBasket();
+  await basketPageRender();
 }
