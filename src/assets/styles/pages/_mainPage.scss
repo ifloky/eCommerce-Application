@@ -1,13 +1,34 @@
-h1 {
+h1,
+p {
+  position: relative;
+  z-index: 2;
   text-align: center;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin: -27px auto;
+  padding: 10px;
+  height: 92vh;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-dark;
+    opacity: 0.9;
+    filter: grayscale(100%);
   }
 
+  h1,
   p {
-    text-align: center;
+    color: $color-light;
   }
-
-  .main-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 10px;
-  }
+}
