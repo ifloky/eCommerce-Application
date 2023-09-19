@@ -35,7 +35,7 @@ const dataObj = function dataObj(cartDataVersion: number, action: string, parent
 };
 
 export async function countProductInBasket(): Promise<string> {
-  const countProductInCart = (await getCartData()).results[0].lineItems.length.toString() || '';
+  const countProductInCart = (await getCartData()).results[0]?.lineItems.length.toString() || '';
   return countProductInCart;
 }
 
