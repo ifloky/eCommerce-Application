@@ -1,6 +1,6 @@
 .basket {
   &__cart-items {
-  padding: 20px 40px;
+    padding: 20px 40px;
 
     & .product {
       display: flex;
@@ -49,7 +49,7 @@
   }
 }
 
-.product-none  {
+.product-none {
   width: 300px;
   margin: 0 auto;
   font-size: 24px;
@@ -63,6 +63,7 @@
   }
 }
 
-.button__minus-amount, .product__count {
-  float:left
+.button__minus-amount,
+.product__count {
+  float: left;
 }

@@ -61,7 +61,7 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   const target = e.target as HTMLElement;
   const parentId = target.closest('[data-id]')?.getAttribute('data-id') || '';
   const { cartId, cartDataVersion } = await cartResponse();
-  const data = dataObj(cartDataVersion, 'removeLineItem', parentId);
+  const data = dataObj(cartDataVersion, 'removeLineItem', parentId, 9999);
 
   await deleteProductFromCart(data, cartId, cartDataVersion);
   await basketPageRender();

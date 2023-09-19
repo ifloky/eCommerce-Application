@@ -24,7 +24,7 @@ export function createRegistrationFields(array: FieldsInfo[]): string {
 }
 
 const registrationUser = document.createElement('div');
-registrationUser.className = 'registration'
+registrationUser.className = 'registration';
 registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       <form class="registration-form" action=''>
       ${createRegistrationFields(registrationFieldsInfo)}
@@ -89,7 +89,6 @@ registrationUser.innerHTML = `<h2 class="registration-title">Registration</h2>
       </form>
       `;
 
-
 const passEye = registrationUser.querySelector('.password-control');
 const input = registrationUser.querySelector('.input-password');
 passEye?.addEventListener('click', () => {
@@ -100,7 +99,7 @@ passEye?.addEventListener('click', () => {
     passEye?.classList.remove('no-view');
     input?.setAttribute('type', 'password');
   }
-})
+});
 
 const submitButton = registrationUser.querySelector('.btn-registration') as HTMLButtonElement;
 const form = registrationUser.querySelector('.registration-form') as HTMLFormElement;
@@ -218,7 +217,6 @@ function validationBillingStreet(): void {
   });
 }
 
-
 function validationBillingCity(): void {
   const billingCityInput = form.querySelector('input[name="billing-city"]') as HTMLInputElement;
   const errorElement = document.createElement('div');
@@ -229,7 +227,6 @@ function validationBillingCity(): void {
     if (!nameRegex.test(billingCityInput.value)) {
       billingCityInput.classList.add('invalid-input');
       errorElement.textContent = 'Must contain a valid city';
-
     } else {
       billingCityInput.classList.remove('invalid-input');
       errorElement.textContent = '';
@@ -253,7 +250,6 @@ function validationShippingStreet(): void {
     }
   });
 }
-
 
 function validationShippingCity(): void {
   const shippingCityInput = form.querySelector('input[name="shipping-city"]') as HTMLInputElement;
