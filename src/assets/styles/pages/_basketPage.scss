@@ -23,7 +23,22 @@
         right: -4px;
         height: 40px;
       }
+
+      &__count {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+      }
     }
+  }
+
+  &__delete-all-button {
+    position: relative;
+    transform: translateX(-100%);
+    left: 100%;
+    margin-bottom: 40px;
+    border-color: $color-invalid;
   }
 
   &__cart-all-price {
@@ -46,4 +61,8 @@
   & .button {
     margin-top: 20px;
   }
+}
+
+.button__minus-amount, .product__count {
+  float:left
 }

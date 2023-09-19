@@ -61,10 +61,10 @@ export const checkItem = (event: Event): void => {
 }
 
 export const updatePersonalDetails = (): void => {
-  const name = document.getElementById('name') as HTMLInputElement
-  const middleName = document.getElementById('middleName') as HTMLInputElement
-  const lastName = document.getElementById('lastName') as HTMLInputElement
-  const birthDay = document.getElementById('birthDay') as HTMLInputElement
+  const name = document.getElementById('personal-name') as HTMLInputElement
+  const middleName = document.getElementById('personal-middleName') as HTMLInputElement
+  const lastName = document.getElementById('personal-lastName') as HTMLInputElement
+  const birthDay = document.getElementById('personal-birthDay') as HTMLInputElement
   const data = {
     name: name.value,
     middleName: middleName.value,

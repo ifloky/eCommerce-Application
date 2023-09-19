@@ -8,7 +8,6 @@ const legendsTextContent = {
   shipping: 'Edit shipping address'
 }
 
-
 const createLabelElement = (): HTMLLabelElement => createElement('label', ['edit__label'])
 
 const createInputElement = (): HTMLInputElement => createElement('input', ['edit__input'])
