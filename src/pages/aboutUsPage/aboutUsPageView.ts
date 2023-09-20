@@ -13,6 +13,7 @@ function createOneMember(elem: TeamMember): HTMLElement {
   <li>Age: ${elem.age} years</li>
   <li>About: ${elem.about}</li>
   <li>GitHub: <a href="${elem.github}">${elem.github}</a></li>
+  <li>Personal contribution: ${elem.contribution}</li>
   </ul>`;
   return oneMemberProfileWrapper;
 }

@@ -31,7 +31,7 @@ export function headerView(links: Links, signIn: boolean): string {
         </div>`
         : `
         <div class="header__user-wrapper">
-          <a href="/basket" class="header__btn button basket"><span class="basket__count-item"></span> </a>
+          <a href="/basket" class="header__btn button basket"><span class="basket__count-item">0</span> </a>
           <a href=${links.signIn} class="header__btn button">Sign In</a>
           <a href=${links.signUp} class="header__btn button">Sign Up</a>
         </div>`

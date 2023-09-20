@@ -5,4 +5,5 @@ export interface TeamMember {
   about: string;
   github: string;
   imgUrl: string;
+  contribution: string;
 }
