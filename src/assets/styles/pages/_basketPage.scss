@@ -19,9 +19,11 @@
 
       &__delete-button {
         position: absolute;
-        transform: translate(-50%, -1px);
+        transform: translate(-74%, -1px);
         right: -4px;
         height: 40px;
+        padding: 10px 5px;
+        border-radius: 7px;
       }
 
       &__count {

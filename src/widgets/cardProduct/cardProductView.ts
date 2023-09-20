@@ -15,6 +15,7 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
     if (productAddToCartButton.innerHTML !== `delete from cart`) {
       productAddToCartButton.innerHTML = `delete from cart`;
       sendDataToCart(e);
+      displayMessage('added to cart', true);
     } else {
       productAddToCartButton.innerHTML = `add to cart`;
       sendDeleteProductFromCartAfterAdd(e);
