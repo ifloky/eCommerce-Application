@@ -24,6 +24,7 @@ async function buttonToCardClick(e: Event): Promise<void> {
 }
 
 const buttonBack = createElement('button', ['button-light', 'button__back'], '&#11178; go to back');
+export const productContainer = createElement('div', ['product__container']);
 
 const buildPriceText = (price: number, discountedPrice?: number): string => {
   if (discountedPrice) {
@@ -60,13 +61,18 @@ const createProductWrapper = (product: ProductDetail, targetItem: lineItem | und
   `;
 };
 
-export const productContainer = createElement('div', ['product__container']);
+function addListeners(): void {
+  const addToCartButton = productContainer.querySelector('#toCart');
+  addToCartButton?.addEventListener('click', (e: Event) => buttonToCardClick(e));
+  const buttonBackElement = productContainer.querySelector('.button__back');
+  buttonBackElement?.addEventListener('click', redirectToCatalog);
+}
 
 export async function productPageView(product: ProductDetail): Promise<HTMLElement> {
   const cartExists: CartResponse = await getCartData();
-  const { results } = cartExists;
-  const lineItems = results[0]?.lineItems;
-  const targetItem: lineItem | undefined = lineItems?.find((item: lineItem) => item.productId === product.id);
+  const [resultsData] = cartExists.results;
+  const { lineItems: lineItemsData } = resultsData;
+  const targetItem: lineItem | undefined = lineItemsData?.find((item: lineItem) => item.productId === product.id);
   const arrayOfImageLinks: string[] = product.masterData.current.masterVariant.images.map((image) => image.url);
   productContainer.innerHTML = `
   ${buttonBack.outerHTML}
@@ -84,9 +90,6 @@ export async function productPageView(product: ProductDetail): Promise<HTMLEleme
       }
     }
   });
-  const addToCartButton = productContainer.querySelector('#toCart');
-  addToCartButton?.addEventListener('click', (e: Event) => buttonToCardClick(e));
-  const buttonBackElement = productContainer.querySelector('.button__back');
-  buttonBackElement?.addEventListener('click', redirectToCatalog);
+  addListeners();
   return productContainer;
 }

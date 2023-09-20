@@ -18,7 +18,12 @@ export function isAuthorized(): boolean {
   return false;
 }
 
-const dataObj = function dataObj(cartDataVersion: number, action: string, parentId: string, quantity = 1): object {
+export const dataObj = function dataObj(
+  cartDataVersion: number,
+  action: string,
+  parentId: string,
+  quantity = 1,
+): object {
   const dataObject = {
     version: cartDataVersion,
     actions: [

@@ -65,7 +65,7 @@ export function getBillingAddresses(): Address[] {
 
   if (defaultBillingCheckbox.checked) {
     billingAddresses.push({
-      addressId: 'BA',
+      addressId: '0',
       street: billingStreetInput?.value || '',
       city: billingCityInput?.value || '',
       postalCode: billingPostalCodeInput?.value || '',
@@ -86,7 +86,7 @@ export function getShippingAddresses(): Address[] {
 
   if (defaultShippingCheckbox.checked) {
     shippingAddresses.push({
-      addressId: 'SA',
+      addressId: '1',
       street: shippingStreetInput?.value || '',
       city: shippingCityInput?.value || '',
       postalCode: shippingPostalCodeInput?.value || '',
@@ -119,15 +119,17 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
     const shippingAddresses = getShippingAddresses();
 
     registrationInfo.addresses = [...billingAddresses, ...shippingAddresses];
-    registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0].addressId;
-    registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1].addressId;
+    registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0]
+      ? registrationInfo.addresses[0].addressId
+      : '';
+    registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1]
+      ? registrationInfo.addresses[1].addressId
+      : '';
     const response = await postAnonymousFlow('/customers', registrationInfo);
-    try {
+    if (response) {
       redirectToHomePage();
-    } catch (error) {
-      throw Error('' + error);
     }
-    return response;
+    redirectToHomePage();
   });
 }
 

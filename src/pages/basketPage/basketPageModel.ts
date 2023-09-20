@@ -7,7 +7,7 @@ import {
   postPasswordFlow,
 } from '../../shared/API';
 import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
-import { cartResponse, isAuthorized } from './basketPageController';
+import { cartResponse, dataObj, isAuthorized } from './basketPageController';
 
 export async function createCart(): Promise<void> {
   if (isAuthorized()) {
@@ -70,18 +70,8 @@ export async function deleteAllProductsFromCart(cartId: string, version: number)
 
 export async function sendMinusProductAmount(e: Event): Promise<void> {
   const target = e.target as HTMLElement;
-  const targetParentID = target.closest('[data-id]')?.getAttribute('data-id');
+  const targetParentID = target.closest('[data-id]')?.getAttribute('data-id') || '';
   const { cartId, cartDataVersion } = await cartResponse();
-  const data = {
-    version: cartDataVersion,
-    actions: [
-      {
-        action: 'removeLineItem',
-        lineItemId: targetParentID,
-        variantId: 1,
-        quantity: 1,
-      },
-    ],
-  };
+  const data = dataObj(cartDataVersion, 'removeLineItem', targetParentID);
   await deleteProductFromCart(data, cartId, cartDataVersion);
 }

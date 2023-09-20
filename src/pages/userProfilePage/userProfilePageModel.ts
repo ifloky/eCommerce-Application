@@ -1,6 +1,6 @@
 import { getCookie } from '../../shared/API';
 import { CustomerData } from '../../types/interfaces/customerData';
-import { AddressesData, PersonalData, UpdatePersonalData } from '../../types/interfaces/userProfilePage';
+import { AddressesData, PersonalData } from '../../types/interfaces/userProfilePage';
 
 const urlUpdate = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')}`;
 
@@ -90,7 +90,7 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
   return addressDataArray;
 };
 
-export const updatePersonalData = async (data: UpdatePersonalData): Promise<Response> => {
+export const updatePersonalData = async (data: PersonalData): Promise<Response> => {
   const { version } = await getCustomerData();
   const body = JSON.stringify({
     version: version,

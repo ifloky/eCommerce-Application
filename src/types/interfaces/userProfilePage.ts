@@ -19,10 +19,3 @@ export interface AddressesData {
   default?: boolean;
   type: string;
 }
-
-export interface UpdatePersonalData {
-  name: string;
-  middleName: string;
-  lastName: string;
-  birthDay: string;
-}

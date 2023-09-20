@@ -6,7 +6,7 @@ import {
 } from './basketPageController';
 import { getProductInCart } from './basketPageModel';
 import { redirectToCatalog } from '../../shared/router';
-import { CartResponseItem } from '../../types/interfaces/basketPage';
+import { CartResponseItem, lineItem } from '../../types/interfaces/basketPage';
 
 function clickProduct(e: Event, productsInCart: HTMLElement): void {
   const target = e.target as HTMLElement;
@@ -45,19 +45,8 @@ function checkEmptyBasket(): HTMLElement {
   return emptyBasket;
 }
 
-export async function productList(productsInCart: CartResponseItem): Promise<HTMLElement> {
-  const cardItemWrapper = createElement('div', ['basket__cart-items']);
-  const cartAllPrice = createElement('div', ['basket__cart-all-price']);
-  const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
-  cartAllPrice.innerHTML = 'Total cost:' + totalPriceAmount / 100 + '$' || 'Total cost:';
-  deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController);
-  cardItemWrapper.appendChild(deleteAllProductButton);
-  productsInCart.lineItems?.forEach((item) => {
-    const productElement = createElement('div', ['product']);
-    productElement.setAttribute('data-id', item.id);
-    productElement.setAttribute('data-productId', item.productId);
-    productElement.addEventListener('click', (e: Event): void => clickProduct(e, cardItemWrapper));
-    productElement.innerHTML = `
+function returnTemplate(item: lineItem): string {
+  const template = `
       <img src="${item.variant.images[0].url}" width="200" class="product__image" alt="product-image">
       <div class="product__info">
         <div class="product__name">Name: ${item.name['en-US']}</div>
@@ -70,7 +59,27 @@ export async function productList(productsInCart: CartResponseItem): Promise<HTM
       </div>
       <button class="product__delete-button button-light">DELETE</button>
     `;
-    cardItemWrapper.append(productElement);
+  return template;
+}
+
+function returnProductElement(item: lineItem, cardItemWrapper: HTMLElement): HTMLElement {
+  const productElement = createElement('div', ['product']);
+  productElement.setAttribute('data-id', item.id);
+  productElement.setAttribute('data-productId', item.productId);
+  productElement.addEventListener('click', (e: Event): void => clickProduct(e, cardItemWrapper));
+  productElement.innerHTML = returnTemplate(item);
+  return productElement;
+}
+
+export async function productList(productsInCart: CartResponseItem): Promise<HTMLElement> {
+  const cardItemWrapper = createElement('div', ['basket__cart-items']);
+  const cartAllPrice = createElement('div', ['basket__cart-all-price']);
+  const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
+  cartAllPrice.innerHTML = 'Total cost:' + totalPriceAmount / 100 + '$' || 'Total cost:';
+  deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController);
+  cardItemWrapper.appendChild(deleteAllProductButton);
+  productsInCart.lineItems?.forEach((item) => {
+    cardItemWrapper.append(returnProductElement(item, cardItemWrapper));
     cardItemWrapper.appendChild(cartAllPrice);
   });
   return cardItemWrapper;
