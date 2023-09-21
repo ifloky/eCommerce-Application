@@ -30,16 +30,20 @@ export const selectCategory = async (event: Event): Promise<void> => {
 
 export async function returnCardItem(data: Product[], catalogPage: Element): Promise<void> {
   const cartResponseResults = (await getCartData()).results[0].lineItems;
-  let productCard;
-  for (let i = 0; i < data.length; i++) {
-    if (!!cartResponseResults[i] && cartResponseResults[i].productId === data[i].id) {
-      productCard = cardProductViewElement(data[i], false);
-      catalogPage?.append(productCard);
-    } else {
-      productCard = cardProductViewElement(data[i], true);
-      catalogPage?.append(productCard);
+
+  data.forEach((product) => {
+    let includeButton = true;
+
+    for (let j = 0; j < cartResponseResults.length; j++) {
+      if (cartResponseResults[j].productId === product.id) {
+        includeButton = false;
+        break;
+      }
     }
-  }
+
+    const productCard = cardProductViewElement(product, includeButton);
+    catalogPage?.append(productCard);
+  });
 }
 
 export const renderSelectedCategory = async (data: Product[]): Promise<void> => {

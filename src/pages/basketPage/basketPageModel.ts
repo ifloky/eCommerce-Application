@@ -10,14 +10,22 @@ import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPag
 import { cartResponse, dataObj, isAuthorized } from './basketPageController';
 
 export async function createCart(): Promise<void> {
+  let cartResult: CartResponse;
   if (isAuthorized()) {
-    await postPasswordFlow(`/me/carts`, {
-      currency: 'USD',
-    });
+    cartResult = await getPasswordFlow(`/me/carts`);
+    if (!cartResult.results[0]) {
+      await postPasswordFlow(`/me/carts`, {
+        currency: 'USD',
+      });
+    }
+  } else {
+    cartResult = await getAnonymousFlow(`/carts`);
+    if (!cartResult.results[0]) {
+      await postAnonymousFlow(`/carts`, {
+        currency: 'USD',
+      });
+    }
   }
-  await postAnonymousFlow(`/carts`, {
-    currency: 'USD',
-  });
 }
 
 export async function getProductInCart(): Promise<CartResponseItem> {
@@ -30,6 +38,9 @@ export async function getProductInCart(): Promise<CartResponseItem> {
     }
   } else {
     cartResult = await getAnonymousFlow(`/carts`);
+    if (!cartResult.results[0]) {
+      cartResult = await getAnonymousFlow(`/carts`);
+    }
   }
   return cartResult.results[0];
 }

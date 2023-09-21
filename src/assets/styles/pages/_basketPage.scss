@@ -69,3 +69,24 @@
 .product__count {
   float: left;
 }
+
+.promo-code {
+  &__wrapper {
+    margin-left: 20px;
+    padding: 10px 20px;
+    border: 1px $color-additional solid;
+    border-radius: 7px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  // &__input {
+
+  // }
+
+  // &__button {
+
+  // }
+}

@@ -93,9 +93,23 @@ export async function returnCartItem(): Promise<HTMLElement> {
   return productList(productsInCart);
 }
 
+function returnPromoCodeEnterElement(): HTMLElement {
+  const promoCodeEnderWrapper = createElement('div', ['promo-code__wrapper']);
+  const inputPromoCode = createElement('input', ['promo-code__input']);
+  inputPromoCode.setAttribute('placeholder', 'enter your promo code');
+  const buttonApplyPromoCode = createElement('button', ['promo-code__button'], 'Apply');
+  promoCodeEnderWrapper.innerHTML = `
+    <div class="promo-code__title">Enter your promo code</div>
+    ${inputPromoCode.outerHTML}
+    ${buttonApplyPromoCode.outerHTML}
+  `;
+  return promoCodeEnderWrapper;
+}
+
 export async function basketPageView(): Promise<HTMLElement> {
   const basketWrapper = createElement('div', ['basket__card-wrapper']);
   basketWrapper.innerHTML = '';
+  basketWrapper.append(returnPromoCodeEnterElement());
   basketWrapper.append(await returnCartItem());
   return basketWrapper;
 }
