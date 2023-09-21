@@ -1,5 +1,6 @@
 import { createElement } from '../../utils/abstract';
 import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
+import { getCartData } from '../basketPage/basketPageModel';
 import { selectCategory } from './catalogPageController';
 import { getAllProducts, getCategoriesData } from './catalogPageModel';
 import { generatePaginationView } from './components/pagination';
@@ -35,10 +36,17 @@ const createButtonsForCategories = async (): Promise<HTMLDivElement> => {
 export const generateAllProductsCard = async (): Promise<HTMLElement> => {
   const wrapper = createElement('div', ['catalog__container']);
   const products = (await getAllProducts()).results;
-  products.forEach((product) => {
-    const productCard = cardProductViewElement(product);
-    wrapper.append(productCard);
-  });
+  const cartResponseResults = (await getCartData()).results[0].lineItems;
+  let productCard;
+  for (let i = 0; i < products.length; i++) {
+    if (!!cartResponseResults[i] && cartResponseResults[i].productId === products[i].id) {
+      productCard = cardProductViewElement(products[i], false);
+      wrapper.append(productCard);
+    } else {
+      productCard = cardProductViewElement(products[i], true);
+      wrapper.append(productCard);
+    }
+  }
   return wrapper;
 };
 

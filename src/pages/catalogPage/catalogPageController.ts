@@ -1,5 +1,6 @@
 import { Product } from '../../types/interfaces/Product';
 import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
+import { getCartData } from '../basketPage/basketPageModel';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
 import { generateAllProductsCard } from './catalogPageView';
 import { generatePaginationView } from './components/pagination';
@@ -27,15 +28,22 @@ export const selectCategory = async (event: Event): Promise<void> => {
   }
 };
 
-export const renderSelectedCategory = (data: Product[]): void => {
+export const renderSelectedCategory = async (data: Product[]): Promise<void> => {
   const catalogPage = document.querySelector('.catalog__container');
   while (catalogPage?.firstChild) {
     catalogPage.firstChild.remove();
   }
-  data.forEach((product) => {
-    const productCard = cardProductViewElement(product);
-    catalogPage?.append(productCard);
-  });
+  const cartResponseResults = (await getCartData()).results[0].lineItems;
+  let productCard;
+  for (let i = 0; i < data.length; i++) {
+    if (!!cartResponseResults[i] && cartResponseResults[i].productId === data[i].id) {
+      productCard = cardProductViewElement(data[i], false);
+      catalogPage?.append(productCard);
+    } else {
+      productCard = cardProductViewElement(data[i], true);
+      catalogPage?.append(productCard);
+    }
+  }
 };
 
 export const generatePaginationForSelectedCategory = (): void => {

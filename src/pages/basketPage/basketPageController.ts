@@ -11,11 +11,8 @@ import {
 } from './basketPageModel';
 
 export function isAuthorized(): boolean {
-  const user = getCookie('access_token');
-  if (user) {
-    return true;
-  }
-  return false;
+  const user = !!getCookie('access_token');
+  return user;
 }
 
 export const dataObj = function dataObj(
