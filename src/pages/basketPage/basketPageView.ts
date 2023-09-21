@@ -97,7 +97,7 @@ function returnPromoCodeEnterElement(): HTMLElement {
   const promoCodeEnderWrapper = createElement('div', ['promo-code__wrapper']);
   const inputPromoCode = createElement('input', ['promo-code__input']);
   inputPromoCode.setAttribute('placeholder', 'enter your promo code');
-  const buttonApplyPromoCode = createElement('button', ['promo-code__button'], 'Apply');
+  const buttonApplyPromoCode = createElement('button', ['button', 'promo-code__button'], 'Apply');
   promoCodeEnderWrapper.innerHTML = `
     <div class="promo-code__title">Enter your promo code</div>
     ${inputPromoCode.outerHTML}
