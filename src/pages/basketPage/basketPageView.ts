@@ -3,10 +3,12 @@ import {
   sendDeleteProductFromCart,
   deleteAllProductsFromCartController,
   changeProductAmount,
+  cartResponse,
 } from './basketPageController';
 import { getProductInCart } from './basketPageModel';
 import { redirectToCatalog } from '../../shared/router';
 import { CartResponseItem, lineItem } from '../../types/interfaces/basketPage';
+import { postAnonymousFlow } from '../../shared/API';
 
 function clickProduct(e: Event, productsInCart: HTMLElement): void {
   const target = e.target as HTMLElement;
@@ -93,6 +95,25 @@ export async function returnCartItem(): Promise<HTMLElement> {
   return productList(productsInCart);
 }
 
+async function applyPromoCode(): Promise<void> {
+  const { cartId, cartDataVersion } = await cartResponse();
+  const data = {
+    version: cartDataVersion,
+    actions: [
+      {
+        action: 'addDiscountCode',
+        code: 'weOpened',
+      },
+    ],
+  };
+  await postAnonymousFlow(`/carts/${cartId}`, data);
+}
+
+const bindEvents = (parent: HTMLElement): void => {
+  const buttons = parent.querySelector('.button');
+  buttons?.addEventListener('click', () => applyPromoCode());
+};
+
 function returnPromoCodeEnterElement(): HTMLElement {
   const promoCodeEnderWrapper = createElement('div', ['promo-code__wrapper']);
   const inputPromoCode = createElement('input', ['promo-code__input']);
@@ -101,8 +122,9 @@ function returnPromoCodeEnterElement(): HTMLElement {
   promoCodeEnderWrapper.innerHTML = `
     <div class="promo-code__title">Enter your promo code</div>
     ${inputPromoCode.outerHTML}
-    ${buttonApplyPromoCode.outerHTML}
+    ${buttonApplyPromoCode.outerHTML} 
   `;
+  bindEvents(promoCodeEnderWrapper);
   return promoCodeEnderWrapper;
 }
 

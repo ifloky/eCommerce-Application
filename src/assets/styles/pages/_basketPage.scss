@@ -72,7 +72,8 @@
 
 .promo-code {
   &__wrapper {
-    margin-left: 20px;
+    width: 260px;
+    margin-left: 40px;
     padding: 10px 20px;
     border: 1px $color-additional solid;
     border-radius: 7px;
@@ -82,11 +83,15 @@
     margin-bottom: 10px;
   }
 
-  // &__input {
+  &__input {
+    height: 28px;
+    padding: 5px 10px;
+    border: 1px $color-additional solid;
+    border-radius: 7px;
+    outline: none;
 
-  // }
-
-  // &__button {
-
-  // }
+    &:focus {
+      border-color: $color-active;
+    }
+  }
 }
