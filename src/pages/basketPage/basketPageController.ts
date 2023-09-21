@@ -85,8 +85,8 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
 
 export async function checkItemInBasketForDelete(e: Event): Promise<string | undefined> {
   const cartExists: CartResponse = await getCartData();
-  const [f] = cartExists.results;
-  const { lineItems } = f;
+  const [cartResults] = cartExists.results;
+  const { lineItems } = cartResults;
   const target = e.target as HTMLElement;
   const targetParentID = target.closest('[data-id]')?.getAttribute('data-id');
   const targetItem: lineItem | undefined = lineItems?.find((item) => item.productId === targetParentID);

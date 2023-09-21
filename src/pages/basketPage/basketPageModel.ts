@@ -9,6 +9,14 @@ import {
 import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
 import { cartResponse, dataObj, isAuthorized } from './basketPageController';
 
+export async function deleteAllProductsFromCart(cartId: string, version: number): Promise<void> {
+  if (isAuthorized()) {
+    await deletePasswordFlow(`/me/carts/${cartId}?version=${version}`, {});
+  } else {
+    await deleteAnonymousFlow(`/carts/${cartId}?version=${version}`, {});
+  }
+}
+
 export async function createCart(): Promise<void> {
   let cartResult: CartResponse;
   if (isAuthorized()) {
@@ -39,6 +47,7 @@ export async function getProductInCart(): Promise<CartResponseItem> {
   } else {
     cartResult = await getAnonymousFlow(`/carts`);
     if (!cartResult.results[0]) {
+      createCart();
       cartResult = await getAnonymousFlow(`/carts`);
     }
   }
@@ -49,9 +58,30 @@ export async function getCartData(): Promise<CartResponse> {
   let response: CartResponse;
   if (isAuthorized()) {
     response = await getPasswordFlow(`/me/carts`);
+    if (!response) {
+      createCart();
+      response = await getPasswordFlow(`/me/carts`);
+    }
   } else {
     response = await getAnonymousFlow(`/carts`);
+    if (!response) {
+      createCart();
+      response = await getAnonymousFlow(`/carts`);
+    }
   }
+  return response;
+}
+
+interface PromoAnswer {
+  results: {
+    id: string;
+    version: string;
+    code: string;
+  }[];
+}
+
+export async function getPromo(): Promise<PromoAnswer> {
+  const response: PromoAnswer = await getAnonymousFlow(`/discount-codes`);
   return response;
 }
 
@@ -68,14 +98,6 @@ export async function deleteProductFromCart(data: object, cartId: string, cartDa
     await postPasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data);
   } else {
     await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data);
-  }
-}
-
-export async function deleteAllProductsFromCart(cartId: string, version: number): Promise<void> {
-  if (isAuthorized()) {
-    await deletePasswordFlow(`/me/carts/${cartId}?version=${version}`, {});
-  } else {
-    await deleteAnonymousFlow(`/carts/${cartId}?version=${version}`, {});
   }
 }
 

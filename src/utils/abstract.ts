@@ -20,7 +20,7 @@ export function displayMessage(message: string, status: boolean): void {
 
   setTimeout(() => {
     document.body.removeChild(messageElement);
-  }, 3000);
+  }, 2000);
 }
 
 const createConfirm = (message: string): Promise<boolean> => {

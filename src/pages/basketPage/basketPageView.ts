@@ -5,7 +5,7 @@ import {
   changeProductAmount,
   cartResponse,
 } from './basketPageController';
-import { getProductInCart } from './basketPageModel';
+import { getProductInCart, getPromo } from './basketPageModel';
 import { redirectToCatalog } from '../../shared/router';
 import { CartResponseItem, lineItem } from '../../types/interfaces/basketPage';
 import { postAnonymousFlow } from '../../shared/API';
@@ -57,7 +57,7 @@ function returnTemplate(item: lineItem): string {
             ${Number(item.price.value.centAmount) / 100} $
           </div>
           <div class="product__discount-price">Discount price: 
-            ${Number(item.price.discounted.value.centAmount) / 100} $
+            ${item.price.discounted ? Number(item.price.discounted.value.centAmount) / 100 : ''} $
           </div>
           <div class="product__total-price">Total price: 
             ${Number(item.totalPrice.centAmount) / 100} $
@@ -97,8 +97,13 @@ export async function productList(productsInCart: CartResponseItem): Promise<HTM
 
 async function applyPromoCode(promoCodeInputElement: HTMLInputElement | null): Promise<void> {
   const { cartId, cartDataVersion } = await cartResponse();
+  const promoResponse = await getPromo();
+  let promoArray: string[] = [];
   const enteredPromoCode = promoCodeInputElement?.value || '';
-  if (enteredPromoCode === 'weOpened') {
+  for (let i = 0; i < promoResponse.results.length; i++) {
+    promoArray = [...promoArray, promoResponse.results[i].code];
+  }
+  if (promoArray.includes(enteredPromoCode)) {
     const data = {
       version: cartDataVersion,
       actions: [
@@ -109,6 +114,7 @@ async function applyPromoCode(promoCodeInputElement: HTMLInputElement | null): P
       ],
     };
     await postAnonymousFlow(`/carts/${cartId}`, data);
+    displayMessage('Promo code applied', true);
   } else {
     displayMessage('Invalid promo code', false);
   }
