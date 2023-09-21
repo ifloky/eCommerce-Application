@@ -14,12 +14,12 @@ export const selectCategory = async (event: Event): Promise<void> => {
     });
     const id = target.getAttribute('data-id');
     if (id) {
-      getProductCategory(id);
+      await getProductCategory(id);
     }
     if (target.classList.contains('catalog__button_all')) {
+      sessionStorage.removeItem('categoryId');
       document.querySelector('.catalog__container')?.remove();
       document.querySelector('.pagination')?.remove();
-      sessionStorage.removeItem('categoryId');
       const allProducts = await generateAllProductsCard();
       const pagination = generatePaginationView();
       document.querySelector('.catalog__wrapper')?.append(allProducts, pagination);
@@ -28,11 +28,7 @@ export const selectCategory = async (event: Event): Promise<void> => {
   }
 };
 
-export const renderSelectedCategory = async (data: Product[]): Promise<void> => {
-  const catalogPage = document.querySelector('.catalog__container');
-  while (catalogPage?.firstChild) {
-    catalogPage.firstChild.remove();
-  }
+export async function returnCardItem(data: Product[], catalogPage: Element): Promise<void> {
   const cartResponseResults = (await getCartData()).results[0].lineItems;
   let productCard;
   for (let i = 0; i < data.length; i++) {
@@ -43,6 +39,16 @@ export const renderSelectedCategory = async (data: Product[]): Promise<void> => 
       productCard = cardProductViewElement(data[i], true);
       catalogPage?.append(productCard);
     }
+  }
+}
+
+export const renderSelectedCategory = async (data: Product[]): Promise<void> => {
+  const catalogPage = document.querySelector('.catalog__container');
+  while (catalogPage?.firstChild) {
+    catalogPage.firstChild.remove();
+  }
+  if (catalogPage) {
+    await returnCardItem(data, catalogPage);
   }
 };
 
@@ -55,7 +61,7 @@ export const generatePaginationForSelectedCategory = (): void => {
   catalogWrapper?.append(pagination);
 };
 
-const checkDisabled = (element: Element, parent: Element): void => {
+export const checkDisabled = (element: Element, parent: Element): void => {
   const prevButton = parent.querySelector('.button_prev');
   const nextButton = parent.querySelector('.button_next');
   const navigation = parent.querySelector('.pagination__buttons');
@@ -95,8 +101,8 @@ const moveToSelectedPage = async (event: Event): Promise<void> => {
         }
       } else {
         products = (await getAllProducts((selectedPage - 1) * 3)).results;
+        renderSelectedCategory(products);
       }
-      renderSelectedCategory(products);
     }
   }
 };
