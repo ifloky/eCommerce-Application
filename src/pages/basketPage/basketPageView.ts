@@ -52,9 +52,17 @@ function returnTemplate(item: lineItem): string {
       <img src="${item.variant.images[0].url}" width="200" class="product__image" alt="product-image">
       <div class="product__info">
         <div class="product__name">Name: ${item.name['en-US']}</div>
-        <div class="product__price">Price: <span class="product__price-amount"> ${
-          Number(item.totalPrice.centAmount) / 100
-        } </span>$</div>
+        <div class="product__price">
+          <div class="product__start-price"> Price:
+            ${Number(item.price.value.centAmount) / 100} $
+          </div>
+          <div class="product__discount-price">Discount price: 
+            ${Number(item.price.discounted.value.centAmount) / 100} $
+          </div>
+          <div class="product__total-price">Total price: 
+            ${Number(item.totalPrice.centAmount) / 100} $
+          </div>
+        </div>
           ${minusAmount.outerHTML}
           <div class="product__count">Count: <span class="product__count-amount"> ${item.quantity} </span> </div>
           ${addAmount.outerHTML}
@@ -87,34 +95,32 @@ export async function productList(productsInCart: CartResponseItem): Promise<HTM
   return cardItemWrapper;
 }
 
-export async function returnCartItem(): Promise<HTMLElement> {
-  const productsInCart = await getProductInCart();
-  if (!productsInCart || !productsInCart.lineItems?.length) {
-    return checkEmptyBasket();
-  }
-  return productList(productsInCart);
-}
-
-async function applyPromoCode(): Promise<void> {
+async function applyPromoCode(promoCodeInputElement: HTMLInputElement | null): Promise<void> {
   const { cartId, cartDataVersion } = await cartResponse();
-  const data = {
-    version: cartDataVersion,
-    actions: [
-      {
-        action: 'addDiscountCode',
-        code: 'weOpened',
-      },
-    ],
-  };
-  await postAnonymousFlow(`/carts/${cartId}`, data);
+  const enteredPromoCode = promoCodeInputElement?.value || '';
+  if (enteredPromoCode === 'weOpened') {
+    const data = {
+      version: cartDataVersion,
+      actions: [
+        {
+          action: 'addDiscountCode',
+          code: 'weOpened',
+        },
+      ],
+    };
+    await postAnonymousFlow(`/carts/${cartId}`, data);
+  } else {
+    displayMessage('Invalid promo code', false);
+  }
 }
 
 const bindEvents = (parent: HTMLElement): void => {
-  const buttons = parent.querySelector('.button');
-  buttons?.addEventListener('click', () => applyPromoCode());
+  const buttonApply = parent.querySelector('.button');
+  const promoCodeInputElement: HTMLInputElement | null = parent.querySelector('.promo-code__input');
+  buttonApply?.addEventListener('click', () => applyPromoCode(promoCodeInputElement));
 };
 
-function returnPromoCodeEnterElement(): HTMLElement {
+async function returnPromoCodeEnterElement(productsInCart: CartResponseItem): Promise<HTMLElement> {
   const promoCodeEnderWrapper = createElement('div', ['promo-code__wrapper']);
   const inputPromoCode = createElement('input', ['promo-code__input']);
   inputPromoCode.setAttribute('placeholder', 'enter your promo code');
@@ -123,15 +129,25 @@ function returnPromoCodeEnterElement(): HTMLElement {
     <div class="promo-code__title">Enter your promo code</div>
     ${inputPromoCode.outerHTML}
     ${buttonApplyPromoCode.outerHTML} 
+    <div class="promo-code__status">
+      <span class="promo-code__status-text"> ${productsInCart.discountCodes ? 'Promo code is active' : ''}</span>
+    </div>
   `;
   bindEvents(promoCodeEnderWrapper);
   return promoCodeEnderWrapper;
 }
 
+export async function returnCartItem(): Promise<HTMLElement> {
+  const productsInCart = await getProductInCart();
+  if (!productsInCart || !productsInCart.lineItems?.length) {
+    return checkEmptyBasket();
+  }
+  const basketInnerElement = createElement('div', ['basket__inner']);
+  basketInnerElement.append(await returnPromoCodeEnterElement(productsInCart), await productList(productsInCart));
+  return basketInnerElement;
+}
+
 export async function basketPageView(): Promise<HTMLElement> {
-  const basketWrapper = createElement('div', ['basket__card-wrapper']);
-  basketWrapper.innerHTML = '';
-  basketWrapper.append(returnPromoCodeEnterElement());
-  basketWrapper.append(await returnCartItem());
+  const basketWrapper = await returnCartItem();
   return basketWrapper;
 }

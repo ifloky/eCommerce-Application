@@ -5,6 +5,11 @@ export interface lineItem {
     'en-US': string;
   };
   price: {
+    discounted: {
+      value: {
+        centAmount: string;
+      };
+    };
     value: {
       centAmount: string;
     };
@@ -27,6 +32,7 @@ export interface CartResponseItem {
   totalPrice?: {
     centAmount: string;
   };
+  discountCodes?: object;
 }
 
 export interface CartItem {

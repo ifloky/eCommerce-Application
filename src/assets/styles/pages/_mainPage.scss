@@ -10,7 +10,6 @@ p {
   flex-direction: column;
   justify-content: center;
   position: relative;
-  margin: -27px auto;
   padding: 10px;
   height: 92vh;
 
@@ -30,5 +29,26 @@ p {
   h1,
   p {
     color: $color-light;
+  }
+}
+
+.promo-card {
+  position: relative;
+  z-index: 10;
+  padding: 3vh 5vh;
+  max-width: 320px;
+  margin: 0 auto;
+  margin-top: 50px;
+  background: $color-white-darkest;
+  border: 1px $color-primary solid;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__promo-code {
+    margin-top: 10px;
+    color: $color-primary;
+    font-weight: 700;
   }
 }
