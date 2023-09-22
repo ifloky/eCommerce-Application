@@ -5,7 +5,7 @@ import {
   changeProductAmount,
   cartResponse,
 } from './basketPageController';
-import { getProductInCart, setPromo } from './basketPageModel';
+import { getCartData, setPromo } from './basketPageModel';
 import { redirectToCatalog } from '../../shared/router';
 import { CartResponseItem, lineItem } from '../../types/interfaces/basketPage';
 
@@ -157,7 +157,7 @@ async function returnPromoCodeEnterElement(productsInCart: CartResponseItem): Pr
 }
 
 export async function returnCartItem(): Promise<HTMLElement> {
-  const productsInCart = await getProductInCart();
+  const [productsInCart] = (await getCartData()).results;
   if (!productsInCart || !productsInCart.lineItems?.length) {
     return checkEmptyBasket();
   }

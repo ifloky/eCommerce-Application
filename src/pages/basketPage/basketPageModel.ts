@@ -8,7 +8,7 @@ import {
 } from '../../shared/API';
 import { getCookie } from '../../shared/API';
 import { basketPageRender } from '../../shared/router';
-import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
+import { CartResponse } from '../../types/interfaces/basketPage';
 import { cartResponse, dataObj } from './basketPageController';
 
 export function isAuthorized(): boolean {
@@ -25,53 +25,28 @@ export async function deleteAllProductsFromCart(cartId: string, version: number)
 }
 
 export async function createCart(): Promise<void> {
-  let cartResult: CartResponse;
   if (isAuthorized()) {
-    cartResult = await getPasswordFlow(`/me/carts`);
-    if (!cartResult.results[0]) {
-      await postPasswordFlow(`/me/carts`, {
-        currency: 'USD',
-      });
-    }
+    await postPasswordFlow(`/me/carts`, {
+      currency: 'USD',
+    });
   } else {
-    cartResult = await getAnonymousFlow(`/me/carts`);
-    if (!cartResult.results[0]) {
-      await postAnonymousFlow(`/me/carts`, {
-        currency: 'USD',
-      });
-    }
+    await postAnonymousFlow(`/me/carts`, {
+      currency: 'USD',
+    });
   }
-}
-
-export async function getProductInCart(): Promise<CartResponseItem> {
-  let cartResult: CartResponse;
-  if (isAuthorized()) {
-    cartResult = await getPasswordFlow(`/me/carts`);
-    if (!cartResult.results[0]) {
-      createCart();
-      cartResult = await getPasswordFlow(`/me/carts`);
-    }
-  } else {
-    cartResult = await getAnonymousFlow(`/me/carts`);
-    if (!cartResult.results[0]) {
-      createCart();
-      cartResult = await getAnonymousFlow(`/me/carts`);
-    }
-  }
-  return cartResult.results[0];
 }
 
 export async function getCartData(): Promise<CartResponse> {
   let response: CartResponse;
   if (isAuthorized()) {
     response = await getPasswordFlow(`/me/carts`);
-    if (!response) {
+    if (!response.results[0]) {
       createCart();
       response = await getPasswordFlow(`/me/carts`);
     }
   } else {
     response = await getAnonymousFlow(`/me/carts`);
-    if (!response) {
+    if (!response.results[0]) {
       createCart();
       response = await getAnonymousFlow(`/me/carts`);
     }
