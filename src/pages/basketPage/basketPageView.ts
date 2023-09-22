@@ -5,10 +5,9 @@ import {
   changeProductAmount,
   cartResponse,
 } from './basketPageController';
-import { getProductInCart, getPromo } from './basketPageModel';
+import { getProductInCart, setPromo } from './basketPageModel';
 import { redirectToCatalog } from '../../shared/router';
 import { CartResponseItem, lineItem } from '../../types/interfaces/basketPage';
-import { postAnonymousFlow } from '../../shared/API';
 
 function clickProduct(e: Event, productsInCart: HTMLElement): void {
   const target = e.target as HTMLElement;
@@ -34,7 +33,7 @@ function clickProduct(e: Event, productsInCart: HTMLElement): void {
 }
 
 const emptyBasket = createElement('div', ['product-none']);
-const deleteAllProductButton = createElement('button', ['button-light', 'basket__delete-all-button'], 'Delete all');
+
 const addAmount = createElement('button', ['button-light', 'button__add-amount'], '+');
 const minusAmount = createElement('button', ['button-light', 'button__minus-amount'], '-');
 
@@ -86,6 +85,7 @@ export async function productList(productsInCart: CartResponseItem): Promise<HTM
   const cartAllPrice = createElement('div', ['basket__cart-all-price']);
   const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
   cartAllPrice.innerHTML = 'Total cost:' + totalPriceAmount / 100 + '$' || 'Total cost:';
+  const deleteAllProductButton = createElement('button', ['button-light', 'basket__delete-all-button'], 'Delete all');
   deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController);
   cardItemWrapper.appendChild(deleteAllProductButton);
   productsInCart.lineItems?.forEach((item) => {
@@ -97,27 +97,8 @@ export async function productList(productsInCart: CartResponseItem): Promise<HTM
 
 async function applyPromoCode(promoCodeInputElement: HTMLInputElement | null): Promise<void> {
   const { cartId, cartDataVersion } = await cartResponse();
-  const promoResponse = await getPromo();
-  let promoArray: string[] = [];
   const enteredPromoCode = promoCodeInputElement?.value || '';
-  for (let i = 0; i < promoResponse.results.length; i++) {
-    promoArray = [...promoArray, promoResponse.results[i].code];
-  }
-  if (promoArray.includes(enteredPromoCode)) {
-    const data = {
-      version: cartDataVersion,
-      actions: [
-        {
-          action: 'addDiscountCode',
-          code: 'weOpened',
-        },
-      ],
-    };
-    await postAnonymousFlow(`/carts/${cartId}`, data);
-    displayMessage('Promo code applied', true);
-  } else {
-    displayMessage('Invalid promo code', false);
-  }
+  await setPromo(cartId, cartDataVersion, enteredPromoCode);
 }
 
 const bindEvents = (parent: HTMLElement): void => {
@@ -136,7 +117,9 @@ async function returnPromoCodeEnterElement(productsInCart: CartResponseItem): Pr
     ${inputPromoCode.outerHTML}
     ${buttonApplyPromoCode.outerHTML} 
     <div class="promo-code__status">
-      <span class="promo-code__status-text"> ${productsInCart.discountCodes ? 'Promo code is active' : ''}</span>
+      <span class="promo-code__status-text"> ${
+        productsInCart.discountCodes?.length ? 'Promo code is active' : ''
+      }</span>
     </div>
   `;
   bindEvents(promoCodeEnderWrapper);

@@ -32,7 +32,7 @@ export interface CartResponseItem {
   totalPrice?: {
     centAmount: string;
   };
-  discountCodes?: object;
+  discountCodes?: object[];
 }
 
 export interface CartItem {

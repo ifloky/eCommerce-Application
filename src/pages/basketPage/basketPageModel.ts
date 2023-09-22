@@ -8,6 +8,7 @@ import {
 } from '../../shared/API';
 import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
 import { cartResponse, dataObj, isAuthorized } from './basketPageController';
+import { basketPageView } from './basketPageView';
 
 export async function deleteAllProductsFromCart(cartId: string, version: number): Promise<void> {
   if (isAuthorized()) {
@@ -72,25 +73,26 @@ export async function getCartData(): Promise<CartResponse> {
   return response;
 }
 
-interface PromoAnswer {
-  results: {
-    id: string;
-    version: string;
-    code: string;
-  }[];
-}
-
-export async function getPromo(): Promise<PromoAnswer> {
-  const response: PromoAnswer = await getAnonymousFlow(`/discount-codes`);
-  return response;
-}
-
 export async function addProductToCart(data: object, cartId: string): Promise<void> {
   if (isAuthorized()) {
     await postPasswordFlow(`/me/carts/${cartId}`, data);
   } else {
     await postAnonymousFlow(`/me/carts/${cartId}`, data);
   }
+}
+
+export async function setPromo(cartId: string, cartVersion: number, code: string): Promise<void> {
+  const data = {
+    version: cartVersion,
+    actions: [
+      {
+        action: 'addDiscountCode',
+        code: code,
+      },
+    ],
+  };
+  await addProductToCart(data, cartId);
+  await basketPageView();
 }
 
 export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: number): Promise<void> {
