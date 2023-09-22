@@ -27,9 +27,9 @@ export async function createCart(): Promise<void> {
       });
     }
   } else {
-    cartResult = await getAnonymousFlow(`/carts`);
+    cartResult = await getAnonymousFlow(`/me/carts`);
     if (!cartResult.results[0]) {
-      await postAnonymousFlow(`/carts`, {
+      await postAnonymousFlow(`/me/carts`, {
         currency: 'USD',
       });
     }
@@ -45,10 +45,10 @@ export async function getProductInCart(): Promise<CartResponseItem> {
       cartResult = await getPasswordFlow(`/me/carts`);
     }
   } else {
-    cartResult = await getAnonymousFlow(`/carts`);
+    cartResult = await getAnonymousFlow(`/me/carts`);
     if (!cartResult.results[0]) {
       createCart();
-      cartResult = await getAnonymousFlow(`/carts`);
+      cartResult = await getAnonymousFlow(`/me/carts`);
     }
   }
   return cartResult.results[0];
@@ -63,10 +63,10 @@ export async function getCartData(): Promise<CartResponse> {
       response = await getPasswordFlow(`/me/carts`);
     }
   } else {
-    response = await getAnonymousFlow(`/carts`);
+    response = await getAnonymousFlow(`/me/carts`);
     if (!response) {
       createCart();
-      response = await getAnonymousFlow(`/carts`);
+      response = await getAnonymousFlow(`/me/carts`);
     }
   }
   return response;
@@ -89,7 +89,7 @@ export async function addProductToCart(data: object, cartId: string): Promise<vo
   if (isAuthorized()) {
     await postPasswordFlow(`/me/carts/${cartId}`, data);
   } else {
-    await postAnonymousFlow(`/carts/${cartId}`, data);
+    await postAnonymousFlow(`/me/carts/${cartId}`, data);
   }
 }
 
@@ -97,7 +97,7 @@ export async function deleteProductFromCart(data: object, cartId: string, cartDa
   if (isAuthorized()) {
     await postPasswordFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data);
   } else {
-    await postAnonymousFlow(`/carts/${cartId}?version=${cartDataVersion}`, data);
+    await postAnonymousFlow(`/me/carts/${cartId}?version=${cartDataVersion}`, data);
   }
 }
 

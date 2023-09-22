@@ -36,7 +36,7 @@ export function deleteCookie(name: string): void {
 }
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
-  const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/token';
+  const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/bestshop-rs/anonymous/token';
   const body = new URLSearchParams({
     grant_type: 'client_credentials',
   });
