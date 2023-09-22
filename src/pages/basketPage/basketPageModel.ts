@@ -7,9 +7,9 @@ import {
   postPasswordFlow,
 } from '../../shared/API';
 import { getCookie } from '../../shared/API';
+import { basketPageRender } from '../../shared/router';
 import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
 import { cartResponse, dataObj } from './basketPageController';
-import { basketPageView } from './basketPageView';
 
 export function isAuthorized(): boolean {
   const user = !!getCookie('access_token');
@@ -98,7 +98,7 @@ export async function setPromo(cartId: string, cartVersion: number, code: string
     ],
   };
   await addProductToCart(data, cartId);
-  await basketPageView();
+  await basketPageRender();
 }
 
 export async function deleteProductFromCart(data: object, cartId: string, cartDataVersion: number): Promise<void> {

@@ -38,7 +38,7 @@ export async function countProductInBasket(): Promise<string> {
 export async function setCountProductInBasket(): Promise<void> {
   const countItemElement = document.querySelector('.basket__count-item');
   if (countItemElement) {
-    countItemElement.innerHTML = await countProductInBasket();
+    countItemElement.innerHTML = (await countProductInBasket()) || '0';
   }
 }
 

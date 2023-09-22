@@ -76,13 +76,13 @@
 
   &__count-item {
     position: absolute;
-    top: -13px;
+    top: -10px;
     right: 10px;
     background: #fefefe;
-    font-size: 16px;
-    color: #ac7ed1;
+    font-size: 12px;
+    color: $color-primary;
     padding: 2px 4px;
-    border: 1px solid #ac7ed1;
+    border: 1px solid $color-primary;
     border-radius: 7px;
   }
 }
