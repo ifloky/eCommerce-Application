@@ -46,22 +46,45 @@ function checkEmptyBasket(): HTMLElement {
   return emptyBasket;
 }
 
+function returnPriceBlockElement(item: lineItem): HTMLElement {
+  const priceBlockTemplate = createElement('div', ['product__price']);
+  priceBlockTemplate.innerHTML = `<div class="product__start-price ${
+    item.price.discounted ? 'discounted-price' : ''
+  }" style=""> Price:
+            ${Number(item.price.value.centAmount) / 100} $
+          </div>
+          <div class="product__discount-price"> 
+            ${
+              item.price.discounted
+                ? `<span>Discount price: ${Number(item.price.discounted.value.centAmount) / 100} $</span>`
+                : ''
+            }
+          </div>
+          <div class="product__total-price">Total price: 
+            ${
+              item.discountedPrice
+                ? `<span class="discounted-price">${
+                    item.price.discounted
+                      ? Number(item.price.discounted.value.centAmount) / 100
+                      : Number(item.price.value.centAmount) / 100
+                  }$</span>
+              <span style="margin-left: 10px;">${Number(item.totalPrice.centAmount) / 100}$</span>`
+                : `<span>${
+                    item.price.discounted
+                      ? Number(item.price.discounted.value.centAmount) / 100
+                      : Number(item.price.value.centAmount) / 100
+                  }$</span>`
+            }
+          </div>`;
+  return priceBlockTemplate;
+}
+
 function returnTemplate(item: lineItem): string {
   const template = `
       <img src="${item.variant.images[0].url}" width="200" class="product__image" alt="product-image">
       <div class="product__info">
         <div class="product__name">Name: ${item.name['en-US']}</div>
-        <div class="product__price">
-          <div class="product__start-price"> Price:
-            ${Number(item.price.value.centAmount) / 100} $
-          </div>
-          <div class="product__discount-price">Discount price: 
-            ${item.price.discounted ? Number(item.price.discounted.value.centAmount) / 100 : ''} $
-          </div>
-          <div class="product__total-price">Total price: 
-            ${Number(item.totalPrice.centAmount) / 100} $
-          </div>
-        </div>
+        ${returnPriceBlockElement(item).outerHTML}
         <div class="product__count">
           ${minusAmount.outerHTML}
           <span class="product__count-amount"> ${item.quantity} </span> 
@@ -85,7 +108,7 @@ function returnProductElement(item: lineItem, cardItemWrapper: HTMLElement): HTM
 export async function productList(productsInCart: CartResponseItem): Promise<HTMLElement> {
   const cardItemWrapper = createElement('div', ['basket__cart-items']);
   const cartAllPrice = createElement('div', ['basket__cart-all-price']);
-  const totalPriceAmount = Number(productsInCart.totalPrice?.centAmount) || 0;
+  const totalPriceAmount = Number(productsInCart.totalPrice.centAmount);
   cartAllPrice.innerHTML = 'Total cost:' + totalPriceAmount / 100 + '$' || 'Total cost:';
   const deleteAllProductButton = createElement('button', ['button-light', 'basket__delete-all-button'], 'Delete all');
   deleteAllProductButton.addEventListener('click', deleteAllProductsFromCartController);

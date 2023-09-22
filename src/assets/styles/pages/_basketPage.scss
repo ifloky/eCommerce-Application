@@ -125,3 +125,8 @@
     color: $color-primary;
   }
 }
+
+.discounted-price {
+  text-decoration: line-through;
+  color: darkred;
+}
