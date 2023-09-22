@@ -198,8 +198,17 @@ const oneAddressCheckbox = registrationUser.querySelector('#oneAddress') as HTML
 oneAddressCheckbox.addEventListener('change', () => {
   const billingStreetInput = form.querySelector('input[name="billing-street"]') as HTMLInputElement;
   const shippingStreetInput = form.querySelector('input[name="shipping-street"]') as HTMLInputElement;
+
+  const shippingCityInput = form.querySelector('input[name="shipping-city"]') as HTMLInputElement;
+  const billingCityInput = form.querySelector('input[name="billing-city"]') as HTMLInputElement;
+
+  const shippingPostalCodeInput = form.querySelector('input[name="shipping-postal-code"]') as HTMLInputElement;
+  const billingPostalCodeInput = form.querySelector('input[name="billing-postal-code"]') as HTMLInputElement;
+
   if (oneAddressCheckbox.checked) {
     shippingStreetInput.value = billingStreetInput.value;
+    shippingCityInput.value = billingCityInput.value;
+    shippingPostalCodeInput.value = billingPostalCodeInput.value;
   }
 });
 
