@@ -6,9 +6,15 @@ import {
   postAnonymousFlow,
   postPasswordFlow,
 } from '../../shared/API';
+import { getCookie } from '../../shared/API';
 import { CartResponse, CartResponseItem } from '../../types/interfaces/basketPage';
-import { cartResponse, dataObj, isAuthorized } from './basketPageController';
+import { cartResponse, dataObj } from './basketPageController';
 import { basketPageView } from './basketPageView';
+
+export function isAuthorized(): boolean {
+  const user = !!getCookie('access_token');
+  return user;
+}
 
 export async function deleteAllProductsFromCart(cartId: string, version: number): Promise<void> {
   if (isAuthorized()) {

@@ -1,4 +1,3 @@
-import { getCookie } from '../../shared/API';
 import { basketPageRender } from '../../shared/router';
 import { CartInfo, CartResponse, lineItem } from '../../types/interfaces/basketPage';
 import { confirmPopUp } from '../../utils/abstract';
@@ -9,11 +8,6 @@ import {
   deleteProductFromCart,
   getCartData,
 } from './basketPageModel';
-
-export function isAuthorized(): boolean {
-  const user = !!getCookie('access_token');
-  return user;
-}
 
 export const dataObj = function dataObj(
   cartDataVersion: number,

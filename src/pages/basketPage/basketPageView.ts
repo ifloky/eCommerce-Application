@@ -104,7 +104,12 @@ async function applyPromoCode(promoCodeInputElement: HTMLInputElement | null): P
 const bindEvents = (parent: HTMLElement): void => {
   const buttonApply = parent.querySelector('.button');
   const promoCodeInputElement: HTMLInputElement | null = parent.querySelector('.promo-code__input');
-  buttonApply?.addEventListener('click', () => applyPromoCode(promoCodeInputElement));
+  buttonApply?.addEventListener('click', async (): Promise<void> => {
+    await applyPromoCode(promoCodeInputElement);
+    if (promoCodeInputElement) {
+      promoCodeInputElement.value = '';
+    }
+  });
 };
 
 async function returnPromoCodeEnterElement(productsInCart: CartResponseItem): Promise<HTMLElement> {
