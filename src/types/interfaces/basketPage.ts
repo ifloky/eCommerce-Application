@@ -1,11 +1,15 @@
-
 export interface lineItem {
   id: string;
-  productId: string,
+  productId: string;
   name: {
-    "en-US": string;
+    'en-US': string;
   };
   price: {
+    discounted: {
+      value: {
+        centAmount: string;
+      };
+    };
     value: {
       centAmount: string;
     };
@@ -21,14 +25,14 @@ export interface lineItem {
   };
 }
 
-
 export interface CartResponseItem {
-  id: string,
-  version: number,
-  lineItems?: lineItem[];
+  id: string;
+  version: number;
+  lineItems: lineItem[];
   totalPrice?: {
     centAmount: string;
   };
+  discountCodes?: object[];
 }
 
 export interface CartItem {
@@ -39,4 +43,9 @@ export interface CartItem {
 export interface CartResponse {
   count: number;
   results: CartResponseItem[];
+}
+
+export interface CartInfo {
+  cartId: string;
+  cartDataVersion: number;
 }

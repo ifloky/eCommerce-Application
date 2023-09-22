@@ -15,6 +15,7 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
     if (productAddToCartButton.innerHTML !== `delete from cart`) {
       productAddToCartButton.innerHTML = `delete from cart`;
       sendDataToCart(e);
+      displayMessage('added to cart', true);
     } else {
       productAddToCartButton.innerHTML = `add to cart`;
       sendDeleteProductFromCartAfterAdd(e);
@@ -23,22 +24,15 @@ function cardProductClick(e: Event, cardProductWrapper: HTMLElement, elem: Produ
   }
 }
 
-export function cardProductViewElement(elem: Product, inCart = true): HTMLElement {
-  const cardProductWrapper = createElement('div', ['product-card__wrapper']);
-  cardProductWrapper.setAttribute('data-id', elem.id);
-  const price = elem.masterData
-    ? Number(elem.masterData.current.masterVariant.prices[0].value.centAmount) / 100
-    : Number(elem.masterVariant?.prices[0].value.centAmount) / 100;
-  const discountedPrice = elem.masterData
-    ? Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100
-    : Number(elem.masterVariant?.prices[0].discounted?.value.centAmount) / 100;
-  const image = elem.masterData
-    ? elem.masterData?.current.masterVariant.images[0].url
-    : elem.masterVariant?.images[0].url;
-  const name = elem.name ? elem.name['en-US'] : elem.masterData?.current.name['en-US'];
-  const description = elem.description ? elem.description['en-US'] : elem.masterData?.current.description['en-US'];
-  cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem));
-  cardProductWrapper.innerHTML = `<div class="product-card__image">
+function cardInnerTemplate(
+  price: number,
+  discountedPrice: number,
+  image: string | undefined,
+  name: string | undefined,
+  description: string | undefined,
+  inCart: boolean,
+): string {
+  const template = `<div class="product-card__image">
     <a href="#"><img src="${image}">
       <div class="product-card__shadow"></div>
     </a>
@@ -61,5 +55,24 @@ export function cardProductViewElement(elem: Product, inCart = true): HTMLElemen
       inCart ? 'add to cart' : 'delete from cart'
     }</button>
   </div>`;
+  return template;
+}
+
+export function cardProductViewElement(elem: Product, inCart = true): HTMLElement {
+  const cardProductWrapper = createElement('div', ['product-card__wrapper']);
+  cardProductWrapper.setAttribute('data-id', elem.id);
+  const price = elem.masterData
+    ? Number(elem.masterData.current.masterVariant.prices[0].value.centAmount) / 100
+    : Number(elem.masterVariant?.prices[0].value.centAmount) / 100;
+  const discountedPrice = elem.masterData
+    ? Number(elem.masterData.current.masterVariant.prices[0].discounted?.value.centAmount) / 100
+    : Number(elem.masterVariant?.prices[0].discounted?.value.centAmount) / 100;
+  const image = elem.masterData
+    ? elem.masterData?.current.masterVariant.images[0].url
+    : elem.masterVariant?.images[0].url;
+  const name = elem.name ? elem.name['en-US'] : elem.masterData?.current.name['en-US'];
+  const description = elem.description ? elem.description['en-US'] : elem.masterData?.current.description['en-US'];
+  cardProductWrapper?.addEventListener('click', (e): void => cardProductClick(e, cardProductWrapper, elem));
+  cardProductWrapper.innerHTML = cardInnerTemplate(price, discountedPrice, image, name, description, inCart);
   return cardProductWrapper;
 }

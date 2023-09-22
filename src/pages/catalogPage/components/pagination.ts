@@ -7,7 +7,7 @@ const createButtonElement = (): HTMLButtonElement => createElement('button', ['p
 const createNavigationButtonsBlock = (): HTMLDivElement => {
   const navigation = createElement('div', ['pagination__buttons']);
   const total = Math.ceil(Number(sessionStorage.getItem('productCount')) / LIMIT);
-  for (let i = 1; i <= total; i++) {
+  for (let i = 1; i <= total; i += 1) {
     const button = createButtonElement();
     button.classList.add('button_nav');
     if (i === 1) {

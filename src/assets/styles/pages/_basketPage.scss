@@ -1,6 +1,6 @@
 .basket {
   &__cart-items {
-  padding: 20px 40px;
+    padding: 20px 40px;
 
     & .product {
       display: flex;
@@ -19,9 +19,11 @@
 
       &__delete-button {
         position: absolute;
-        transform: translate(-50%, -1px);
+        transform: translate(-74%, -1px);
         right: -4px;
         height: 40px;
+        padding: 10px 5px;
+        border-radius: 7px;
       }
 
       &__count {
@@ -37,7 +39,7 @@
     position: relative;
     transform: translateX(-100%);
     left: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     border-color: $color-invalid;
   }
 
@@ -49,7 +51,7 @@
   }
 }
 
-.product-none  {
+.product-none {
   width: 300px;
   margin: 0 auto;
   font-size: 24px;
@@ -63,6 +65,38 @@
   }
 }
 
-.button__minus-amount, .product__count {
-  float:left
+.button__minus-amount,
+.product__count {
+  float: left;
+}
+
+.promo-code {
+  &__wrapper {
+    margin: 0 40px;
+    margin-top: 30px;
+    padding: 10px 20px;
+    border: 1px $color-additional solid;
+    border-radius: 7px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  &__input {
+    height: 28px;
+    padding: 5px 10px;
+    border: 1px $color-additional solid;
+    border-radius: 7px;
+    outline: none;
+
+    &:focus {
+      border-color: $color-active;
+    }
+  }
+
+  &__status-text {
+    font-size: 12px;
+    color: $color-primary;
+  }
 }

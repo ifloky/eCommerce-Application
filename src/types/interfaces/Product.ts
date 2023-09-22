@@ -63,7 +63,6 @@ export interface ProductResult {
   results: Product[];
 }
 
-
 export interface ProductDetail {
   id: string;
   masterData: {
@@ -73,7 +72,7 @@ export interface ProductDetail {
       masterVariant: {
         images: [
           {
-            url: ''
+            url: '';
           },
         ];
         prices: {
