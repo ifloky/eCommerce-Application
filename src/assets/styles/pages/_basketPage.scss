@@ -23,7 +23,9 @@
         right: -4px;
         height: 40px;
         padding: 10px 5px;
-        border-radius: 7px;
+        border-top: none;
+        border-right: none;
+        border-radius: 0 7px 0 7px;
       }
 
       &__count {
@@ -31,6 +33,17 @@
         display: flex;
         align-items: center;
         margin: 0 10px;
+        border: 1px solid $color-primary;
+        border-radius: 7px;
+        margin: 10px 0;
+      }
+
+      &__count-amount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 40px;
+        cursor: default;
       }
     }
   }
@@ -63,6 +76,18 @@
   & .button {
     margin-top: 20px;
   }
+}
+
+.button__minus-amount {
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid $color-additional;
+}
+
+.button__add-amount {
+  border: none;
+  border-radius: 0;
+  border-left: 1px solid $color-additional;
 }
 
 .button__minus-amount,

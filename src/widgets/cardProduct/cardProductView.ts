@@ -39,7 +39,6 @@ function cardInnerTemplate(
     <a class="product-card__detail-link" href="#"></a>
     <div class="product-card__actions">
       <div class="product-card__actions-btn">
-        <a class="product-card__add-to-wishlist" href="" title="add to favorite"></a>
       </div>
     </div>
   </div>

@@ -62,9 +62,11 @@ function returnTemplate(item: lineItem): string {
             ${Number(item.totalPrice.centAmount) / 100} $
           </div>
         </div>
+        <div class="product__count">
           ${minusAmount.outerHTML}
-          <div class="product__count">Count: <span class="product__count-amount"> ${item.quantity} </span> </div>
+          <span class="product__count-amount"> ${item.quantity} </span> 
           ${addAmount.outerHTML}
+        </div>
       </div>
       <button class="product__delete-button button-light">DELETE</button>
     `;
