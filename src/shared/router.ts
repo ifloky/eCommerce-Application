@@ -1,12 +1,12 @@
-import { getLoginPageView } from "../pages/loginPage/loginPageView";
-import { MainPageController } from "../pages/mainPage/MainPageController";
-import RegistrationPageView from "../pages/registrationPage/registrationView";
-import { getUserProfileView } from "../pages/userProfilePage/userProfilePageView";
-import {  catalogRender, 
-          createTomatoCorn, 
-          createOtherSeeds,
-          createAllProducts } from "../pages/catalogPage/catalogPageView";
-import { ProductPage } from "../pages/productPage/productPageController";
+import { getLoginPageView } from '../pages/loginPage/loginPageView';
+import { MainPageController } from '../pages/mainPage/MainPageController';
+import RegistrationPageView from '../pages/registrationPage/registrationView';
+import { getUserProfileView } from '../pages/userProfilePage/userProfilePageView';
+import { ProductPage } from '../pages/productPage/productPageController';
+import { aboutUsPageView } from '../pages/aboutUsPage/aboutUsPageView';
+import { teamMembers } from '../pages/aboutUsPage/components/teamMembers';
+import { basketPageView } from '../pages/basketPage/basketPageView';
+import { getCatalogView } from '../pages/catalogPage/catalogPageView';
 
 type ControllerFunction = () => void;
 
@@ -14,92 +14,68 @@ function createControllerFunction(renderFunction: ControllerFunction): Controlle
   return renderFunction;
 }
 
-function updateContainer(content: string): void {
+export async function updateContainer(element: HTMLElement): Promise<void> {
   const appContainer = document.getElementById('app');
   if (appContainer) {
-    appContainer.innerHTML = content;
+    appContainer.innerHTML = '';
+    appContainer.append(element);
   }
 }
 
-export async function homeController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await MainPageController());
-  }
+export async function homePageRender(): Promise<void> {
+  updateContainer(await MainPageController());
 }
 
-export function logInController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(getLoginPageView);
-  }
+export function logInPageRender(): void {
+  updateContainer(getLoginPageView);
 }
 
-export function registerController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(RegistrationPageView())
-  }
+export function registerPageRender(): void {
+  updateContainer(RegistrationPageView());
 }
 
-export function userProfilePageController(): void {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(getUserProfileView)
-  }
+export function userProfilePageRender(): void {
+  updateContainer(getUserProfileView);
 }
 
-export async function catalogController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(catalogRender());
-    appContainer.append(await createAllProducts());
-  }
+export async function catalogPageRender(): Promise<void> {
+  updateContainer(await getCatalogView());
 }
 
-async function tomatoCornController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await createTomatoCorn());
-  }
-} 
-
-async function otherSeedsController(): Promise<void> {
-  const appContainer = document.getElementById('app');
-  if (appContainer) {
-    appContainer.innerHTML = ''
-    appContainer.append(await createOtherSeeds());
-  }
-} 
-
-export function productController(): void {
-  ProductPage.render()
+function aboutUsPageRender(): void {
+  updateContainer(aboutUsPageView(teamMembers));
 }
 
-function notFoundController(): void {
-  updateContainer('<div class="main-container"><h1>404 - Page Not Found</h1></div>');
+export async function basketPageRender(): Promise<void> {
+  updateContainer(await basketPageView());
+}
+
+export function productPageRender(): void {
+  ProductPage.render();
+}
+
+function notFoundPageRender(): void {
+  const appContainer = document.getElementById('app');
+  if (appContainer) {
+    appContainer.innerHTML = '';
+    appContainer.innerHTML = '<div class="main-container"><h1>404 - Page Not Found</h1><a href="/"</div>';
+  }
 }
 
 const routes: { [path: string]: ControllerFunction } = {
-  '/': createControllerFunction(homeController),
-  '/login': createControllerFunction(logInController),
-  '/register': createControllerFunction(registerController),
-  '/catalog': createControllerFunction(catalogController),
-  '/tomato': createControllerFunction(tomatoCornController),
-  '/otherSeeds': createControllerFunction(otherSeedsController),
-  '/product': createControllerFunction(productController),
-  '/profile': createControllerFunction(userProfilePageController)
+  '/': createControllerFunction(homePageRender),
+  '/login': createControllerFunction(logInPageRender),
+  '/register': createControllerFunction(registerPageRender),
+  '/catalog': createControllerFunction(catalogPageRender),
+  '/product': createControllerFunction(productPageRender),
+  '/profile': createControllerFunction(userProfilePageRender),
+  '/about': createControllerFunction(aboutUsPageRender),
+  '/basket': createControllerFunction(basketPageRender),
 };
 
 function handleRoute(): void {
   const currentPath = window.location.pathname;
-  const controller = routes[currentPath] || notFoundController;
+  const controller = routes[currentPath] || notFoundPageRender;
   controller();
 }
 
@@ -146,5 +122,12 @@ export function redirectToLoginPage(): void {
   changeRoute('/login');
 }
 
+export function redirectToCatalog(): void {
+  changeRoute('/catalog');
+}
+
+export function redirectToBasket(): void {
+  changeRoute('/basket');
+}
 
 startRouting();

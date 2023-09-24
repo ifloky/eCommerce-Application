@@ -41,6 +41,8 @@
   width: 80%;
 
   &__wrapper {
+    margin-bottom: 40px;
+
     &_password {
       position: relative;
     }
@@ -59,13 +61,15 @@
     border-radius: 10px;
     border: 1px solid $color-primary;
     outline: none;
-    margin-bottom: 40px;
     font-size: 16px;
     box-sizing: border-box;
+  }
 
-    &:invalid {
-      border-color: $color-invalid;
-    }
+  &__error-text {
+    display: block;
+    height: 15px;
+    color: $color-invalid;
+    font-size: 12px;
   }
 
   &__buttons {
@@ -92,7 +96,7 @@
 
 .form__wrapper_toggle {
   position: absolute;
-  top: calc(50% - 20px);
+  top: calc(50% - 5px);
   right: 15px;
 
   .form__label {

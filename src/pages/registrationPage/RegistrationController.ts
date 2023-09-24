@@ -1,7 +1,7 @@
-import { postAnonymousFlow } from "../../shared/API";
-import { redirectToHomePage } from "../../shared/router";
-import { FieldsInfo } from "../../types/interfaces/interfaces";
-import { RegistrationInfo, Address } from "../../types/interfaces/interfaces";
+import { postAnonymousFlow } from '../../shared/API';
+import { redirectToHomePage } from '../../shared/router';
+import { FieldsInfo } from '../../types/interfaces/interfaces';
+import { RegistrationInfo, Address } from '../../types/interfaces/interfaces';
 
 export const registrationInfo: RegistrationInfo = {
   id: '',
@@ -11,12 +11,12 @@ export const registrationInfo: RegistrationInfo = {
   createdAt: new Date(),
   lastModifiedAt: new Date(),
   lastModifiedBy: {
-    "clientId": "",
-    "isPlatformClient": false
+    clientId: '',
+    isPlatformClient: false,
   },
   createdBy: {
-    clientId: "",
-    isPlatformClient: false
+    clientId: '',
+    isPlatformClient: false,
   },
   email: '',
   password: '',
@@ -30,8 +30,8 @@ export const registrationInfo: RegistrationInfo = {
   billingAddressIds: [],
   isEmailVerified: false,
   stores: [],
-  authenticationMode: "Password",
-}
+  authenticationMode: 'Password',
+};
 
 export const registrationFieldsInfo: FieldsInfo[] = [
   { for: 'email', text: 'E-mail', type: 'email', id: 'email', class: 'email' },
@@ -40,7 +40,6 @@ export const registrationFieldsInfo: FieldsInfo[] = [
   { for: 'lastName', text: 'Last name', type: 'text', id: 'lastName', class: 'lastName' },
   { for: 'date', text: 'Date of Birth', type: 'date', id: 'dateOfBirth', class: 'date' },
 ];
-
 
 export function showHidePassword(): void {
   const passEye = document.querySelector('.password-control');
@@ -53,7 +52,7 @@ export function showHidePassword(): void {
       passEye?.classList.remove('no-view');
       input?.setAttribute('type', 'password');
     }
-  })
+  });
 }
 
 export function getBillingAddresses(): Address[] {
@@ -66,7 +65,7 @@ export function getBillingAddresses(): Address[] {
 
   if (defaultBillingCheckbox.checked) {
     billingAddresses.push({
-      addressId: "BA",
+      addressId: '0',
       street: billingStreetInput?.value || '',
       city: billingCityInput?.value || '',
       postalCode: billingPostalCodeInput?.value || '',
@@ -87,7 +86,7 @@ export function getShippingAddresses(): Address[] {
 
   if (defaultShippingCheckbox.checked) {
     shippingAddresses.push({
-      addressId: "SA",
+      addressId: '1',
       street: shippingStreetInput?.value || '',
       city: shippingCityInput?.value || '',
       postalCode: shippingPostalCodeInput?.value || '',
@@ -105,7 +104,13 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
 
     filledForm.forEach((inputField) => {
       const input = inputField as HTMLInputElement;
-      if (input.id === 'email' || input.id === 'password' || input.id === 'firstName' || input.id === 'lastName' || input.id === 'dateOfBirth') {
+      if (
+        input.id === 'email' ||
+        input.id === 'password' ||
+        input.id === 'firstName' ||
+        input.id === 'lastName' ||
+        input.id === 'dateOfBirth'
+      ) {
         registrationInfo[input.id] = input.value;
       }
     });
@@ -114,28 +119,30 @@ export function receiveInfoAfterSubmit(submitButton: HTMLButtonElement): void {
     const shippingAddresses = getShippingAddresses();
 
     registrationInfo.addresses = [...billingAddresses, ...shippingAddresses];
-    registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0].addressId;
-    registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1].addressId
+    registrationInfo.defaultBillingAddressId = registrationInfo.addresses[0]
+      ? registrationInfo.addresses[0].addressId
+      : '';
+    registrationInfo.defaultShippingAddressId = registrationInfo.addresses[1]
+      ? registrationInfo.addresses[1].addressId
+      : '';
     const response = await postAnonymousFlow('/customers', registrationInfo);
-    try {
-      redirectToHomePage()
-    } catch (error) {
-      throw Error(''+ error)
+    if (response) {
+      redirectToHomePage();
     }
-    return response;
+    redirectToHomePage();
   });
 }
 
-export function validationForm(registrationUser: HTMLElement):void {
+export function validationForm(registrationUser: HTMLElement): void {
   const formInputs = registrationUser.querySelectorAll('.form-input');
   registrationUser.querySelector('.registration-form')?.addEventListener('submit', (event) => {
     let isValid = true;
     formInputs.forEach((input) => {
-        isValid = false;
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'error-message';
-        errorMessage.textContent = 'This field is required.';
-        input.parentElement?.appendChild(errorMessage);
+      isValid = false;
+      const errorMessage = document.createElement('div');
+      errorMessage.className = 'error-message';
+      errorMessage.textContent = 'This field is required.';
+      input.parentElement?.appendChild(errorMessage);
     });
 
     if (!isValid) {

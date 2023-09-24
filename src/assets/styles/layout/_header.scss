@@ -1,6 +1,5 @@
 .header {
-  margin-bottom: 2vh;
-  padding: 4vh 6vw;
+  padding: 1.5vh 6vw;
   border-bottom: 1px $color-additional solid;
 
   display: flex;
@@ -59,6 +58,35 @@
   font-size: 14px;
 }
 
+.basket {
+  position: relative;
+  width: 42px;
+  height: 17px;
+  background-color: transparent;
+  border: 1px #9c96e2 solid;
+  border-radius: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../../image/icons/cardProduct/buy_cart.svg);
+
+  &:hover {
+    background-color: $color-additional;
+    background-image: url(../../image/icons/cardProduct/buy_cart_hover.svg);
+  }
+
+  &__count-item {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: #fefefe;
+    font-size: 12px;
+    color: $color-primary;
+    padding: 2px 4px;
+    border: 1px solid $color-primary;
+    border-radius: 7px;
+  }
+}
+
 @media screen and (max-width: 968px) {
   .header {
     padding-bottom: 60px;
@@ -72,7 +100,7 @@
 
   .header__nav-ul {
     position: absolute;
-    top: 90px;
+    top: 70px;
     right: 10px;
   }
 
@@ -91,5 +119,4 @@
   .header__btn {
     margin-left: 5px;
   }
-
 }

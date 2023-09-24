@@ -17,11 +17,15 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "project": "./tsconfig.json",
-    "extraFileExtensions": [".svg", ".scss"]
+    "extraFileExtensions": [
+      ".svg",
+      ".scss"
+    ]
   },
   "rules": {
+    "no-plusplus": "off",
     "no-console": "warn",
-    "prefer-destructuring":"error",
+    "prefer-destructuring": "error",
     "eol-last": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",

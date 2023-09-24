@@ -1,30 +1,53 @@
-import { Product } from "../../../types/interfaces/Product"
-import { createElement } from "../../../utils/abstract"
+import { createElement } from '../../../utils/abstract';
+import { changePage } from '../catalogPageController';
+import { LIMIT } from '../catalogPageModel';
 
+const createButtonElement = (): HTMLButtonElement => createElement('button', ['pagination__button', 'button']);
 
-function returnButtonPages(items: Product[]): string {
-  const countPages = Math.ceil(items.length / 10);
-  let buttonPages: string = ''
-  if (countPages > 1) {
-    for (let i = 1; i <= countPages; i += 1) {
-      buttonPages += `<button class="button-light" id="${i}">${i}</button>`;
+const createNavigationButtonsBlock = (): HTMLDivElement => {
+  const navigation = createElement('div', ['pagination__buttons']);
+  const total = Math.ceil(Number(sessionStorage.getItem('productCount')) / LIMIT);
+  for (let i = 1; i <= total; i += 1) {
+    const button = createButtonElement();
+    button.classList.add('button_nav');
+    if (i === 1) {
+      button.classList.add('button_active');
     }
+    button.textContent = `${i}`;
+
+    navigation.append(button);
   }
-  return buttonPages;
-}
+  return navigation;
+};
 
-export function paginationView(items: Product[]): HTMLElement {
-  const paginationWrapper = createElement('div', ['pagination__wrapper']);
+const createPrevButton = (): HTMLButtonElement => {
+  const prevButton = createButtonElement();
+  prevButton.classList.add('button_prev');
+  prevButton.disabled = true;
+  prevButton.textContent = '<<';
+  return prevButton;
+};
 
-  try {
-    const buttonPages = returnButtonPages(items);
+const createNextButton = (): HTMLButtonElement => {
+  const nextButton = createButtonElement();
+  nextButton.classList.add('button_next');
+  nextButton.textContent = '>>';
+  return nextButton;
+};
 
-    paginationWrapper.innerHTML = `<button class="button" id="buttonPrev">Prev</button>${buttonPages || '...'}<button class="button" id="buttonNext">Next</button>`;
-  } catch (error) {
-    throw Error("" + error);
-  }
+const createPaginationBlock = (): HTMLDivElement => createElement('div', ['pagination']);
 
-  return paginationWrapper;
-}
+const bindEvents = (parent: HTMLDivElement): void => {
+  const pagination = parent;
+  pagination?.addEventListener('click', changePage);
+};
 
-
+export const generatePaginationView = (): HTMLDivElement => {
+  const pagination = createPaginationBlock();
+  const navigation = createNavigationButtonsBlock();
+  const prevButton = createPrevButton();
+  const nextButton = createNextButton();
+  bindEvents(pagination);
+  pagination.append(prevButton, navigation, nextButton);
+  return pagination;
+};

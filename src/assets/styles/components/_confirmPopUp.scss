@@ -1,0 +1,14 @@
+.confirm-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background-color: $color-light;
+  border: 1px $color-primary solid;
+  border-radius: 7px;
+  padding: 20px 40px;
+
+  &__button-yes {
+    margin: 0 10px;
+  }
+}
