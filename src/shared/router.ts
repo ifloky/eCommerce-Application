@@ -123,13 +123,15 @@ function changeRoute(path: string): void {
 export function startRouting(): void {
   const links = document.querySelectorAll('a');
   links.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const href = link.getAttribute('href');
-      if (href) {
-        changeRoute(href);
-      }
-    });
+    if (!link.closest('.footer')) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const href = link.getAttribute('href');
+        if (href) {
+          changeRoute(href);
+        }
+      });
+    }
   });
 
   handleRoute();

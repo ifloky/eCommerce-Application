@@ -7,22 +7,20 @@ const createAuthorsElement = (): HTMLDivElement => {
   const title = createElement('span', ['footer__title'], 'Our dream team:');
   const linkTeamLead = createElement('a', ['footer__link'], 'Maksim Petrenko (Team Lead)');
   linkTeamLead.setAttribute('href', 'https://github.com/ifloky');
+  linkTeamLead.setAttribute('target', '_blank');
   const developerVictor = createElement('a', ['footer__link'], 'Viktar Brutsis');
   developerVictor.setAttribute('href', 'https://github.com/viktarbrutsis');
+  developerVictor.setAttribute('target', '_blank');
   const developerKiryl = createElement('a', ['footer__link'], 'Kiryl Panamarou');
   developerKiryl.setAttribute('href', 'https://github.com/panakir');
+  developerKiryl.setAttribute('target', '_blank');
   element.append(title, linkTeamLead, developerVictor, developerKiryl);
   return element;
 };
 
-const createLogoBlock = (): HTMLDivElement => {
-  const logoBlock = createElement('div', ['footer__logo']);
-  const link = createElement('a', ['footer__link']);
-  link.setAttribute('href', 'https://rs.school/');
-  const logo = createElement('img', ['footer__logo-image']);
-  logo.setAttribute('src', 'assets/rs_school_js212047cfd6bf59b808257.svg');
-  link.append(logo);
-  logoBlock.append(link);
+const createLogoBlock = (): HTMLAnchorElement => {
+  const logoBlock = createElement('a', ['footer__logo']);
+  logoBlock.setAttribute('href', 'https://rs.school/');
   return logoBlock;
 };
 
