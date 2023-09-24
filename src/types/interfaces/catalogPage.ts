@@ -1,4 +1,4 @@
-import { Product } from "./Product";
+import { Product } from './Product';
 
 export type Category = {
   ancestors?: string[];

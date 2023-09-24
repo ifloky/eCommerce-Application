@@ -1,9 +1,8 @@
-
 export interface lineItem {
   id: string;
-  productId: string,
+  productId: string;
   name: {
-    "en-US": string;
+    'en-US': string;
   };
   price: {
     value: {
@@ -21,10 +20,9 @@ export interface lineItem {
   };
 }
 
-
 export interface CartResponseItem {
-  id: string,
-  version: number,
+  id: string;
+  version: number;
   lineItems?: lineItem[];
   totalPrice?: {
     centAmount: string;

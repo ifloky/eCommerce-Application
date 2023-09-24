@@ -1,4 +1,4 @@
-import { TeamMember } from "../../types/interfaces/teamMemberInfo";
+import { TeamMember } from '../../types/interfaces/teamMemberInfo';
 
 function createOneMember(elem: TeamMember): HTMLElement {
   const oneMemberProfileWrapper = document.createElement('div');
@@ -25,11 +25,5 @@ export function aboutUsPageView(info: TeamMember[]): HTMLElement {
     const onePerson = createOneMember(info[i]);
     aboutUsWrapper.append(onePerson);
   }
-  const footerIcon = document.createElement('div');
-  footerIcon.innerHTML = `
-  <div class="footer__logo">
-  <a href="https://rs.school/" class="footer__logo-link"> </a>
-  </div>`;
-  aboutUsWrapper.append(footerIcon);
   return aboutUsWrapper;
 }
