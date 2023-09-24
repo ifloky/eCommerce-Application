@@ -1,7 +1,8 @@
+import { getFooterView } from './widgets/footer/footerView';
+import { setCountProductInBasket } from './pages/basketPage/basketPageController';
 import { MainPageController } from './pages/mainPage/MainPageController';
 import { getCookie } from './shared/API';
 import { startRouting } from './shared/router';
-import { getFooterView } from './widgets/footer/footerView';
 import Header from './widgets/header/headerView';
 
 export async function initializeApp(): Promise<void> {
@@ -12,11 +13,12 @@ export async function initializeApp(): Promise<void> {
     const appContainer = document.createElement('div');
     appContainer.id = 'app';
     document.body.append(appContainer);
+    document.body.append(getFooterView);
     const savedState = localStorage.getItem('appState');
     if (!savedState) {
       appContainer.innerHTML += MainPageController();
     }
-    document.body.append(getFooterView);
+    await setCountProductInBasket();
     startRouting();
   } catch (error) {
     throw new Error();

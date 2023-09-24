@@ -1,5 +1,6 @@
 import { Product } from '../../types/interfaces/Product';
 import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
+import { getCartData } from '../basketPage/basketPageModel';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
 import { generateAllProductsCard } from './catalogPageView';
 import { generatePaginationView } from './components/pagination';
@@ -13,7 +14,7 @@ export const selectCategory = async (event: Event): Promise<void> => {
     });
     const id = target.getAttribute('data-id');
     if (id) {
-      getProductCategory(id);
+      await getProductCategory(id);
     }
     if (target.classList.contains('catalog__button_all')) {
       document.querySelector('.catalog__container')?.remove();
@@ -27,7 +28,31 @@ export const selectCategory = async (event: Event): Promise<void> => {
   }
 };
 
-export const renderSelectedCategory = (data: Product[]): void => {
+export async function returnCardItem(data: Product[], catalogPage: Element): Promise<void> {
+  const [cartResponse] = (await getCartData()).results;
+  if (!cartResponse) {
+    data.forEach((product) => {
+      const productCard = cardProductViewElement(product, true);
+      catalogPage?.append(productCard);
+    });
+  } else {
+    const cartResponseResults = cartResponse.lineItems;
+    data.forEach((product) => {
+      let includeButton = true;
+
+      for (let j = 0; j < cartResponseResults.length; j++) {
+        if (cartResponseResults[j].productId === product.id) {
+          includeButton = false;
+          break;
+        }
+      }
+      const productCard = cardProductViewElement(product, includeButton);
+      catalogPage?.append(productCard);
+    });
+  }
+}
+
+export const renderSelectedCategory = async (data: Product[]): Promise<void> => {
   const catalogPage = document.querySelector('.catalog__container');
   while (catalogPage?.firstChild) {
     catalogPage.firstChild.remove();
@@ -47,7 +72,7 @@ export const generatePaginationForSelectedCategory = (): void => {
   catalogWrapper?.append(pagination);
 };
 
-const checkDisabled = (element: Element, parent: Element): void => {
+export const checkDisabled = (element: Element, parent: Element): void => {
   const prevButton = parent.querySelector('.button_prev');
   const nextButton = parent.querySelector('.button_next');
   const navigation = parent.querySelector('.pagination__buttons');
@@ -87,8 +112,8 @@ const moveToSelectedPage = async (event: Event): Promise<void> => {
         }
       } else {
         products = (await getAllProducts((selectedPage - 1) * 3)).results;
+        renderSelectedCategory(products);
       }
-      renderSelectedCategory(products);
     }
   }
 };
@@ -98,7 +123,7 @@ const moveToNextOrPrevPage = (event: Event): void => {
   if (target instanceof HTMLButtonElement) {
     const parent = target.closest('.pagination');
     const navigation = document.querySelector('.pagination__buttons');
-    const activePage = parent?.querySelector('.active');
+    const activePage = parent?.querySelector('.button_active');
     const activePageNumber = Number(activePage?.textContent);
     const prevButton = parent?.querySelector('.button_prev');
     const nextButton = parent?.querySelector('.button_next');
@@ -110,12 +135,12 @@ const moveToNextOrPrevPage = (event: Event): void => {
       shiftNumber = activePageNumber + 1;
     }
     navigation?.querySelectorAll('.button_nav').forEach(async (button) => {
-      button.classList.remove('active');
+      button.classList.remove('button_active');
       if (Number(button.textContent) === shiftNumber) {
         if (prevButton instanceof HTMLButtonElement && nextButton instanceof HTMLButtonElement && parent) {
           checkDisabled(button, parent);
         }
-        button.classList.add('active');
+        button.classList.add('button_active');
         const products = (await getAllProducts((shiftNumber - 1) * 3)).results;
         renderSelectedCategory(products);
       }

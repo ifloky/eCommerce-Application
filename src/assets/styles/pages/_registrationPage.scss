@@ -1,9 +1,10 @@
 .registration {
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 10px;
   width: 80%;
-  padding: 15px;
+  padding: 30px 15px 15px;
   margin: 0 auto;
   border: 1px solid $color-primary;
   border-radius: 7px;

@@ -1,7 +1,6 @@
 import { createElement } from '../../utils/abstract';
-import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
-import { selectCategory } from './catalogPageController';
-import { getAllProducts, getCategoriesData } from './catalogPageModel';
+import { returnCardItem, selectCategory } from './catalogPageController';
+import { getAllProducts, getCategoriesData, getProductCategory } from './catalogPageModel';
 import { generatePaginationView } from './components/pagination';
 
 const createHeadingElement = (): HTMLHeadingElement => {
@@ -35,10 +34,14 @@ const createButtonsForCategories = async (): Promise<HTMLDivElement> => {
 export const generateAllProductsCard = async (): Promise<HTMLElement> => {
   const wrapper = createElement('div', ['catalog__container']);
   const products = (await getAllProducts()).results;
-  products.forEach((product) => {
-    const productCard = cardProductViewElement(product);
-    wrapper.append(productCard);
-  });
+  returnCardItem(products, wrapper);
+  return wrapper;
+};
+
+export const generateCategoryProductsCard = async (savedCategoryId: string): Promise<HTMLElement> => {
+  const wrapper = createElement('div', ['catalog__container']);
+  const products = (await getProductCategory(savedCategoryId)).results;
+  returnCardItem(products, wrapper);
   return wrapper;
 };
 
@@ -51,12 +54,26 @@ const generateCatalogView = async (): Promise<HTMLElement> => {
   const section = createElement('section', ['catalog']);
   const sectionWrapper = createElement('div', ['catalog__wrapper']);
   const title = createHeadingElement();
-  const productWrapper = await generateAllProductsCard();
   const buttonsBlock = await createButtonsForCategories();
+  let productWrapper;
+  const savedCategoryId = sessionStorage.getItem('categoryId') || '';
+  if (savedCategoryId) {
+    productWrapper = await generateCategoryProductsCard(savedCategoryId);
+  } else {
+    productWrapper = await generateAllProductsCard();
+  }
   const pagination = generatePaginationView();
   sectionWrapper.append(title, buttonsBlock, productWrapper, pagination);
   section.append(sectionWrapper);
-  bindEvents(section);
+  bindEvents(sectionWrapper);
+  sectionWrapper?.querySelectorAll('.catalog__button').forEach((button) => {
+    button.classList.remove('button_active');
+    if (savedCategoryId === '' && button.getAttribute('data-id') === null) {
+      button.classList.add('catalog__button_all', 'button_active');
+    } else if (button.getAttribute('data-id') === savedCategoryId) {
+      button.classList.add('catalog__button_all', 'button_active');
+    }
+  });
   return section;
 };
 

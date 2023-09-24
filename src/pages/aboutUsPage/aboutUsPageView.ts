@@ -1,9 +1,8 @@
 import { TeamMember } from '../../types/interfaces/teamMemberInfo';
+import { createElement } from '../../utils/abstract';
 
-function createOneMember(elem: TeamMember): HTMLElement {
-  const oneMemberProfileWrapper = document.createElement('div');
-  oneMemberProfileWrapper.classList.add('item__wrapper');
-  oneMemberProfileWrapper.innerHTML = `
+function returnTemplateOneMember(elem: TeamMember): string {
+  const template = `
   <div class="person__image-wrapper">
     <img src="${elem.imgUrl}" class="person__image" alt="personal-image">
   </div>
@@ -13,13 +12,19 @@ function createOneMember(elem: TeamMember): HTMLElement {
   <li>Age: ${elem.age} years</li>
   <li>About: ${elem.about}</li>
   <li>GitHub: <a href="${elem.github}">${elem.github}</a></li>
+  <li>Personal contribution: ${elem.contribution}</li>
   </ul>`;
+  return template;
+}
+
+function createOneMember(elem: TeamMember): HTMLElement {
+  const oneMemberProfileWrapper = createElement('div', ['item__wrapper']);
+  oneMemberProfileWrapper.innerHTML = returnTemplateOneMember(elem);
   return oneMemberProfileWrapper;
 }
 
 export function aboutUsPageView(info: TeamMember[]): HTMLElement {
-  const aboutUsWrapper = document.createElement('div');
-  aboutUsWrapper.classList.add('about__wrapper');
+  const aboutUsWrapper = createElement('div', ['about__wrapper']);
   aboutUsWrapper.innerHTML = `<h2 class="about__title">Our Dream Team</h2>`;
   for (let i = 0; i < info.length; i += 1) {
     const onePerson = createOneMember(info[i]);

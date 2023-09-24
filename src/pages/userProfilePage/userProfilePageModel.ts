@@ -29,7 +29,7 @@ export const getPersonalData = async (): Promise<PersonalData> => {
   const response = await getCustomerData();
   const personalData = {
     name: response.firstName,
-    middleName: response.middleName,
+    middleName: response.middleName || '',
     lastName: response.lastName,
     birthDay: response.dateOfBirth,
   };

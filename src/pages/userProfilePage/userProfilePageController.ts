@@ -1,4 +1,4 @@
-import { homeController, userProfilePageController } from '../../shared/router';
+import { homePageRender, userProfilePageRender } from '../../shared/router';
 import { displayMessage } from '../../utils/abstract';
 import { renderEditBlock } from './components/editProfile';
 import { renderArticle } from './components/information';
@@ -128,7 +128,7 @@ export const isSignOut = (event: Event): void => {
   const { target } = event;
   if (target instanceof HTMLButtonElement && target.textContent === 'yes') {
     localStorage.setItem('login', 'false');
-    homeController();
+    homePageRender();
   }
-  userProfilePageController();
+  userProfilePageRender();
 };

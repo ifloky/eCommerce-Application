@@ -4,7 +4,6 @@ const navigationElements = [
   { link: '/', nameLink: 'Main' },
   { link: '/about', nameLink: 'about us' },
   { link: '/catalog', nameLink: 'catalog' },
-  { link: '/404', nameLink: '404' },
 ];
 
 function renderNavigation(): string {

@@ -3,10 +3,9 @@ import { createElement } from '../utils/abstract';
 
 const BASE_URL = process.env.BASE_URL || '';
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || '';
-let BEARER_TOKEN = process.env.BEARER_TOKEN || '';
-
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || '';
 const DEVELOP_ID = process.env.DEVELOP_ID || '';
+let BEARER_TOKEN = process.env.BEARER_TOKEN || '';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE';
 
@@ -36,7 +35,7 @@ export function deleteCookie(name: string): void {
 }
 
 export const fetchBearerToken = async (clientId: string, clientSecret: string): Promise<string> => {
-  const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/token';
+  const tokenUrl = 'https://auth.us-central1.gcp.commercetools.com/oauth/bestshop-rs/anonymous/token';
   const body = new URLSearchParams({
     grant_type: 'client_credentials',
   });
@@ -91,11 +90,20 @@ const fetchWithAuthorization = async <T>(url: string, method: HttpMethod, data?:
   return response.json();
 };
 
+const isToken = (): string => {
+  const token = getCookie('token');
+  return token;
+};
+
 const fetchAndSetBearerToken = async (): Promise<void> => {
   try {
-    const token = await fetchBearerToken(DEVELOP_ID, DEVELOP_SECRET);
-    BEARER_TOKEN = token;
-    setCookie('token', token, 24);
+    if (!isToken()) {
+      const token = await fetchBearerToken(DEVELOP_ID, DEVELOP_SECRET);
+      BEARER_TOKEN = token;
+      setCookie('token', token, 24);
+    } else {
+      BEARER_TOKEN = getCookie('token');
+    }
   } catch (error) {
     deleteCookie('token');
     throw new Error('' + error);

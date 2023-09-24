@@ -147,26 +147,6 @@
   background-image: url('../../image/icons/cardProduct/buy_cart_hover.svg');
 }
 
-.product-card__add-to-wishlist {
-  border-radius: 7px 0 0 0;
-}
-
-.product-card__add-to-wishlist:after {
-  content: '';
-  display: flex;
-  background-image: url('../../image/icons/cardProduct/favorite.svg');
-  background-repeat: no-repeat;
-  background-size: 75%;
-  background-position: 30%;
-  height: 50px;
-  width: 50px;
-}
-
-.product-card__add-to-wishlist:hover:after {
-  @extend %transition;
-  background-image: url('../../image/icons/cardProduct/favorite_hover.svg');
-}
-
 .product-card__add-to-compare:after {
   content: '\f079';
 }
