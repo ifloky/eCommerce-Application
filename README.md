@@ -1,16 +1,13 @@
-# eCommerce-Application sprint#1
+# eCommerce-Application
  
-This repository contains a SPA web application for an online store selling pets.
+This repository contains a SPA web application for an online store selling seed of vegetables.
 
-Our team completed the following tasks in Sprint #1:
-1. Repository Setup (ifloky)
-2. Task Board Setup (Jira) (viktarbrutsis)
-3. CommerceTools Project and API Client Setup (ifloky)
-4. Development Environment Configuration (panakir)
-5. Development Scripts (panakir)
-6. Comprehensive README (ifloky)
-
-
+How run this project? 
+1. Fork this repository;
+2. run command "npm install"
+3. add your commercetools API variables in .env file
+4. run command npm start
+5. Enjoy and work.
 
 ## Technology stack used:
 
@@ -21,7 +18,6 @@ Our team completed the following tasks in Sprint #1:
 - Jest
 - Webpack
 - Husky
-
 
 ## Description scripts
 
