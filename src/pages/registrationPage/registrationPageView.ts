@@ -1,5 +1,13 @@
 import { createElement } from '../../utils/abstract';
-import { isValidForm } from './registrationPageController';
+import { isShowed } from '../../widgets/forms/forms';
+import {
+  hideShippingAddressField,
+  moveForm,
+  sendForm,
+  validationAddressData,
+  validationPersonalData,
+} from './registrationPageController';
+import { getCountries } from './registrationPageModel';
 
 const personalDataFields = [
   {
@@ -15,22 +23,22 @@ const personalDataFields = [
     required: true,
   },
   {
-    id: 'first-name',
+    id: 'firstName',
     label: 'First name *:',
     required: true,
   },
   {
-    id: 'middle-name',
+    id: 'middleName',
     label: 'Middle name:',
   },
   {
-    id: 'last-name',
+    id: 'lastName',
     label: 'Last name *:',
     required: true,
   },
   {
     type: 'date',
-    id: 'date-of-birth',
+    id: 'dateOfBirth',
     label: 'Date of birth *:',
     required: true,
   },
@@ -38,21 +46,9 @@ const personalDataFields = [
 
 const addressesDataFields = [
   {
-    id: 'street-number',
-    text: 'Street number:',
-  },
-  {
-    id: 'street-name',
+    id: 'streetName',
+    name: 'street',
     text: 'Street name *:',
-    required: true,
-  },
-  {
-    id: 'building',
-    text: 'Building *:',
-  },
-  {
-    id: 'apartment',
-    text: 'Apartment/Suite *:',
     required: true,
   },
   {
@@ -61,33 +57,23 @@ const addressesDataFields = [
     required: true,
   },
   {
-    id: 'postal-code',
+    id: 'postalCode',
     text: 'Postal code *:',
     required: true,
-  },
-  {
-    id: 'region',
-    text: 'Region:',
-  },
-  {
-    id: 'state',
-    text: 'State:',
   },
   {
     id: 'country',
     text: 'Country *:',
     required: true,
   },
-];
-
-const typesOfAddresses = [
-  'Choose type of your address',
-  'Billing',
-  'Shipping',
-  'Shipping and Billing',
-  'Billing default',
-  'Shipping default',
-  'Shipping and Billing default',
+  {
+    id: 'default',
+    text: 'Use as default address',
+  },
+  {
+    id: 'mergeAddresses',
+    text: 'Use billing address also as the shipping address',
+  },
 ];
 
 const createHeadingElement = (): HTMLHeadingElement => {
@@ -125,7 +111,7 @@ const generateShowPasswordCheckbox = (): HTMLDivElement => {
   const wrapper = createWrapperFieldElement();
   wrapper.classList.add('form__wrapper_toggle');
   const label = createLabelElement('', '');
-  label.setAttribute('for', 'toggle');
+  label.setAttribute('for', 'toggle-password');
   const input = createInputElement('');
   input.setAttribute('id', 'toggle-password');
   input.type = 'checkbox';
@@ -135,6 +121,7 @@ const generateShowPasswordCheckbox = (): HTMLDivElement => {
 
 const createPersonalDataBlock = (): HTMLFieldSetElement => {
   const personalDataBlock = createFieldsetElement();
+  personalDataBlock.classList.add('form__fieldset_personal');
   const headingOfBlock = createLegendElement('personal data');
   personalDataFields.forEach((field) => {
     const { label, id, type, required } = field;
@@ -142,12 +129,7 @@ const createPersonalDataBlock = (): HTMLFieldSetElement => {
     const labelElement = createLabelElement(label, id);
     const input = createInputElement(id, required, type);
     const errorText = createElement('span', ['form__error-text']);
-    if (id === 'email') {
-      errorText.classList.add('form__error-text_email');
-      personalField.append(labelElement, input, errorText);
-    }
     if (id === 'password') {
-      errorText.classList.add('form__error-text_password');
       const showPassword = generateShowPasswordCheckbox();
       personalField.append(labelElement, input, showPassword, errorText);
     }
@@ -158,38 +140,52 @@ const createPersonalDataBlock = (): HTMLFieldSetElement => {
   return personalDataBlock;
 };
 
-const generateSelectAddressesElement = (): HTMLDivElement => {
-  const wrapperForSelect = createWrapperFieldElement();
-  const labelForSelect = createLabelElement('Choose type of your address *:', 'select-address');
+const createSelectCountryElement = async (typeAddress: string): Promise<HTMLDivElement> => {
+  const wrapper = createWrapperFieldElement();
   const select = createElement('select', ['form__select']);
-  select.id = 'select-address';
-  select.required = true;
-  typesOfAddresses.forEach((typeOfAddress) => {
+  select.id = `${typeAddress}-countries`;
+  const label = createLabelElement('Country:', select.id);
+  const countries = await getCountries();
+  countries.forEach((country) => {
     const option = createElement('option', ['form__option']);
-    if (typeOfAddress === 'Choose type of your address') {
-      option.disabled = true;
-      option.selected = true;
-    }
-    option.textContent = typeOfAddress;
+    option.textContent = country;
     select.append(option);
   });
-  wrapperForSelect.append(labelForSelect, select);
-  return wrapperForSelect;
+  wrapper.append(label, select);
+  return wrapper;
 };
 
-const createAddressesDataBlock = (): HTMLFieldSetElement => {
+const createAddressesDataBlock = (type: string): HTMLFieldSetElement => {
   const addressesDataBlock = createFieldsetElement();
-  const legend = createLegendElement('addresses data');
-  const selectAddressType = generateSelectAddressesElement();
-  addressesDataFields.forEach((addressData) => {
-    const { id, text } = addressData;
-    const label = createLabelElement(text, id);
-    const input = createInputElement(id, true);
+  const classForAddress = type === 'Billing' ? 'form__fieldset_billing' : 'form__fieldset_shipping';
+  addressesDataBlock.classList.add(`${classForAddress}`);
+  const legend = createLegendElement(`${type} address data`);
+  addressesDataFields.forEach(async (addressData) => {
     const addressField = createWrapperFieldElement();
-    addressField.append(label, input);
+    const { id, text, required } = addressData;
+    const label = createLabelElement(text, `${id}${type}`);
+    const input = createInputElement(`${id}${type}`, required);
+    const errorText = createElement('span', ['form__error-text']);
+    if (id === 'country') {
+      const selectCountryElement = await createSelectCountryElement(type);
+      addressField.classList.add('form__wrapper-field_countries');
+      addressField.append(selectCountryElement);
+    } else if (id === 'default' || id === 'mergeAddresses') {
+      input.type = 'checkbox';
+      addressField.classList.add('form__wrapper-field_checkbox');
+      addressField.append(label, input);
+      if (type === 'Shipping' && id === 'mergeAddresses') {
+        addressField.hidden = true;
+      }
+    } else if (input.type === 'checkbox') {
+      input.removeAttribute('required');
+      addressField.classList.add('form__wrapper-field_checkbox');
+    } else {
+      addressField.append(label, input, errorText);
+    }
     addressesDataBlock.append(addressField);
   });
-  addressesDataBlock.prepend(legend, selectAddressType);
+  addressesDataBlock.append(legend);
   return addressesDataBlock;
 };
 
@@ -216,17 +212,45 @@ const createFormButtonsBlock = (): HTMLDivElement => {
   return block;
 };
 
-const generateFormView = (): HTMLFormElement => {
+const createNavButtonsBlock = (): HTMLDivElement => {
+  const block = createElement('div', ['registration__form-buttons']);
+  const prevButton = createElement('button', ['button', 'registration__form-button', 'registration__form-button_prev']);
+  prevButton.textContent = 'back';
+  prevButton.type = 'button';
+  prevButton.disabled = true;
+  const nextButton = createElement('button', ['button', 'registration__form-button', 'registration__form-button_next']);
+  nextButton.textContent = 'next';
+  nextButton.type = 'button';
+  block.append(prevButton, nextButton);
+  return block;
+};
+
+const generateFormView = (): HTMLDivElement => {
+  const wrapper = createElement('div', ['registration__form-wrapper']);
   const form = createElement('form', ['registration__form', 'form']);
   const personalData = createPersonalDataBlock();
-  const addressesData = createAddressesDataBlock();
+  const billingAddressesData = createAddressesDataBlock('Billing');
+  const shippingAddressesData = createAddressesDataBlock('Shipping');
   const buttonsBlock = createFormButtonsBlock();
-  form.append(personalData, addressesData, buttonsBlock);
-  return form;
+  const navButtonsBlock = createNavButtonsBlock();
+  form.append(personalData, billingAddressesData, shippingAddressesData, buttonsBlock);
+  wrapper.append(form, navButtonsBlock);
+  return wrapper;
 };
 
 const bindEvents = (parentElement: HTMLElement): void => {
-  parentElement.addEventListener('input', isValidForm);
+  const personalData = parentElement.querySelector('.form__fieldset_personal');
+  personalData?.addEventListener('input', validationPersonalData);
+  personalData?.addEventListener('click', isShowed);
+  const billingAddressData = parentElement.querySelector('.form__fieldset_billing');
+  billingAddressData?.addEventListener('input', validationAddressData);
+  const shippingAddressData = parentElement.querySelector('.form__fieldset_shipping');
+  shippingAddressData?.addEventListener('input', validationAddressData);
+  const sendButtons = parentElement.querySelector('.form__buttons');
+  sendButtons?.addEventListener('click', sendForm);
+  const mergeAddresses = parentElement.querySelector('#mergeAddressesBilling');
+  mergeAddresses?.addEventListener('click', hideShippingAddressField);
+  parentElement.querySelector('.registration__form-buttons')?.addEventListener('click', moveForm);
 };
 
 const generateRegistrationPageView = (): HTMLElement => {

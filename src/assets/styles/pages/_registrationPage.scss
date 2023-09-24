@@ -7,25 +7,72 @@
   margin: 0 auto;
   border: 1px solid $color-primary;
   border-radius: 7px;
-}
 
-.registration__form {
-  width: 100%;
+  &__form {
+    display: flex;
+    width: 100%;
+    transition: transform 1s ease;
+
+    &[data-slide='2'] {
+      transform: translateX(-100%);
+    }
+
+    &[data-slide='3'] {
+      transform: translateX(-200%);
+    }
+
+    &[data-slide='4'] {
+      transform: translateX(-300%);
+    }
+
+    .form__wrapper_toggle {
+      position: absolute;
+      top: 31px;
+    }
+  }
+
+  &__form-wrapper {
+    overflow: hidden;
+    width: 60vw;
+    margin: 0 auto;
+  }
+
+  &__form-buttons {
+    width: fit-content;
+    margin: 30px auto 15px;
+    display: flex;
+    gap: 15px;
+  }
+
+  &__form-button {
+    text-transform: uppercase;
+  }
+
+  .form__buttons {
+    min-width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 60vw;
+    text-align: center;
+  }
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
   &__fieldset {
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
+    flex: 1 0 100%;
     flex-wrap: wrap;
     gap: 10px;
     border: 1px solid $color-primary;
     border-radius: 7px;
     padding: 10px;
+  }
+
+  .hidden {
+    display: none;
   }
 
   &__legend {
@@ -36,6 +83,23 @@
   &__wrapper-field {
     flex-basis: 45%;
     position: relative;
+
+    &_checkbox {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      justify-content: start;
+      gap: 10px;
+      order: 2;
+
+      .form__label {
+        margin: 0;
+      }
+    }
+
+    &[hidden] {
+      display: none;
+    }
 
     @media (max-width: 600px) {
       flex-basis: 100%;
@@ -67,9 +131,4 @@
       flex-direction: column;
     }
   }
-}
-
-.form__wrapper_toggle {
-  position: absolute;
-  top: calc(50% - 5px);
 }

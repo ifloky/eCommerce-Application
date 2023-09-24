@@ -26,7 +26,7 @@ export const validationPassword = (target: HTMLInputElement): boolean => {
   const isValid = false;
   if (!password.match(passwordPattern) && errorText) {
     errorText.textContent =
-      'Password must be at least 8 characters long and must contain at least one of (A-Z), (a-z), (0-9), (!@#$%^&*).';
+      'Password length is at least 8 characters, at least one character from (A-Z), (a-z), (0-9), (!@#$%^&*).';
   } else if (errorText) {
     errorText.textContent = '';
   }
