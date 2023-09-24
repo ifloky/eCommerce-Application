@@ -47,14 +47,9 @@ export const getBillingData = async (): Promise<AddressesData[]> => {
     const addressData = {
       default: isDefault,
       country: billingAddress?.country || '',
-      state: billingAddress?.state || '',
-      region: billingAddress?.region || '',
       city: billingAddress?.city || '',
       streetName: billingAddress?.streetName || '',
-      building: billingAddress?.building || '',
-      apartment: billingAddress?.apartment || '',
       postalCode: billingAddress?.postalCode || '',
-      company: billingAddress?.company || '',
       id: billingAddress?.id || '',
       type: 'billing',
     };
@@ -74,14 +69,9 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
     const addressData = {
       default: isDefault,
       country: shippingAddress?.country || '',
-      state: shippingAddress?.state || '',
-      region: shippingAddress?.region || '',
       city: shippingAddress?.city || '',
       streetName: shippingAddress?.streetName || '',
-      building: shippingAddress?.building || '',
-      apartment: shippingAddress?.apartment || '',
       postalCode: shippingAddress?.postalCode || '',
-      company: shippingAddress?.company || '',
       id: shippingAddress?.id || '',
       type: 'shipping',
     };

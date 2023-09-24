@@ -1,4 +1,5 @@
 import { homeController, userProfilePageController } from '../../shared/router';
+import { displayMessage } from '../../utils/abstract';
 import { renderEditBlock } from './components/editProfile';
 import { renderArticle } from './components/information';
 import { renderSignOutBlock } from './components/signOut';
@@ -60,7 +61,7 @@ export const checkItem = (event: Event): void => {
   getItemData();
 };
 
-export const updatePersonalDetails = (): void => {
+export const updatePersonalDetails = async (): Promise<void> => {
   const name = document.getElementById('personal-name') as HTMLInputElement;
   const middleName = document.getElementById('personal-middleName') as HTMLInputElement;
   const lastName = document.getElementById('personal-lastName') as HTMLInputElement;
@@ -71,32 +72,27 @@ export const updatePersonalDetails = (): void => {
     lastName: lastName.value,
     birthDay: birthDay.value,
   };
-  updatePersonalData(data);
+  const response = await updatePersonalData(data);
+  if (response) {
+    displayMessage('The personal data is update', true);
+  } else {
+    displayMessage('Something went wrong', false);
+  }
 };
 
-export const updateAddress = (parent: HTMLElement): void => {
+export const updateAddress = async (parent: HTMLElement): Promise<void> => {
   const parentId = parent.id;
   const country = parent.querySelector(`#${parentId}-country`) as HTMLInputElement;
-  const state = parent.querySelector(`#${parentId}-state`) as HTMLInputElement;
-  const region = parent.querySelector(`#${parentId}-region`) as HTMLInputElement;
   const city = parent.querySelector(`#${parentId}-city`) as HTMLInputElement;
   const street = parent.querySelector(`#${parentId}-streetName`) as HTMLInputElement;
-  const building = parent.querySelector(`#${parentId}-building`) as HTMLInputElement;
-  const apartment = parent.querySelector(`#${parentId}-apartment`) as HTMLInputElement;
   const postalCode = parent.querySelector(`#${parentId}-postalCode`) as HTMLInputElement;
-  const company = parent.querySelector(`#${parentId}-company`) as HTMLInputElement;
   const id = parent.querySelector(`#${parentId}-id`) as HTMLInputElement;
   const isDefault = parent.querySelector(`#${parentId}-checkbox`) as HTMLInputElement;
   const data = {
     country: country.value,
-    state: state.value,
-    region: region.value,
     city: city.value,
     streetName: street.value,
-    building: building.value,
-    apartment: apartment.value,
     postalCode: postalCode.value,
-    company: company.value,
     id: id.value,
     default: isDefault.checked,
     type: parentId,
@@ -104,7 +100,12 @@ export const updateAddress = (parent: HTMLElement): void => {
   if (data.default) {
     setDefaultAddress(data);
   }
-  updateAddressData(data);
+  const response = await updateAddressData(data);
+  if (response) {
+    displayMessage('The address data is update', true);
+  } else {
+    displayMessage('Something went wrong', false);
+  }
 };
 
 export const updateData = (event: Event): void => {

@@ -6,13 +6,8 @@ export interface PersonalData {
 }
 
 export interface AddressesData {
-  apartment: string;
-  building: string;
   city: string;
-  company: string;
   postalCode: string;
-  region: string;
-  state?: string;
   streetName: string;
   country: string;
   id: string;
