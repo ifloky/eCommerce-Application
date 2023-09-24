@@ -112,7 +112,6 @@ export async function sendDeleteProductFromCartAfterAdd(e: Event): Promise<void>
   }
 }
 
-// TODO: custom confirm popup
 export async function deleteAllProductsFromCartController(): Promise<void> {
   const [cartId, cartDataVersion] = await cartResponse();
   // eslint-disable-next-line no-alert

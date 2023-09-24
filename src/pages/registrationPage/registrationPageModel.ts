@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getAnonymousFlow, postAnonymousFlow } from '../../shared/API';
 import { Project } from '../../types/interfaces/Project';
 import { CustomerData, RegistrationData } from '../../types/interfaces/customerData';
