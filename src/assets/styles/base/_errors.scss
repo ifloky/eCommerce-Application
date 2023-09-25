@@ -3,7 +3,7 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  border:1px solid $color-invalid;
+  border: 1px solid $color-invalid;
   border-radius: 5px;
   padding: 5px 10px;
   background-color: $color-invalid;
@@ -17,7 +17,7 @@
 
 .invalid-input {
   outline: none;
-  border: 1px $color-invalid solid !important; 
+  border: 1px $color-invalid solid !important;
 }
 
 .error-message {

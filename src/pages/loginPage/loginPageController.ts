@@ -94,7 +94,6 @@ export const loginUser = async (event: Event): Promise<void> => {
       if (isCorrectUserData) {
         const { id } = isCorrectUserData;
         localStorage.setItem('id', id);
-        localStorage.setItem('login', 'true');
         Header.refresh(true);
         redirectToHomePage();
       }

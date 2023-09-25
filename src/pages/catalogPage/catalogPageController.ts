@@ -1,5 +1,6 @@
 import { Product } from '../../types/interfaces/Product';
 import { cardProductViewElement } from '../../widgets/cardProduct/cardProductView';
+import { getCartData } from '../basketPage/basketPageModel';
 import { getAllProducts, getProductCategory } from './catalogPageModel';
 import { generateAllProductsCard } from './catalogPageView';
 import { generatePaginationView } from './components/pagination';
@@ -13,12 +14,12 @@ export const selectCategory = async (event: Event): Promise<void> => {
     });
     const id = target.getAttribute('data-id');
     if (id) {
-      getProductCategory(id);
+      await getProductCategory(id);
     }
     if (target.classList.contains('catalog__button_all')) {
+      sessionStorage.removeItem('categoryId');
       document.querySelector('.catalog__container')?.remove();
       document.querySelector('.pagination')?.remove();
-      sessionStorage.removeItem('categoryId');
       const allProducts = await generateAllProductsCard();
       const pagination = generatePaginationView();
       document.querySelector('.catalog__wrapper')?.append(allProducts, pagination);
@@ -27,15 +28,39 @@ export const selectCategory = async (event: Event): Promise<void> => {
   }
 };
 
-export const renderSelectedCategory = (data: Product[]): void => {
+export async function returnCardItem(data: Product[], catalogPage: Element): Promise<void> {
+  const [cartResponse] = (await getCartData()).results;
+  if (!cartResponse) {
+    data.forEach((product) => {
+      const productCard = cardProductViewElement(product, true);
+      catalogPage?.append(productCard);
+    });
+  } else {
+    const cartResponseResults = cartResponse.lineItems;
+    data.forEach((product) => {
+      let includeButton = true;
+
+      for (let j = 0; j < cartResponseResults.length; j++) {
+        if (cartResponseResults[j].productId === product.id) {
+          includeButton = false;
+          break;
+        }
+      }
+
+      const productCard = cardProductViewElement(product, includeButton);
+      catalogPage?.append(productCard);
+    });
+  }
+}
+
+export const renderSelectedCategory = async (data: Product[]): Promise<void> => {
   const catalogPage = document.querySelector('.catalog__container');
   while (catalogPage?.firstChild) {
     catalogPage.firstChild.remove();
   }
-  data.forEach((product) => {
-    const productCard = cardProductViewElement(product);
-    catalogPage?.append(productCard);
-  });
+  if (catalogPage) {
+    await returnCardItem(data, catalogPage);
+  }
 };
 
 export const generatePaginationForSelectedCategory = (): void => {
@@ -47,7 +72,7 @@ export const generatePaginationForSelectedCategory = (): void => {
   catalogWrapper?.append(pagination);
 };
 
-const checkDisabled = (element: Element, parent: Element): void => {
+export const checkDisabled = (element: Element, parent: Element): void => {
   const prevButton = parent.querySelector('.button_prev');
   const nextButton = parent.querySelector('.button_next');
   const navigation = parent.querySelector('.pagination__buttons');
@@ -87,8 +112,8 @@ const moveToSelectedPage = async (event: Event): Promise<void> => {
         }
       } else {
         products = (await getAllProducts((selectedPage - 1) * 3)).results;
+        renderSelectedCategory(products);
       }
-      renderSelectedCategory(products);
     }
   }
 };

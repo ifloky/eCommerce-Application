@@ -25,14 +25,14 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
   }
 }
 .person__list {
   width: 500px;
 }
 li::marker {
-    color: $color-primary;
+  color: $color-primary;
 }
 
 .footer__logo-link {

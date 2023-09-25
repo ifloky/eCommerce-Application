@@ -6,11 +6,11 @@ export interface CustomerFields {
 }
 
 export interface FieldsInfo {
-  for: string,
-  text: string,
-  type: string,
-  id: string,
-  class: string
+  for: string;
+  text: string;
+  type: string;
+  id: string;
+  class: string;
 }
 
 export interface Address {
@@ -21,22 +21,21 @@ export interface Address {
   country: string;
 }
 
-
 export interface RegistrationInfo {
-  id: string,
-  version: number,
-  versionModifiedAt: Date,
-  lastMessageSequenceNumber: number,
+  id: string;
+  version: number;
+  versionModifiedAt: Date;
+  lastMessageSequenceNumber: number;
   lastModifiedBy: {
-    clientId: "",
-    isPlatformClient: boolean,
-  },
+    clientId: '';
+    isPlatformClient: boolean;
+  };
   createdBy: {
-    clientId: "",
-    isPlatformClient: boolean,
-  },
-  createdAt: Date,
-  lastModifiedAt: Date,
+    clientId: '';
+    isPlatformClient: boolean;
+  };
+  createdAt: Date;
+  lastModifiedAt: Date;
   email: string;
   password: string;
   firstName: string;

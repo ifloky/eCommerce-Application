@@ -11,9 +11,9 @@ export interface CustomerRegistrationInfo {
 }
 
 export interface FieldsInfo {
-  for: string,
-  text: string,
-  type: string,
-  id: string,
-  class: string
+  for: string;
+  text: string;
+  type: string;
+  id: string;
+  class: string;
 }
