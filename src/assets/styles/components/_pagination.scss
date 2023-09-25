@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  padding: 15px 0;
+  gap: 15px;
+  justify-content: center;
+}
+
+.pagination__buttons {
+  display: flex;
+  gap: 10px;
+
+  > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      padding: 5px 10px;
+    }
+  }
+
+  @media (max-width: 530px) {
+    flex-basis: 50%;
+    flex-wrap: wrap;
+  }
+}

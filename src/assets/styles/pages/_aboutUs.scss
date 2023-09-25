@@ -1,0 +1,79 @@
+.about__wrapper {
+  padding: 20px;
+}
+.about__title {
+  text-align: center;
+  color: $color-primary;
+}
+.item__wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 30px;
+}
+.person__image-wrapper {
+  display: block;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border: 1px solid $color-primary;
+  margin-right: 30px;
+  border-radius: 5px;
+
+  & .person__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.person__list {
+  max-width: 600px;
+}
+li::marker {
+  color: $color-primary;
+}
+
+.footer__logo-link {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 100px;
+  height: 38px;
+  background-size: 100%;
+  background-image: url(../../../assets/image/rs_school_js.svg);
+}
+
+@media screen and (max-width: 968px) {
+  .item__wrapper {
+    border: 1px solid $color-primary;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    display: flex;
+    width: 90vw;
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+  .person {
+    &__image-wrapper {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+    &__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__list {
+      margin-left: 10px;
+    }
+  }
+}

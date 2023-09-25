@@ -1,0 +1,53 @@
+.footer {
+  border-top: 1px $color-additional solid;
+  flex: 0 1 auto;
+}
+
+.footer__wrapper {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
+.footer__title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer__authors {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.footer__link {
+  display: inline-block;
+  width: 100%;
+  font-size: 12px;
+  text-decoration: none;
+  @extend %transition;
+
+  &:hover {
+    text-decoration: underline;
+    color: $color-primary;
+  }
+}
+
+.footer__text {
+  font-weight: 700;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+.footer__logo {
+  width: 120px;
+  height: 60px;
+  background: url('../../image/rs_school_js2.svg') center / contain no-repeat;
+}

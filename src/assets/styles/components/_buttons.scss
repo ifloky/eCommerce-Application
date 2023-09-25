@@ -1,0 +1,82 @@
+.button-light {
+  background-color: transparent;
+  color: $color-primary;
+  border: 1px $color-primary solid;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 20px;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-light;
+    border: 1px transparent solid;
+    cursor: pointer;
+    @extend %transition;
+  }
+}
+
+.button {
+  background-color: $color-primary;
+  color: $color-light;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 20px;
+  white-space: nowrap;
+  border: 1px transparent solid;
+  cursor: pointer;
+  @extend %transition;
+
+  &:not(&:disabled):hover {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px $color-primary solid;
+    cursor: pointer;
+    @extend %transition;
+  }
+
+  &_light {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px $color-primary solid;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 10px 20px;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-light;
+      border: 1px transparent solid;
+      @extend %transition;
+    }
+
+    &_save {
+      width: 200px;
+      align-self: end;
+      margin-top: 30px;
+    }
+  }
+
+  &_sign-out {
+    max-width: 150px;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    @media (max-width: 500px) {
+      font-size: 12px;
+      width: 100%;
+    }
+  }
+
+  &_active {
+    background-color: $color-light;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
+}

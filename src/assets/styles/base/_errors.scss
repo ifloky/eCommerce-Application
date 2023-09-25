@@ -1,0 +1,27 @@
+.error {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid $color-invalid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: $color-invalid;
+  color: $color-light;
+}
+
+.positive {
+  background-color: $color-green;
+  border-color: $color-darkest-green;
+}
+
+.invalid-input {
+  outline: none;
+  border: 1px $color-invalid solid !important;
+}
+
+.error-message {
+  color: $color-invalid;
+  font-size: 10px;
+  text-align: left;
+}
