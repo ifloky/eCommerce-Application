@@ -7,6 +7,7 @@ const createButtonsBlock = (): HTMLDivElement => {
   const block = createElement('div', ['sign-out__buttons']);
   const agreeButton = createButtonElement();
   agreeButton.textContent = 'yes, please';
+  agreeButton.id = 'signOut';
   const disagreeButton = createButtonElement();
   disagreeButton.textContent = 'no, thanks';
   block.append(agreeButton, disagreeButton);

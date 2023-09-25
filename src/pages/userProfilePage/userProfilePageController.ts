@@ -1,5 +1,7 @@
-import { homePageRender, userProfilePageRender } from '../../shared/router';
+import { deleteCookie } from '../../shared/API';
+import { homePageRender } from '../../shared/router';
 import { displayMessage } from '../../utils/abstract';
+import Header from '../../widgets/header/headerView';
 import { renderEditBlock } from './components/editProfile';
 import { renderArticle } from './components/information';
 import { renderSignOutBlock } from './components/signOut';
@@ -125,10 +127,9 @@ export const updateData = (event: Event): void => {
 };
 
 export const isSignOut = (event: Event): void => {
-  const { target } = event;
-  if (target instanceof HTMLButtonElement && target.textContent === 'yes') {
-    localStorage.setItem('login', 'false');
+  if ((event.target as HTMLElement).id === 'signOut') {
+    deleteCookie('access_token');
+    Header.refresh(false);
     homePageRender();
   }
-  userProfilePageRender();
 };

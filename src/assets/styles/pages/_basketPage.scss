@@ -1,4 +1,8 @@
 .basket {
+  &__inner {
+    flex: 1 0 auto;
+  }
+
   &__cart-items {
     padding: 20px 40px;
 
