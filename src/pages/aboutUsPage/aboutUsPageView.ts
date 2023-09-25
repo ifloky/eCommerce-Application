@@ -23,15 +23,6 @@ function createOneMember(elem: TeamMember): HTMLElement {
   return oneMemberProfileWrapper;
 }
 
-function returnFooterIconElement(): HTMLElement {
-  const footerIcon = createElement('div', ['footer__icon']);
-  footerIcon.innerHTML = `
-  <div class="footer__logo">
-  <a href="https://rs.school/" class="footer__logo-link"> </a>
-  </div>`;
-  return footerIcon;
-}
-
 export function aboutUsPageView(info: TeamMember[]): HTMLElement {
   const aboutUsWrapper = createElement('div', ['about__wrapper']);
   aboutUsWrapper.innerHTML = `<h2 class="about__title">Our Dream Team</h2>`;
@@ -39,6 +30,5 @@ export function aboutUsPageView(info: TeamMember[]): HTMLElement {
     const onePerson = createOneMember(info[i]);
     aboutUsWrapper.append(onePerson);
   }
-  aboutUsWrapper.append(returnFooterIconElement());
   return aboutUsWrapper;
 }

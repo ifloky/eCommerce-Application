@@ -55,13 +55,11 @@ export async function sendDataToCart(e: Event): Promise<void> {
     await createCart();
     cartExists = await getCartData();
   }
-
   const target = e.target as HTMLElement;
   const parentElement = target.closest('[data-id]');
   const parentId = parentElement?.getAttribute('data-id') || '';
   const { cartId, cartDataVersion } = await cartResponse();
   const data = dataObj(cartDataVersion, 'addLineItem', parentId);
-
   await addProductToCart(data, cartId);
   await setCountProductInBasket();
 }
@@ -71,7 +69,6 @@ export async function sendDeleteProductFromCart(e: Event): Promise<void> {
   const parentId = target.closest('[data-id]')?.getAttribute('data-id') || '';
   const { cartId, cartDataVersion } = await cartResponse();
   const data = dataObj(cartDataVersion, 'removeLineItem', parentId, 9999);
-
   await deleteProductFromCart(data, cartId, cartDataVersion);
   await setCountProductInBasket();
   await basketPageRender();

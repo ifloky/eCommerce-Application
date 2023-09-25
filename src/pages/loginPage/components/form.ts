@@ -29,7 +29,7 @@ const generateShowPasswordCheckbox = (): HTMLDivElement => {
   const wrapper = createWrapper();
   wrapper.classList.add('form__wrapper_toggle');
   const label = createLabelElement();
-  label.setAttribute('for', 'toggle');
+  label.setAttribute('for', 'toggle-password');
   const input = createInputElement();
   input.setAttribute('id', 'toggle-password');
   input.type = 'checkbox';

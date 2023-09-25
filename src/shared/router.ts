@@ -1,12 +1,12 @@
 import { getLoginPageView } from '../pages/loginPage/loginPageView';
 import { MainPageController } from '../pages/mainPage/MainPageController';
-import RegistrationPageView from '../pages/registrationPage/registrationView';
 import { getUserProfileView } from '../pages/userProfilePage/userProfilePageView';
 import { ProductPage } from '../pages/productPage/productPageController';
 import { aboutUsPageView } from '../pages/aboutUsPage/aboutUsPageView';
 import { teamMembers } from '../pages/aboutUsPage/components/teamMembers';
 import { basketPageView } from '../pages/basketPage/basketPageView';
 import { getCatalogView } from '../pages/catalogPage/catalogPageView';
+import { getRegistrationPageView } from '../pages/registrationPage/registrationPageView';
 
 type ControllerFunction = () => void;
 
@@ -31,7 +31,7 @@ export function logInPageRender(): void {
 }
 
 export function registerPageRender(): void {
-  updateContainer(RegistrationPageView());
+  updateContainer(getRegistrationPageView);
 }
 
 export function userProfilePageRender(): void {
@@ -94,13 +94,15 @@ function changeRoute(path: string): void {
 export function startRouting(): void {
   const links = document.querySelectorAll('a');
   links.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const href = link.getAttribute('href');
-      if (href) {
-        changeRoute(href);
-      }
-    });
+    if (!link.closest('.footer')) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const href = link.getAttribute('href');
+        if (href) {
+          changeRoute(href);
+        }
+      });
+    }
   });
 
   handleRoute();

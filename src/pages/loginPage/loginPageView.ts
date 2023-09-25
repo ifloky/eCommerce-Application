@@ -1,7 +1,8 @@
 import { createElement } from '../../utils/abstract';
+import { isShowed, isValid } from '../../widgets/forms/forms';
 import { generateForm } from './components/form';
 import { generateHeaderBlock } from './components/header';
-import { loginUser, isShowed, isValid, redirectToRegistrationPage } from './loginPageController';
+import { loginUser, redirectToRegistrationPage } from './loginPageController';
 
 const createLoginPage = (): HTMLElement => createElement('section', ['login-page']);
 

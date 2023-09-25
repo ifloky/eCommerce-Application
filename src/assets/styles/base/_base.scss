@@ -8,4 +8,14 @@
 body {
   overflow-x: hidden;
   background-color: $color-white-darkest;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
 }

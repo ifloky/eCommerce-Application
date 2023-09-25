@@ -17,6 +17,16 @@ interface Address {
   streetName: string;
 }
 
+export interface AddressesData {
+  id: string;
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  default?: boolean;
+  merge?: boolean;
+}
+
 interface CreatedByUser {
   id: string;
   typeId: string;
@@ -63,4 +73,16 @@ export interface CustomerData {
   title: string;
   version: number;
   versionModifiedAt: string;
+}
+export interface PersonalData {
+  email: string;
+  password: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  dateOfBirth: string;
+}
+
+export interface RegistrationData extends PersonalData {
+  addresses: AddressesData[];
 }

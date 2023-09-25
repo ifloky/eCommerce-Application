@@ -17,9 +17,9 @@ export const selectCategory = async (event: Event): Promise<void> => {
       await getProductCategory(id);
     }
     if (target.classList.contains('catalog__button_all')) {
-      sessionStorage.removeItem('categoryId');
       document.querySelector('.catalog__container')?.remove();
       document.querySelector('.pagination')?.remove();
+      sessionStorage.removeItem('categoryId');
       const allProducts = await generateAllProductsCard();
       const pagination = generatePaginationView();
       document.querySelector('.catalog__wrapper')?.append(allProducts, pagination);
@@ -46,7 +46,6 @@ export async function returnCardItem(data: Product[], catalogPage: Element): Pro
           break;
         }
       }
-
       const productCard = cardProductViewElement(product, includeButton);
       catalogPage?.append(productCard);
     });
@@ -58,9 +57,10 @@ export const renderSelectedCategory = async (data: Product[]): Promise<void> => 
   while (catalogPage?.firstChild) {
     catalogPage.firstChild.remove();
   }
-  if (catalogPage) {
-    await returnCardItem(data, catalogPage);
-  }
+  data.forEach((product) => {
+    const productCard = cardProductViewElement(product);
+    catalogPage?.append(productCard);
+  });
 };
 
 export const generatePaginationForSelectedCategory = (): void => {

@@ -42,7 +42,6 @@ export const generateCategoryProductsCard = async (savedCategoryId: string): Pro
   const wrapper = createElement('div', ['catalog__container']);
   const products = (await getProductCategory(savedCategoryId)).results;
   returnCardItem(products, wrapper);
-
   return wrapper;
 };
 
@@ -56,7 +55,6 @@ const generateCatalogView = async (): Promise<HTMLElement> => {
   const sectionWrapper = createElement('div', ['catalog__wrapper']);
   const title = createHeadingElement();
   const buttonsBlock = await createButtonsForCategories();
-  const pagination = generatePaginationView();
   let productWrapper;
   const savedCategoryId = sessionStorage.getItem('categoryId') || '';
   if (savedCategoryId) {
@@ -64,6 +62,7 @@ const generateCatalogView = async (): Promise<HTMLElement> => {
   } else {
     productWrapper = await generateAllProductsCard();
   }
+  const pagination = generatePaginationView();
   sectionWrapper.append(title, buttonsBlock, productWrapper, pagination);
   section.append(sectionWrapper);
   bindEvents(sectionWrapper);

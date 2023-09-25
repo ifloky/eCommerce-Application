@@ -2,7 +2,7 @@ import { navigationView } from './navigationView';
 
 const navigationElements = [
   { link: '/', nameLink: 'Main' },
-  { link: '/about', nameLink: 'about' },
+  { link: '/about', nameLink: 'about us' },
   { link: '/catalog', nameLink: 'catalog' },
 ];
 

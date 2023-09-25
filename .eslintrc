@@ -4,25 +4,17 @@
     "commonjs": true,
     "es2021": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "airbnb-base/legacy",
-    "plugin:json/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "@typeScript-eslint"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "airbnb-base/legacy", "plugin:json/recommended", "prettier"],
+  "plugins": ["@typeScript-eslint", "no-comments"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "project": "./tsconfig.json",
-    "extraFileExtensions": [
-      ".svg",
-      ".scss"
-    ]
+    "extraFileExtensions": [".svg", ".scss"]
   },
   "rules": {
+    "no-comments/disallowComments": "warn",
+    "no-inline-comments": "error",
     "no-plusplus": "off",
     "no-console": "warn",
     "prefer-destructuring": "error",
@@ -49,10 +41,7 @@
         }
       }
     ],
-    "max-lines-per-function": [
-      "error",
-      40
-    ],
+    "max-lines-per-function": ["error", 40],
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/no-non-null-assertion": "error",

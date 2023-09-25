@@ -3,10 +3,9 @@ import { createElement } from '../utils/abstract';
 
 const BASE_URL = process.env.BASE_URL || '';
 const BASE_PROJECT_KEY = process.env.BASE_PROJECT_KEY || '';
-let BEARER_TOKEN = process.env.BEARER_TOKEN || '';
-
 const DEVELOP_SECRET = process.env.DEVELOP_SECRET || '';
 const DEVELOP_ID = process.env.DEVELOP_ID || '';
+let BEARER_TOKEN = process.env.BEARER_TOKEN || '';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE';
 

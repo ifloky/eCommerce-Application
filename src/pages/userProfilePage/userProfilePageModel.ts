@@ -1,6 +1,6 @@
 import { getCookie } from '../../shared/API';
 import { CustomerData } from '../../types/interfaces/customerData';
-import { AddressesData, PersonalData } from '../../types/interfaces/userProfilePage';
+import { AddressesData, PersonalData, UpdatePersonalData } from '../../types/interfaces/userProfilePage';
 
 const urlUpdate = `${process.env.BASE_URL}/${process.env.BASE_PROJECT_KEY}/customers/${localStorage.getItem('id')}`;
 
@@ -47,14 +47,9 @@ export const getBillingData = async (): Promise<AddressesData[]> => {
     const addressData = {
       default: isDefault,
       country: billingAddress?.country || '',
-      state: billingAddress?.state || '',
-      region: billingAddress?.region || '',
       city: billingAddress?.city || '',
       streetName: billingAddress?.streetName || '',
-      building: billingAddress?.building || '',
-      apartment: billingAddress?.apartment || '',
       postalCode: billingAddress?.postalCode || '',
-      company: billingAddress?.company || '',
       id: billingAddress?.id || '',
       type: 'billing',
     };
@@ -74,14 +69,9 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
     const addressData = {
       default: isDefault,
       country: shippingAddress?.country || '',
-      state: shippingAddress?.state || '',
-      region: shippingAddress?.region || '',
       city: shippingAddress?.city || '',
       streetName: shippingAddress?.streetName || '',
-      building: shippingAddress?.building || '',
-      apartment: shippingAddress?.apartment || '',
       postalCode: shippingAddress?.postalCode || '',
-      company: shippingAddress?.company || '',
       id: shippingAddress?.id || '',
       type: 'shipping',
     };
@@ -90,7 +80,7 @@ export const getShippingData = async (): Promise<AddressesData[]> => {
   return addressDataArray;
 };
 
-export const updatePersonalData = async (data: PersonalData): Promise<Response> => {
+export const updatePersonalData = async (data: UpdatePersonalData): Promise<Response> => {
   const { version } = await getCustomerData();
   const body = JSON.stringify({
     version: version,

@@ -23,7 +23,7 @@ const createEditLineContent = (labelText: string, inputText: string, addressType
   if (labelText === 'birthDay') {
     input.type = 'date';
   }
-  if (labelText === 'id') {
+  if (labelText === 'id' || labelText === 'type') {
     input.disabled = true;
   }
   input.value = inputText;
